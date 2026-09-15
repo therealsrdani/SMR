@@ -264,13 +264,38 @@
                      Teléfono: <input type="tel" name="Teléfono" size="12" maxlength="15" required><br><br>
                      Fecha de nacimiento: <input type="date" name="Fecha de nacimiento" required><br><br>
                      Población: <input type="text" name="Población" size="20" maxlength="30" placeholder="Vitoria-Gasteiz" required><br><br>
-                    <input type="submit" value="Enviar" style="color: whitesmoke; font-weight: bold; height: 35px; border: 2.5px solid greenyellow; background-color: darkblue;">
+                    <p style="text-align: left; color: black;">Valora este formulario del 0-5</p>
+                    <select name="list">
+                        <option value="" selected>-- Selecciona --</option>
+                        <option value="0"> Cero </option>
+                        <option value="1"> Uno </option>
+                        <option value="2"> Dos </option>
+                        <option value="3"> Tres </option>
+                        <option value="4"> Cuatro </option>
+                        <option value="5"> Cinco </option>
+                    </select><br><br>
+                    <p style="text-align: left; color: black;">Escoge según prefieras:</p>
+                    <p style="text-align: left; color: black;"><input type="checkbox" name="option1">Euskera</p>
+                    <p style="text-align: left; color: black;"><input type="checkbox" name="option2">Español</p>
+                    <br>
+                    <p style="text-align: left;">Escoge tu género musical preferido:</p>
+                    <input type="radio" name="music" value="country">Country
+                    <input type="radio" name="music" value="rockroll">Rock-Roll
+                    <input type="radio" name="music" value="classic">Classic
+                    <input type="radio" name="music" value="pop">Pop
+                    <hr style="height: 5px; border: none; background-color: black;">
+                    <p style="text-align: center; color: black;"><input type="checkbox" name="checkbox1" value="opcion1"> Aceptas los términos y condiciones</p><br>
+                    <input type="submit" value="Enviar formulario" style="color: whitesmoke; font-weight: bold; height: 35px; border: 2.5px solid darkblue; background-color: blue;">
+                    <input type="reset" name="borrar" value="Borrar respuestas" style="color: whitesmoke; font-weight: bold; height: 35px; border: 2.5px solid darkred; background-color: red;">
                 </form>
             </td></tr>
         </table>
         <br>
         <hr style="height: 10px; border: none; background-color: black;">
         <br>
+        <audio controls autoplay loop>
+            <source src="audio/AURON REACCIONA TEVAS PERMA VALE.mp3" type="audio/mpeg">
+        </audio>
     </body>
     <style>
         body {
