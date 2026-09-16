@@ -220,11 +220,18 @@
         <!--Creamos el formulario-->
             <form action="mailto:daniel.ruiz.53443@ikasle.egibide.org" method="post" enctype="text/plain" onsubmit="ponerFechaHora()">
 
-                <strong>NOMBRE</strong>: <input type="text" name="Nombre"/><br><br>
-                <strong>FECHA DE NACIMIENTO</strong>: <input type="date" name="Fecha de nacimiento"/><br><br>
-                <strong>EMAIL</strong>: <input type="email" name="Email"/><br><br>
-                <strong>MES</strong>: <input type="month" name="Mes"/><br><br>
-                <strong>NÚMERO</strong>: <input type="number" name="Numero"/><br><br>
+                Nombre: <input type="text" name="Nombre" size="20" maxlength="20" required><br><br>
+                Correo electrónico: <input type="email" name="Correo electrónico" size="30" maxlength="30" required><br><br>
+                <strong>URL</strong>: <input type="url" name="URL"/><br><br>
+                Feha: <input type="date" name="Fecha"/><br><br>
+                Tiempo: <input type="time" name="Tiempo"/><br><br>
+                Fecha y Hora: <input type="datetime-local" name="Fecha y Hora"/><br><br>
+                Mes: <input type="month" name="Mes"/><br><br>
+                Semana: <input type="week" name="Semana"/><br><br>
+                Número (Min 10 - Max 10): <input type="number" name="Número" minlength="10" maxlength="10"/><br><br>
+                Teléfono: <input type="tel" name="Teléfono" maxlength="12"/><br><br>
+                Términos de búsqueda: <input type="search" name="Términos de búsqueda"/><br><br>
+                Color: <input type="color" name="Color"/><br><br>
                 <!--Fecha y hora que se muestra en la página-->
                     <p style="color: black; text-align: left;"><strong>Fecha y Hora</strong>: <span id="fechaHora"></span></p>
                 <!--Fecha y hora que se enviará por mailto-->
