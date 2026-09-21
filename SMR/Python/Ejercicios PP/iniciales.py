@@ -68,8 +68,35 @@ def calculadora(number1, number2, operacion): # Creamos la función que hace la 
             return "Error: División por cero" # Mostramos el error
     else: # Si la operación no es válida, mostramos un error
         return "Operación no válida" # Mostramos el error
-number1 = float(input("Introduce el primer número: ")) # Pedimos el primer número
-number2 = float(input("Introduce el segundo número: ")) # Pedimos el segundo número
+number1 = float(int(input("Introduce el primer número: "))) # Pedimos el primer número
+number2 = float((int(input("Introduce el segundo número: ")))) # Pedimos el segundo número
 operacion = input("Elige una operación (+, -, *, /): ").strip() # Pedimos la operación y eliminamos espacios en blanco
-resultado = calculadora(number1, number2, operacion) # Llamamos a la función calculadora con los números y la operación
+resultado = int(calculadora(number1, number2, operacion)) # Llamamos a la función calculadora con los números y la operación
 print(f"El resultado de {number1:g} {operacion} {number2:g} es {resultado}") # Mostramos el resultado de la operación
+
+# Ejercicio 8, bucle de numero
+while True: # Creamos un bucle
+    try: # Intentamos ejecutar el siguiente bloque de código
+        num8 = int(input("Introduce un número: ")) # Pedimos un número
+        break # Si se introduce un número válido, salimos del bucle
+    except ValueError: # Si se produce un error de valor (no se introduce un número)
+        print("Error: Debes introducir un número válido.") # Mostramos el error y volvemos a pedir el número
+
+# Ejercicio 9, numero y nota correspondiente
+while True: # Creamos un bucle
+    try: # Intentamos ejecutar el siguiente bloque de código
+        num9 = int(input("Introduce un número entre 0 y 10: ")) # Pedimos un número
+        if 0 <= num9 <= 10: # Comprobamos si el número está entre 0 y 10
+            if 0 <= num9 <= 4: # Comprobamos si el número está entre 0 y 4
+                print("Suspenso") # Mostramos que es suspenso
+            elif 5 <= num9 <= 6: # Comprobamos si el número está entre 5 y 6
+                print("Aprobado") # Mostramos que es aprobado
+            elif 7 <= num9 <= 8: # Comprobamos si el número está entre 7 y 8
+                print("Notable") # Mostramos que es notable
+            elif 9 <= num9 <= 10: # Comprobamos si el número está entre 9 y 10
+                print("Sobresaliente") # Mostramos que es sobresaliente
+            break # Si el número es válido, salimos del bucle
+        else: # Si el número no está entre 0 y 10
+            print("Error: Debes introducir un número entre 0 y 10.") # Mostramos el error y volvemos a pedir el número
+    except ValueError: # Si se produce un error de valor (no se introduce un número)
+        print("Error: Debes introducir un número válido.") # Mostramos el error y volvemos a pedir el número
