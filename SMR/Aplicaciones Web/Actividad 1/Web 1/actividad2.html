@@ -308,6 +308,54 @@
         <source src="video/AURON REACCIONA TEVAS PERMA VALE.mp4" type="video/mp4">
         </video>
         <!--Fin del reproductor de audio y video-->
+
+        <div class="donar-card">
+            <div class="donar-header">DONAR SANGRE</div>
+
+            <form class="donar-form">
+                <div class="field-row">
+                    <label for="nombre">NOMBRE:</label>
+                    <input id="nombre" type="text" value="Tu nombre y apellidos">
+                </div>
+
+                <div class="field-row">
+                    <label for="fecha">FECHA DE NACIMIENTO:</label>
+                    <div class="date-wrap">
+                        <input id="fecha" type="text" value="dd / mm / aaaa" aria-label="Fecha de nacimiento">
+                        <span class="calendar-icon">📅</span>
+                    </div>
+                </div>
+
+                <div class="field-row">
+                    <label for="email">EMAIL:</label>
+                    <input id="email" type="email">
+                </div>
+
+                <div class="field-row">
+                    <label for="telefono">TELÉFONO:</label>
+                    <input id="telefono" type="tel">
+                </div>
+
+                <div class="accept-row">
+                    <input type="checkbox" id="acepto">
+                    <label for="acepto">Acepto ...</label>
+                </div>
+
+                <div class="donar-place">
+                    <label>DÓNDE DONAR:</label>
+                </div>
+
+                <div class="radio-row">
+                    <label><input type="radio" name="donar" value="autobus"> Autobús</label>
+                    <label><input type="radio" name="donar" value="ambulatorio"> Ambulatorio</label>
+                </div>
+
+                <div class="buttons-row">
+                    <button type="submit" class="btn btn-primary">REGISTRARSE</button>
+                    <button type="reset" class="btn btn-secondary">BORRAR DATOS</button>
+                </div>
+            </form>
+        </div>
     </body>
     <style>
         body {
@@ -345,6 +393,182 @@
         .centrada {
             display: block;
             margin: auto;
+        }
+
+        .donar-card {
+            width: 90%;
+            max-width: 1200px;
+            margin: 18px auto 0;
+            background: #f2d7e1;
+            border: 3px solid #4a4a4a;
+            box-sizing: border-box;
+            padding: 12px 18px 18px;
+        }
+
+        .donar-header {
+            font-family: "Impact", "Arial Black", serif;
+            font-size: 3.2rem;
+            line-height: 1.1;
+            letter-spacing: 1px;
+            font-weight: 700;
+            color: #000;
+            text-transform: uppercase;
+            padding: 6px 8px 10px;
+            border-bottom: 3px solid #5a5a5a;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+
+        .donar-header::after {
+            content: "";
+            display: block;
+            flex: 1;
+            height: 4px;
+            background: rgba(0, 0, 0, 0.7);
+            margin-top: 12px;
+        }
+
+        .donar-form {
+            display: flex;
+            flex-direction: column;
+            gap: 18px;
+            margin-top: 8px;
+        }
+
+        .field-row {
+            display: flex;
+            align-items: center;
+            gap: 18px;
+            min-height: 52px;
+        }
+
+        .field-row label,
+        .donar-place label {
+            font-family: "Impact", "Arial Black", serif;
+            font-size: 2.1rem;
+            color: #000;
+            text-transform: uppercase;
+            min-width: 290px;
+            text-align: left;
+        }
+
+        .field-row input {
+            flex: 1;
+            height: 44px;
+            border: 2px solid #4a4a4a;
+            background: #e8e8e8;
+            font-size: 1.35rem;
+            color: #666;
+            padding: 0 12px;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        .field-row input:focus {
+            outline: none;
+            border-color: #2a2a2a;
+        }
+
+        .date-wrap {
+            position: relative;
+            display: flex;
+            align-items: center;
+            width: 100%;
+            max-width: 480px;
+        }
+
+        .date-wrap input {
+            width: 100%;
+            padding-right: 44px;
+        }
+
+        .calendar-icon {
+            position: absolute;
+            right: 10px;
+            font-size: 1.8rem;
+            color: #1b1b1b;
+            pointer-events: none;
+        }
+
+        .accept-row {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            margin-top: 8px;
+            min-height: 36px;
+        }
+
+        .accept-row input[type="checkbox"] {
+            width: 24px;
+            height: 24px;
+            accent-color: #000;
+            margin: 0;
+        }
+
+        .accept-row label {
+            font-family: "Impact", "Arial Black", serif;
+            font-size: 1.8rem;
+            color: #000;
+            text-transform: none;
+        }
+
+        .donar-place {
+            margin-top: 10px;
+        }
+
+        .radio-row {
+            display: flex;
+            align-items: center;
+            gap: 42px;
+            margin-left: 0;
+            margin-top: 4px;
+        }
+
+        .radio-row label {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-family: "Impact", "Arial Black", serif;
+            font-size: 1.9rem;
+            color: #000;
+        }
+
+        .radio-row input[type="radio"] {
+            width: 24px;
+            height: 24px;
+            accent-color: #000;
+            margin: 0;
+        }
+
+        .buttons-row {
+            display: flex;
+            gap: 18px;
+            margin-top: 18px;
+            padding-top: 8px;
+        }
+
+        .btn {
+            min-width: 220px;
+            height: 58px;
+            border: 2px solid #595959;
+            background: #d9d9d9;
+            color: #000;
+            font-family: "Impact", "Arial Black", serif;
+            font-size: 1.7rem;
+            font-weight: 700;
+            cursor: pointer;
+            letter-spacing: 1px;
+            box-shadow: 0 0 0 1px rgba(0,0,0,0.15);
+        }
+
+        .btn-primary {
+            background: #d9d9d9;
+        }
+
+        .btn-secondary {
+            background: #d9d9d9;
         }
     </style>
 </html>
