@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="es">
+    <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mi página web</title>
+    <link rel="stylesheet" href="mrp4.css">
+    </head>
+    <body>
+    <table class="layout" aria-label="Estructura principal de la página">
+        <tr>
+        <td colspan="2" class="cabecera">
+            <iframe class="frame cabecera" name="cabecera" srcdoc="
+            <link rel='stylesheet' href='mrp4-iframes.css'>
+            <body class='iframe-cabecera'>
+                <h1>CABECERA</h1>
+                <p>Nombre del sitio web - Práctica 1: Web 1.0</p>
+            </body>
+            "></iframe>
+        </td>
+        </tr>
+
+        <tr>
+        <td class="navegador">
+            <iframe class="frame navegador" name="navegador" srcdoc="
+            <link rel='stylesheet' href='mrp4-iframes.css'>
+            <body class='iframe-navegador'>
+                <h2>NAVEGADOR</h2>
+                <ul>
+                    <li><a href='inicio.html' target='contenido'>Inicio</a></li>
+                    <li><a href='pagina2.html' target='contenido'>Página 2</a></li>
+                    <li><a href='pagina3.html' target='contenido'>Página 3</a></li>
+                    <li><a href='pagina4.html' target='contenido'>Página 4</a></li>
+                </ul>
+            </body>
+            "></iframe>
+        </td>
+        <td class="contenido">
+            <iframe class="frame contenido" name="contenido" src="inicio.html"></iframe>
+        </td>
+        </tr>
+
+        <tr>
+        <td colspan="2" class="pie">
+            <iframe class="frame pie" name="pie" srcdoc="
+            <link rel='stylesheet' href='mrp4-iframes.css'>
+            <body class='iframe-pie'>
+                <p>PIE DE PÁGINA - © 2026 Práctica 1: Web 1.0</p>
+            </body>
+            "></iframe>
+        </td>
+        </tr>
+    </table>
+    </body>
+</html>

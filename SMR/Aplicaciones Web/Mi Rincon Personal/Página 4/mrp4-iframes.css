@@ -1,0 +1,126 @@
+body.iframe-cabecera {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: #8ea3d0;
+  color: #1a1a4d;
+  text-align: center;
+}
+
+body.iframe-cabecera h1 {
+  margin: 0 0 8px;
+  font-size: 1.9rem;
+}
+
+body.iframe-cabecera p {
+  margin: 0;
+  font-size: 1rem;
+}
+
+body.iframe-navegador {
+  margin: 0;
+  padding: 16px 10px;
+  font-family: Arial, sans-serif;
+  background: #f5d38a;
+  color: #1f2430;
+  text-align: center;
+}
+
+body.iframe-navegador h2 {
+  margin: 0 0 16px;
+}
+
+body.iframe-navegador ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+body.iframe-navegador li {
+  margin: 0;
+}
+
+body.iframe-navegador a {
+  display: block;
+  padding: 10px 12px;
+  background: #1a1a4d;
+  color: #ffffff;
+  text-decoration: none;
+  font-weight: 600;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
+  transition: background 0.2s ease;
+}
+
+body.iframe-navegador a:hover {
+  background: #2d2d6a;
+  text-decoration: none;
+}
+
+body.iframe-contenido {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: #c9f2f5;
+  color: #1f2430;
+  padding: 18px;
+}
+
+body.iframe-contenido h1,
+body.iframe-contenido h2 {
+  margin-top: 0;
+}
+
+body.iframe-contenido table {
+  width: 100%;
+  border-collapse: collapse;
+  border: 1px solid #1f2430;
+}
+
+body.iframe-contenido th,
+body.iframe-contenido td {
+  border: 1px solid #1f2430;
+  padding: 8px;
+  text-align: left;
+}
+
+body.iframe-contenido a {
+  color: #1a1a4d;
+}
+
+body.iframe-contenido form {
+  display: grid;
+  gap: 10px;
+  max-width: 360px;
+}
+
+body.iframe-contenido input[type='text'],
+body.iframe-contenido input[type='email'] {
+  padding: 8px;
+  border: 1px solid #8c8c8c;
+  border-radius: 4px;
+}
+
+body.iframe-contenido input[type='submit'] {
+  width: max-content;
+  padding: 8px 16px;
+  background: #1a1a4d;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+body.iframe-pie {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: #f0c4a8;
+  color: #1f2430;
+  text-align: center;
+}
+
+body.iframe-pie p {
+  margin: 0;
+  padding: 18px 10px;
+}

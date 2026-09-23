@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Mi Rincón Personal</title>
+    <link rel="stylesheet" href="mrp3.css">
+</head>
+
+<body>
+
+    <header>
+        <h1>Mi Rincón Personal</h1>
+    </header>
+
+    <div class="contenedor">
+
+        <nav>
+            <button onclick="cambiarContenido('inicio')">Inicio</button>
+            <button onclick="cambiarContenido('sobremi')">Sobre mí</button>
+            <button onclick="cambiarContenido('aficiones')">Mis aficiones</button>
+            <button onclick="cambiarContenido('estudios')">Mis estudios</button>
+            <button onclick="cambiarContenido('hobbies')">Mis hobbies</button>
+        </nav>
+
+        <main id="contenido">
+            <h1>Inicio</h1>
+            <p>¡Bienvenido a mi web!</p>
+        </main>
+
+    </div>
+
+    <footer>
+        <p>© 2026 Mi Rincón Personal. Todos los derechos reservados.</p>
+    </footer>
+
+
+    <script>
+        function cambiarContenido(seccion) {
+
+            const contenido = document.getElementById("contenido");
+
+            switch (seccion) {
+
+                case "inicio":
+                    contenido.innerHTML = `
+                        <h1>Inicio</h1>
+                        <p>Bienvenido a nuestra página web.</p>
+                    `;
+                    break;
+
+                case "sobremi":
+                    contenido.innerHTML = `
+                        <h1>Sobre nosotros</h1>
+                        <p>Información sobre nuestra empresa.</p>
+                    `;
+                    break;
+
+                case "aficiones":
+                    contenido.innerHTML = `
+                        <h1>Mis aficiones</h1>
+                        <p>Información sobre mis aficiones.</p>
+                    `;
+                    break;
+
+                case "estudios":
+                    contenido.innerHTML = `
+                        <h1>Mis estudios</h1>
+                        <p>Información sobre mis estudios.</p>
+                    `;
+                    break;
+
+                case "hobbies":
+                    contenido.innerHTML = `
+                        <h1>Mis hobbies</h1>
+                        <p>Información sobre mis hobbies.</p>
+                    `;
+                    break;
+
+                case "contacto":
+                    contenido.innerHTML = `
+                        <h1>Contacto</h1>
+                        <p>Aquí puedes encontrar nuestros datos de contacto.</p>
+                    `;
+                    break;
+            }
+        }
+    </script>
+
+</body>
+</html>

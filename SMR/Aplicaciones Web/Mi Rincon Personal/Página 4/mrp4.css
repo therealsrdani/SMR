@@ -1,0 +1,80 @@
+:root {
+  --bg-body: #eef3ff;
+  --header-bg: #8ea3d0;
+  --nav-bg: #f5d38a;
+  --content-bg: #c9f2f5;
+  --footer-bg: #f0c4a8;
+  --text-main: #1f2430;
+  --link: #1a1a4d;
+  --border-soft: rgba(31, 36, 48, 0.18);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+  min-height: 100%;
+  font-family: Arial, Helvetica, sans-serif;
+  background: var(--bg-body);
+  color: var(--text-main);
+}
+
+body {
+  line-height: 1.5;
+}
+
+.layout {
+  width: 100%;
+  border-collapse: collapse;
+  table-layout: fixed;
+  border: 0;
+  margin: 0;
+  padding: 0;
+}
+
+.layout td {
+  padding: 0;
+  border: 0;
+  vertical-align: top;
+}
+
+.cabecera {
+  background: var(--header-bg);
+}
+
+.navegador {
+  background: var(--nav-bg);
+  width: 20%;
+}
+
+.contenido {
+  background: var(--content-bg);
+  width: 80%;
+}
+
+.pie {
+  background: var(--footer-bg);
+}
+
+.frame {
+  display: block;
+  width: 100%;
+  border: 0;
+  background: transparent;
+}
+
+.frame.cabecera {
+  height: 110px;
+}
+
+.frame.navegador,
+.frame.contenido {
+  height: 420px;
+}
+
+.frame.pie {
+  height: 70px;
+}
