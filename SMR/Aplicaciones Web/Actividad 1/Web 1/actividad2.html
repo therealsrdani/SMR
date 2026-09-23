@@ -358,6 +358,80 @@
             </form>
         </div>
         <!--Fin del formulario de donación de sangre-->
+        <fieldset>
+            <legend><h1>Formulario - Ciclos superiores</h1></legend>
+            <form action="#" method="post">
+                <p style="text-align: left; color: black;">
+                    Nombre: <input type="text" name="nombre" required>
+                </p>
+                <p style="text-align: left; color: black;">
+                    Apellidos: <input type="text" name="apellidos" required>
+                </p>
+                <p style="text-align: left; color: black;">
+                    Ciclo:
+                    <input type="radio" name="ciclo" value="DAM"> DAM
+                    <input type="radio" name="ciclo" value="DAW"> DAW
+                    <input type="radio" name="ciclo" value="ASIR"> ASIR
+                </p>
+                <p style="text-align: left; color: black;">
+                    Correo: <input type="email" name="correo" required>
+                </p>
+                <p style="text-align: left; color: black;">
+                    <input type="checkbox" name="informacion" checked>
+                    Deseo recibir información
+                </p>
+                <p style="text-align: left; color: black;">
+                    <input type="checkbox" name="condiciones" required>
+                    Declaro haber leído y aceptar las condiciones generales del programa y la normativa sobre protección de datos
+                </p>
+                <input type="submit" value="Enviar">
+                <input type="reset" value="Borrar">
+            </form>
+        </fieldset>
+
+        <fieldset>
+            <legend>DATOS PERSONALES</legend>
+            <form action="#" method="post">
+                <p style="text-align: left; color: black;">
+                    Nombre: <input type="text" name="nombre_datos">
+                </p>
+                <p style="text-align: left; color: black;">
+                    Correo electrónico: <input type="email" name="correo_datos">
+                </p>
+                <p style="text-align: left; color: black;">
+                    URL: <input type="url" name="url" placeholder="Escribe la URL de tu página">
+                </p>
+                <p style="text-align: left; color: black;">
+                    Fecha: <input type="date" name="fecha">
+                </p>
+                <p style="text-align: left; color: black;">
+                    Tiempo: <input type="time" name="tiempo">
+                </p>
+                <p style="text-align: left; color: black;">
+                    Fecha y hora: <input type="datetime-local" name="fecha_hora_datos">
+                </p>
+                <p style="text-align: left; color: black;">
+                    Mes: <input type="month" name="mes">
+                </p>
+                <p style="text-align: left; color: black;">
+                    Semana: <input type="week" name="semana">
+                </p>
+                <p style="text-align: left; color: black;">
+                    Número (min -10, max 10): <input type="number" name="numero" min="-10" max="10" value="0">
+                </p>
+                <p style="text-align: left; color: black;">
+                    Teléfono: <input type="tel" name="telefono">
+                </p>
+                <p style="text-align: left; color: black;">
+                    Término de búsqueda: <input type="search" name="busqueda">
+                </p>
+                <p style="text-align: left; color: black;">
+                    Color favorito: <input type="color" name="color">
+                </p>
+                <input type="submit" value="Enviar">
+                <input type="reset" value="Borrar">
+            </form>
+        </fieldset>
     </body>
     <style>
         body {
