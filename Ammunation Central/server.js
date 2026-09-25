@@ -3,10 +3,9 @@ const session = require("express-session");
 const bcrypt = require("bcryptjs");
 const path = require("path");
 
-const db = require("./database");
+const { datos, guardar } = require("./database");
 
 const app = express();
-
 const PORT = 3000;
 
 
@@ -45,44 +44,31 @@ app.post("/api/login", async (req, res) => {
     const { usuario, password } = req.body;
 
     if (!usuario || !password) {
-
         return res.status(400).json({
             error: "Introduce usuario y contraseña."
         });
-
     }
 
-
-    const empleado = db
-        .prepare(
-            "SELECT * FROM empleados WHERE usuario = ?"
-        )
-        .get(usuario);
-
+    const empleado = datos.empleados.find(
+        empleado => empleado.usuario === usuario
+    );
 
     if (!empleado) {
-
         return res.status(401).json({
             error: "Usuario o contraseña incorrectos."
         });
-
     }
-
 
     const correcto = await bcrypt.compare(
         password,
         empleado.password
     );
 
-
     if (!correcto) {
-
         return res.status(401).json({
             error: "Usuario o contraseña incorrectos."
         });
-
     }
-
 
     req.session.empleado = {
         id: empleado.id,
@@ -91,11 +77,9 @@ app.post("/api/login", async (req, res) => {
         rango: empleado.rango
     };
 
-
     res.json({
         correcto: true
     });
-
 });
 
 
@@ -106,19 +90,15 @@ app.post("/api/login", async (req, res) => {
 app.get("/api/sesion", (req, res) => {
 
     if (!req.session.empleado) {
-
         return res.status(401).json({
             autenticado: false
         });
-
     }
-
 
     res.json({
         autenticado: true,
         empleado: req.session.empleado
     });
-
 });
 
 
@@ -129,11 +109,9 @@ app.get("/api/sesion", (req, res) => {
 app.post("/api/logout", (req, res) => {
 
     req.session.destroy(() => {
-
         res.json({
             correcto: true
         });
-
     });
 
 });
@@ -146,15 +124,12 @@ app.post("/api/logout", (req, res) => {
 function comprobarEmpleado(req, res, next) {
 
     if (!req.session.empleado) {
-
         return res.status(401).json({
             error: "No tienes una sesión activa."
         });
-
     }
 
     next();
-
 }
 
 
@@ -164,14 +139,10 @@ function comprobarEmpleado(req, res, next) {
 
 app.get("/api/productos", comprobarEmpleado, (req, res) => {
 
-    const productos = db
-        .prepare(
-            "SELECT * FROM productos ORDER BY id DESC"
-        )
-        .all();
+    const productos = [...datos.productos]
+        .sort((a, b) => b.id - a.id);
 
     res.json(productos);
-
 });
 
 
@@ -184,53 +155,56 @@ app.post("/api/productos", comprobarEmpleado, (req, res) => {
         stock
     } = req.body;
 
-
     if (!nombre) {
-
         return res.status(400).json({
             error: "El producto necesita un nombre."
         });
-
     }
 
+    const nuevoId = datos.productos.length > 0
+        ? Math.max(...datos.productos.map(p => p.id)) + 1
+        : 1;
 
-    const resultado = db
-        .prepare(
-            `
-            INSERT INTO productos
-            (nombre, categoria, precio, stock)
-            VALUES (?, ?, ?, ?)
-            `
-        )
-        .run(
-            nombre,
-            categoria || "",
-            Number(precio) || 0,
-            Number(stock) || 0
-        );
+    const producto = {
+        id: nuevoId,
+        nombre: nombre,
+        categoria: categoria || "",
+        precio: Number(precio) || 0,
+        stock: Number(stock) || 0
+    };
 
+    datos.productos.push(producto);
+
+    guardar();
 
     res.json({
         correcto: true,
-        id: resultado.lastInsertRowid
+        id: producto.id
     });
-
 });
 
 
 app.delete("/api/productos/:id", comprobarEmpleado, (req, res) => {
 
-    db
-        .prepare(
-            "DELETE FROM productos WHERE id = ?"
-        )
-        .run(req.params.id);
+    const id = Number(req.params.id);
 
+    const posicion = datos.productos.findIndex(
+        producto => producto.id === id
+    );
+
+    if (posicion === -1) {
+        return res.status(404).json({
+            error: "Producto no encontrado."
+        });
+    }
+
+    datos.productos.splice(posicion, 1);
+
+    guardar();
 
     res.json({
         correcto: true
     });
-
 });
 
 
@@ -242,34 +216,37 @@ app.patch("/api/stock/:id", comprobarEmpleado, (req, res) => {
 
     const cantidad = Number(req.body.cantidad);
 
-
     if (Number.isNaN(cantidad)) {
-
         return res.status(400).json({
             error: "Cantidad incorrecta."
         });
-
     }
 
+    const id = Number(req.params.id);
 
-    db
-        .prepare(
-            `
-            UPDATE productos
-            SET stock = stock + ?
-            WHERE id = ?
-            `
-        )
-        .run(
-            cantidad,
-            req.params.id
-        );
+    const producto = datos.productos.find(
+        producto => producto.id === id
+    );
 
+    if (!producto) {
+        return res.status(404).json({
+            error: "Producto no encontrado."
+        });
+    }
+
+    producto.stock += cantidad;
+
+    // Evitar stock negativo
+    if (producto.stock < 0) {
+        producto.stock = 0;
+    }
+
+    guardar();
 
     res.json({
-        correcto: true
+        correcto: true,
+        stock: producto.stock
     });
-
 });
 
 
@@ -279,14 +256,10 @@ app.patch("/api/stock/:id", comprobarEmpleado, (req, res) => {
 
 app.get("/api/formularios", comprobarEmpleado, (req, res) => {
 
-    const formularios = db
-        .prepare(
-            "SELECT * FROM formularios ORDER BY id DESC"
-        )
-        .all();
+    const formularios = [...datos.formularios]
+        .sort((a, b) => b.id - a.id);
 
     res.json(formularios);
-
 });
 
 
@@ -297,26 +270,26 @@ app.post("/api/formularios", comprobarEmpleado, (req, res) => {
         descripcion
     } = req.body;
 
+    const nuevoId = datos.formularios.length > 0
+        ? Math.max(...datos.formularios.map(f => f.id)) + 1
+        : 1;
 
-    db
-        .prepare(
-            `
-            INSERT INTO formularios
-            (tipo, descripcion, empleado)
-            VALUES (?, ?, ?)
-            `
-        )
-        .run(
-            tipo || "General",
-            descripcion || "",
-            req.session.empleado.usuario
-        );
+    const formulario = {
+        id: nuevoId,
+        tipo: tipo || "General",
+        descripcion: descripcion || "",
+        empleado: req.session.empleado.usuario,
+        fecha: new Date().toLocaleString("es-ES")
+    };
 
+    datos.formularios.push(formulario);
+
+    guardar();
 
     res.json({
-        correcto: true
+        correcto: true,
+        id: formulario.id
     });
-
 });
 
 
@@ -326,18 +299,34 @@ app.post("/api/formularios", comprobarEmpleado, (req, res) => {
 
 app.get("/api/empleados", comprobarEmpleado, (req, res) => {
 
-    const empleados = db
-        .prepare(
-            `
-            SELECT id, usuario, nombre, rango
-            FROM empleados
-            ORDER BY id DESC
-            `
-        )
-        .all();
+    const empleados = datos.empleados
+        .map(empleado => ({
+            id: empleado.id,
+            usuario: empleado.usuario,
+            nombre: empleado.nombre,
+            rango: empleado.rango
+        }))
+        .sort((a, b) => b.id - a.id);
 
     res.json(empleados);
+});
 
+
+/* -------------------------
+   PRODUCTOS PÚBLICOS
+------------------------- */
+
+app.get("/api/productos-publicos", (req, res) => {
+
+    const productos = datos.productos.map(producto => ({
+        id: producto.id,
+        nombre: producto.nombre,
+        categoria: producto.categoria,
+        precio: producto.precio,
+        stock: producto.stock
+    }));
+
+    res.json(productos);
 });
 
 
@@ -349,10 +338,12 @@ app.listen(PORT, () => {
 
     console.log("");
     console.log("=================================");
-    console.log("   COMERCIO WEB");
+    console.log("      AMMUNATION CENTRAL");
     console.log("=================================");
     console.log("");
     console.log(`Servidor: http://localhost:${PORT}`);
     console.log("");
-
+    console.log("Usuario de prueba: admin");
+    console.log("Contraseña: admin123");
+    console.log("");
 });
