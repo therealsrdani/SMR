@@ -1,162 +1,75 @@
-const Database = require("better-sqlite3");
-const bcrypt = require("bcrypt");
 const fs = require("fs");
 const path = require("path");
+const bcrypt = require("bcryptjs");
 
+const dataDir = path.join(__dirname, "data");
+const dataFile = path.join(dataDir, "data.json");
 
-const dataFolder = path.join(__dirname, "data");
-
-
-if (!fs.existsSync(dataFolder)) {
-    fs.mkdirSync(dataFolder);
+if (!fs.existsSync(dataDir)) {
+    fs.mkdirSync(dataDir, { recursive: true });
 }
 
+let datos;
 
-const db = new Database(
-    path.join(dataFolder, "comercio.db")
-);
-
-
-/* -------------------------
-   TABLA EMPLEADOS
-------------------------- */
-
-db.prepare(`
-    CREATE TABLE IF NOT EXISTS empleados (
-
-        id INTEGER PRIMARY KEY AUTOINCREMENT,
-
-        usuario TEXT UNIQUE NOT NULL,
-
-        password TEXT NOT NULL,
-
-        nombre TEXT NOT NULL,
-
-        rango TEXT NOT NULL
-
-    )
-`).run();
-
-
-/* -------------------------
-   TABLA PRODUCTOS
-------------------------- */
-
-db.prepare(`
-    CREATE TABLE IF NOT EXISTS productos (
-
-        id INTEGER PRIMARY KEY AUTOINCREMENT,
-
-        nombre TEXT NOT NULL,
-
-        categoria TEXT,
-
-        precio REAL DEFAULT 0,
-
-        stock INTEGER DEFAULT 0
-
-    )
-`).run();
-
-
-/* -------------------------
-   TABLA FORMULARIOS
-------------------------- */
-
-db.prepare(`
-    CREATE TABLE IF NOT EXISTS formularios (
-
-        id INTEGER PRIMARY KEY AUTOINCREMENT,
-
-        tipo TEXT,
-
-        descripcion TEXT,
-
-        empleado TEXT,
-
-        fecha DATETIME DEFAULT CURRENT_TIMESTAMP
-
-    )
-`).run();
-
-
-/* -------------------------
-   EMPLEADO INICIAL
-------------------------- */
-
-const empleadoExistente = db
-    .prepare(
-        "SELECT id FROM empleados WHERE usuario = ?"
-    )
-    .get("admin");
-
-
-if (!empleadoExistente) {
-
-    const password = bcrypt.hashSync(
-        "admin123",
-        10
-    );
-
-
-    db.prepare(`
-        INSERT INTO empleados
-        (usuario, password, nombre, rango)
-        VALUES (?, ?, ?, ?)
-    `).run(
-        "admin",
-        password,
-        "Administrador",
-        "Gerente"
-    );
-
+function guardar() {
+    fs.writeFileSync(dataFile, JSON.stringify(datos, null, 2), "utf8");
 }
 
+function cargar() {
+    if (fs.existsSync(dataFile)) {
+        datos = JSON.parse(fs.readFileSync(dataFile, "utf8"));
+    } else {
+        datos = {
+            empleados: [],
+            productos: [],
+            formularios: []
+        };
+    }
 
-/* -------------------------
-   PRODUCTOS DE EJEMPLO
-------------------------- */
+    // Crear empleado inicial
+    if (datos.empleados.length === 0) {
+        datos.empleados.push({
+            id: 1,
+            usuario: "admin",
+            password: bcrypt.hashSync("admin123", 10),
+            nombre: "Administrador",
+            rango: "Gerente"
+        });
+    }
 
-const cantidadProductos = db
-    .prepare(
-        "SELECT COUNT(*) AS cantidad FROM productos"
-    )
-    .get();
+    // Crear productos iniciales
+    if (datos.productos.length === 0) {
+        datos.productos.push(
+            {
+                id: 1,
+                nombre: "Pistola",
+                categoria: "Armas",
+                precio: 500,
+                stock: 10
+            },
+            {
+                id: 2,
+                nombre: "Munición",
+                categoria: "Munición",
+                precio: 50,
+                stock: 100
+            },
+            {
+                id: 3,
+                nombre: "Chaleco",
+                categoria: "Protección",
+                precio: 300,
+                stock: 15
+            }
+        );
+    }
 
-
-if (cantidadProductos.cantidad === 0) {
-
-    const insertar = db.prepare(`
-        INSERT INTO productos
-        (nombre, categoria, precio, stock)
-        VALUES (?, ?, ?, ?)
-    `);
-
-
-    insertar.run(
-        "Producto 1",
-        "General",
-        100,
-        25
-    );
-
-
-    insertar.run(
-        "Producto 2",
-        "General",
-        50,
-        10
-    );
-
-
-    insertar.run(
-        "Producto 3",
-        "General",
-        75,
-        5
-    );
-
+    guardar();
 }
 
+cargar();
 
-module.exports = db;
+module.exports = {
+    datos,
+    guardar
+};
