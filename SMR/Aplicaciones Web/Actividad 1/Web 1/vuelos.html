@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formulario de reserva de vuelos</title>
+</head>
+<body>
+    <h1>Reserva de vuelo internacional</h1>
+    <form action="reserva.php" method="post">
+        <fieldset>
+            <legend>Datos del Pasajero</legend>
+
+            <p>
+                <label for="pnr">Código de Reserva (PNR):</label>
+                <input type="text" id="pnr" name="pnr" required minlength="6" maxlength="6"
+                    pattern="[A-Z0-9]{6}" title="Introduce exactamente 6 letras mayúsculas o números (por ejemplo, A3X9K2).">
+            </p>
+
+            <p>
+                <label for="documento">Pasaporte o DNI:</label>
+                <input type="text" id="documento" name="documento" required minlength="9" maxlength="9"
+                    pattern="[0-9]{8}[A-Z]" title="Introduce 8 números seguidos de una letra mayúscula (por ejemplo, 12345678Z).">
+            </p>
+        </fieldset>
+
+        <fieldset>
+            <legend>Detalles del Vuelo</legend>
+
+            <p>
+                <label for="origen">Aeropuerto de origen:</label>
+                <input type="text" id="origen" name="origen" list="aeropuertos" required>
+                <datalist id="aeropuertos">
+                    <option value="Adolfo Suárez Madrid-Barajas (MAD)">
+                    <option value="Barcelona-El Prat (BCN)">
+                    <option value="Aeropuerto de Málaga-Costa del Sol (AGP)">
+                    <option value="Aeropuerto de Palma de Mallorca (PMI)">
+                </datalist>
+            </p>
+
+            <p>
+                <label for="fecha_vuelo">Fecha de vuelo:</label>
+                <input type="date" id="fecha_vuelo" name="fecha_vuelo" required
+                    min="2026-10-01" max="2026-12-31">
+            </p>
+
+            <p>
+                <label for="asiento">Selección de asiento (fila y letra):</label>
+                <input type="text" id="asiento" name="asiento" required minlength="3" maxlength="3"
+                    pattern="(0[1-9]|[12][0-9]|30)[A-F]" placeholder="04A"
+                    title="Introduce una fila del 01 al 30 y una letra de la A a la F (por ejemplo, 04A).">
+            </p>
+
+            <p>
+                <label for="maletas">Maletas facturadas (0 a 3):</label>
+                <input type="range" id="maletas" name="maletas" min="0" max="3" step="1" value="1">
+            </p>
+
+            <p>
+                <label for="instrucciones">Instrucciones especiales:</label><br>
+                <textarea id="instrucciones" name="instrucciones" maxlength="200"
+                    placeholder="Escribe aquí cualquier instrucción especial (máximo 200 caracteres)."></textarea>
+            </p>
+        </fieldset>
+
+        <p><button type="submit">Reservar vuelo</button></p>
+    </form>
+</body>
+<style>
+    legend {
+        background-color: whitesmoke;
+}
+</style>
+</html>
