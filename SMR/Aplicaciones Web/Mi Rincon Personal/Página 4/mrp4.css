@@ -1,12 +1,34 @@
 :root {
-  --bg-body: #eef3ff;
-  --header-bg: #94a8d4;
-  --nav-bg: #f5d38a;
-  --content-bg: #c9f2f5;
-  --footer-bg: #f0c4a8;
-  --text-main: #1f2430;
-  --link: #1a1a4d;
-  --border-soft: rgba(31, 36, 48, 0.18);
+  --bg-body: #FCEAF2;
+
+  --header-bg: linear-gradient(
+    135deg,
+    #172A5E 0%,
+    #633D8F 45%,
+    #E05A8A 100%
+  );
+
+  --nav-bg: linear-gradient(
+    180deg,
+    #F05A8A 0%,
+    #B84F91 50%,
+    #6B4B9E 100%
+  );
+
+  --content-bg: #FFF0F5;
+
+  --footer-bg: linear-gradient(
+    90deg,
+    #FFAB00 0%,
+    #F06A8D 45%,
+    #75469A 100%
+  );
+
+  --text-main: #24203A;
+
+  --link: #FFAB00;
+
+  --border-soft: rgba(211, 75, 130, 0.30);
 }
 
 * {
@@ -77,4 +99,55 @@ body {
 
 .frame.pie {
   height: 70px;
+}
+
+.banner-gta6 {
+  width: 100%;
+  height: 150px;
+  overflow: hidden;
+  position: relative;
+
+  background: #172A5E;
+}
+
+.banner-gta6 img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+
+  display: block;
+
+  filter: brightness(0.75);
+}
+
+.banner-gta6-text {
+  position: absolute;
+
+  inset: 0;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  color: #FFFFFF;
+
+  text-align: center;
+
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.7);
+}
+
+.banner-gta6-text strong {
+  font-size: 2rem;
+  letter-spacing: 2px;
+}
+
+.banner-gta6-text span {
+  margin-top: 5px;
+
+  color: #FFAB00;
+
+  font-weight: bold;
+  letter-spacing: 3px;
 }
