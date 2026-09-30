@@ -59,6 +59,13 @@
                 <span>VICE CITY · LEONIDA</span>
             </div>
         </div>
-        <audio src="audio/gangsta_paradise.mp3" autoplay loop></audio>
+        <audio id="musica" src="audio/gangsta_paradise.mp3" loop></audio>
+            <script>
+                const musica = document.getElementById("musica");
+
+                document.addEventListener("click", () => {
+                    musica.play();
+                }, { once: true });
+            </script>
     </body>
 </html>
