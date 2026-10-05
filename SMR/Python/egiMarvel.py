@@ -30,5 +30,5 @@ resultados = {
 # Mostramos el resultado según las respuestas del usuario. Si no coincide con resultados sacará una frase default.
 print(resultados.get(
     (poder, cualidad, objetivo),
-    "Eres un gran agente del S.H.I.E.L.D.",
+    "Eres un agente del S.H.I.E.L.D. muy valiente.",
 ))
