@@ -218,6 +218,163 @@ body.iframe-contenido tr:hover td {
 
 }
 
+/* =========================
+   DISEÑO GTA VI
+========================= */
+
+body.gta-contenido,
+body.iframe-contenido {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: linear-gradient(135deg, #FFF0F5 0%, #F8E8F2 45%, #E8E9FF 100%);
+  color: #24203A;
+  padding: 18px;
+}
+
+.gta-hero {
+  background: linear-gradient(135deg, #172A5E 0%, #633D8F 45%, #E05A8A 100%);
+  color: #FFFFFF;
+  border-radius: 18px;
+  padding: 28px 22px;
+  text-align: center;
+  box-shadow: 0 10px 24px rgba(30, 14, 70, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  margin-bottom: 20px;
+}
+
+.gta-rockstar,
+.gta-localizacion {
+  display: block;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  font-size: 0.78rem;
+  font-weight: 700;
+  opacity: 0.9;
+}
+
+.gta-titulo {
+  margin: 14px 0 10px;
+  font-size: clamp(2rem, 4vw, 3rem);
+  letter-spacing: 2px;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.35);
+}
+
+.gta-card {
+  background: rgba(255, 255, 255, 0.8);
+  border: 1px solid rgba(211, 75, 130, 0.25);
+  border-radius: 14px;
+  padding: 18px 20px;
+  box-shadow: 0 8px 18px rgba(64, 34, 80, 0.08);
+  margin-bottom: 18px;
+}
+
+.gta-card-titulo {
+  margin: 0 0 12px;
+  color: #6A327F;
+  font-size: 1.6rem;
+}
+
+.gta-card-texto {
+  margin: 0;
+  font-size: 1rem;
+  line-height: 1.7;
+}
+
+.gta-destacado {
+  background: linear-gradient(90deg, #FFAB00 0%, #F06A8D 45%, #75469A 100%);
+  color: #FFFFFF;
+  border-radius: 14px;
+  padding: 18px 20px;
+  text-align: center;
+  margin-top: 18px;
+  box-shadow: 0 8px 20px rgba(83, 56, 122, 0.18);
+}
+
+.gta-destacado-label,
+.gta-destacado-subtitulo {
+  display: block;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  font-size: 0.72rem;
+  font-weight: 700;
+}
+
+.gta-destacado-titulo {
+  display: block;
+  font-size: clamp(1.5rem, 3vw, 2.5rem);
+  margin: 8px 0;
+}
+
+.gta-section {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 18px;
+  margin-top: 22px;
+}
+
+.gta-panel {
+  background: rgba(255, 255, 255, 0.8);
+  border: 1px solid rgba(211, 75, 130, 0.24);
+  border-radius: 14px;
+  padding: 18px;
+  box-shadow: 0 6px 16px rgba(64, 34, 80, 0.06);
+}
+
+.gta-panel h3 {
+  margin: 0 0 10px;
+  color: #6A327F;
+  font-size: 1.15rem;
+}
+
+.gta-panel p,
+.gta-panel li {
+  margin: 0;
+  line-height: 1.7;
+  color: #25213A;
+}
+
+.gta-panel ul {
+  padding-left: 18px;
+  margin: 0;
+}
+
+.gta-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 18px;
+  overflow: hidden;
+  border-radius: 12px;
+}
+
+.gta-table th,
+.gta-table td {
+  border: 1px solid #E1A1BD;
+  padding: 10px 12px;
+  text-align: left;
+  vertical-align: top;
+}
+
+.gta-table th {
+  background: linear-gradient(90deg, #6A3D8F, #C64F91);
+  color: #FFFFFF;
+  font-weight: 700;
+}
+
+.gta-table td {
+  background: rgba(255, 255, 255, 0.75);
+  color: #25213A;
+}
+
+.gta-mensaje {
+  margin-top: 16px;
+  padding: 14px 16px;
+  background: rgba(255, 171, 0, 0.12);
+  border-left: 4px solid #FFAB00;
+  border-radius: 8px;
+  font-weight: 700;
+  color: #542B59;
+}
+
 body.iframe-contenido a {
 
   color: #D34B82;
