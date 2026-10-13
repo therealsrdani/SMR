@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="es">
+    <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Grand Theft Auto VI</title>
+    <style>
+        :root {
+            --bg-body: #FCEAF2;
+            --header-bg: linear-gradient(135deg, #172A5E 0%, #633D8F 45%, #E05A8A 100%);
+            --nav-bg: linear-gradient(180deg, #F05A8A 0%, #B84F91 50%, #6B4B9E 100%);
+            --content-bg: #FFF0F5;
+            --footer-bg: linear-gradient(90deg, #FFAB00 0%, #F06A8D 45%, #75469A 100%);
+            --text-main: #24203A;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        html, body {
+            margin: 0;
+            padding: 0;
+            min-height: 100%;
+            font-family: Arial, Helvetica, sans-serif;
+            background: var(--bg-body);
+            color: var(--text-main);
+        }
+
+        body {
+            line-height: 1.5;
+        }
+
+        .layout {
+            width: 100%;
+            border-collapse: collapse;
+            table-layout: fixed;
+            border: 0;
+            margin: 0;
+            padding: 0;
+        }
+
+        .layout td {
+            padding: 0;
+            border: 0;
+            vertical-align: top;
+        }
+
+        .cabecera {
+            background: var(--header-bg);
+        }
+
+        .navegador {
+            background: var(--nav-bg);
+            width: 20%;
+        }
+
+        .contenido {
+            background: var(--content-bg);
+            width: 80%;
+        }
+
+        .pie {
+            background: var(--footer-bg);
+        }
+
+        .frame {
+            display: block;
+            width: 100%;
+            border: 0;
+            background: transparent;
+        }
+
+        .frame.cabecera {
+            height: 110px;
+        }
+
+        .frame.navegador,
+        .frame.contenido {
+            height: 420px;
+        }
+
+        .frame.pie {
+            height: 70px;
+        }
+
+        .banner-gta6 {
+            width: 100%;
+            height: 150px;
+            overflow: hidden;
+            position: relative;
+            background: #172A5E;
+        }
+
+        .banner-gta6 img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center;
+            display: block;
+            filter: brightness(0.75);
+        }
+
+        .banner-gta6-text {
+            position: absolute;
+            inset: 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            color: #FFFFFF;
+            text-align: center;
+            text-shadow: 0 2px 8px rgba(0, 0, 0, 0.7);
+        }
+
+        .banner-gta6-text strong {
+            font-size: 2rem;
+            letter-spacing: 2px;
+        }
+
+        .banner-gta6-text span {
+            margin-top: 5px;
+            color: #FFAB00;
+            font-weight: bold;
+            letter-spacing: 3px;
+        }
+    </style>
+    </head>
+    <body>
+        <table class="layout">
+            <tr>
+            <td colspan="2" class="cabecera">
+                <iframe class="frame cabecera" name="cabecera" srcdoc="
+                <style>
+                    body.iframe-cabecera {
+                        margin: 0;
+                        font-family: Arial, sans-serif;
+                        background: linear-gradient(135deg, #172A5E 0%, #6A3D8F 45%, #E05A8A 75%, #F28B5B 100%);
+                        color: #FFFFFF;
+                        text-align: center;
+                    }
+                    body.iframe-cabecera h1 {
+                        margin: 0 0 8px;
+                        font-size: 1.9rem;
+                        text-shadow: 0 2px 8px rgba(0, 0, 0, 0.35);
+                    }
+                    body.iframe-cabecera p {
+                        margin: 0;
+                        font-size: 1rem;
+                    }
+                </style>
+                <body class='iframe-cabecera'>
+                    <h1>Grand Theft Auto VI</h1>
+                    <p>Rockstar Games presents - Grand Theft Auto VI</p>
+                </body>
+                "></iframe>
+            </td>
+            </tr>
+
+            <tr>
+            <td class="navegador">
+                <iframe class="frame navegador" name="navegador" srcdoc="
+                <style>
+                    body.iframe-navegador {
+                        margin: 0;
+                        padding: 16px 10px;
+                        font-family: Arial, sans-serif;
+                        background: linear-gradient(180deg, #F05A8A 0%, #B84F91 45%, #6B4B9E 100%);
+                        color: #FFFFFF;
+                        text-align: center;
+                    }
+                    body.iframe-navegador h2 {
+                        margin: 0 0 16px;
+                        color: #FFFFFF;
+                        text-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+                    }
+                    body.iframe-navegador ul {
+                        list-style: none;
+                        padding: 0;
+                        margin: 0;
+                        display: flex;
+                        flex-direction: column;
+                        gap: 10px;
+                    }
+                    body.iframe-navegador li {
+                        margin: 0;
+                    }
+                    body.iframe-navegador a {
+                        display: block;
+                        padding: 10px 12px;
+                        background: #FFAB00;
+                        color: #111111;
+                        text-decoration: none;
+                        font-weight: 700;
+                        border-radius: 8px;
+                        box-shadow: 0 3px 8px rgba(0, 0, 0, 0.25);
+                        transition: background 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+                    }
+                    body.iframe-navegador a:hover {
+                        background: #FFFFFF;
+                        color: #B83F7F;
+                        text-decoration: none;
+                        transform: translateY(-2px);
+                        box-shadow: 0 5px 14px rgba(0, 0, 0, 0.3);
+                    }
+                </style>
+                <body class='iframe-navegador'>
+                    <h2>NAVEGADOR</h2>
+                    <ul>
+                        <li><a href='inicio.html' target='contenido'>Inicio</a></li>
+                        <li><a href='pagina2.html' target='contenido'>Development</a></li>
+                        <li><a href='pagina3.html' target='contenido'>Launcher</a></li>
+                        <li><a href='pagina4.html' target='contenido'>Date of publishment</a></li>
+                        <li><a href='pagina5.html' target='contenido'>DLCs</a></li>
+                    </ul>
+                </body>
+                "></iframe>
+            </td>
+            <td class="contenido">
+                <iframe class="frame contenido" name="contenido" src="inicio.html"></iframe>
+            </td>
+            </tr>
+
+            <tr>
+            <td colspan="2" class="pie">
+                <iframe class="frame pie" name="pie" srcdoc="
+                <style>
+                    body.iframe-pie {
+                        margin: 0;
+                        font-family: Arial, sans-serif;
+                        background: linear-gradient(90deg, #FFAB00 0%, #F06A8D 45%, #75469A 100%);
+                        color: #FFFFFF;
+                        text-align: center;
+                    }
+                    body.iframe-pie p {
+                        margin: 0;
+                        padding: 18px 10px;
+                        font-weight: 600;
+                        text-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);
+                    }
+                </style>
+                <body class='iframe-pie'>
+                    <p>Grand Theft Auto VI - © 2026 Rockstar Games</p>
+                </body>
+                "></iframe>
+            </td>
+            </tr>
+        </table>
+        <div class="banner-gta6">
+            <img src="img/gta6.gif" alt="Grand Theft Auto VI">
+            <div class="banner-gta6-text">
+                <strong>GRAND THEFT AUTO VI</strong>
+                <span>VICE CITY · LEONIDA</span>
+            </div>
+        </div>
+        <audio id="musica" src="audio/gangsta_paradise.mp3" autoplay loop></audio>
+    </body>
+</html>
