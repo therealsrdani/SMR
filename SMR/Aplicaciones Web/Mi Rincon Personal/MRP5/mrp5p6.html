@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Compra GTA VI</title>
+  <style>
+    body.gta-contenido {
+      margin: 0;
+      padding: 22px;
+      min-height: 420px;
+      font-family: Arial, Helvetica, sans-serif;
+      background: linear-gradient(135deg, #172A5E 0%, #4B3980 25%, #8E438E 50%, #D65389 72%, #F28B5B 100%);
+      color: #FFFFFF;
+    }
+
+    .gta-hero {
+      padding: 20px;
+      margin-bottom: 18px;
+      text-align: center;
+      border-radius: 14px;
+      background: linear-gradient(135deg, #172A5E 0%, #633D8F 42%, #C94D8D 72%, #E97861 100%);
+      color: #FFFFFF;
+      box-shadow: 0 6px 18px rgba(70, 35, 100, 0.30);
+      border: 1px solid rgba(255, 255, 255, 0.18);
+    }
+
+    .gta-rockstar,
+    .gta-localizacion {
+      display: block;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      font-size: 0.78rem;
+      font-weight: 700;
+      opacity: 0.9;
+    }
+
+    .gta-rockstar {
+      margin-bottom: 7px;
+      color: #FFAB00;
+      font-weight: 800;
+      letter-spacing: 4px;
+    }
+
+    .gta-titulo {
+      margin: 0;
+      font-size: 2rem;
+      font-weight: 800;
+      letter-spacing: 1px;
+      text-shadow: 0 2px 5px rgba(0, 0, 0, 0.35);
+    }
+
+    .gta-localizacion {
+      margin-top: 7px;
+      color: #FFE1EC;
+      font-weight: 600;
+    }
+
+    .gta-card {
+      padding: 20px;
+      margin-bottom: 18px;
+      background: rgba(255, 255, 255, 0.86);
+      border: 1px solid rgba(211, 75, 130, 0.25);
+      border-left: 5px solid #D94F8C;
+      border-radius: 14px;
+      box-shadow: 0 5px 18px rgba(80, 40, 110, 0.15);
+    }
+
+    .gta-card-titulo {
+      margin: 0 0 10px;
+      color: #633D8F;
+      font-size: 1.55rem;
+    }
+
+    .gta-card-texto {
+      margin: 0;
+      color: #25213A;
+      font-size: 1rem;
+      line-height: 1.6;
+    }
+
+    .compra-formulario {
+      margin: 0;
+    }
+
+    .compra-opciones {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+      gap: 14px;
+      margin: 0;
+      padding: 0;
+      border: 0;
+    }
+
+    .compra-opciones legend {
+      margin-bottom: 12px;
+      color: #633D8F;
+      font-size: 1.2rem;
+      font-weight: 700;
+    }
+
+    .compra-opcion {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      padding: 16px;
+      background: rgba(255, 255, 255, 0.9);
+      border: 2px solid #E1A1BD;
+      border-radius: 12px;
+      color: #25213A;
+      cursor: pointer;
+    }
+
+    .compra-opcion:has(input:checked) {
+      border-color: #C94D8D;
+      box-shadow: 0 0 0 2px rgba(201, 77, 141, 0.18);
+    }
+
+    .compra-opcion input {
+      margin-top: 4px;
+      accent-color: #8E438E;
+    }
+
+    .compra-opcion-texto {
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+    }
+
+    .compra-opcion strong {
+      color: #633D8F;
+    }
+
+    .compra-precio {
+      font-size: 1.2rem;
+      font-weight: 800;
+    }
+
+    .compra-boton {
+      margin-top: 18px;
+      padding: 12px 20px;
+      border: 0;
+      border-radius: 9px;
+      background: #FFAB00;
+      color: #25213A;
+      font-size: 1rem;
+      font-weight: 800;
+      cursor: pointer;
+      box-shadow: 0 3px 8px rgba(0, 0, 0, 0.2);
+    }
+
+    .compra-boton:hover {
+      background: #FFFFFF;
+      color: #B83F7F;
+    }
+
+    .compra-aviso {
+      margin: 12px 0 0;
+      color: #542B59;
+      font-size: 0.9rem;
+      line-height: 1.5;
+    }
+
+    @supports not selector(.compra-opcion:has(input:checked)) {
+      .compra-opcion:focus-within {
+        border-color: #C94D8D;
+        box-shadow: 0 0 0 2px rgba(201, 77, 141, 0.18);
+      }
+    }
+  </style>
+</head>
+<body class="gta-contenido">
+  <div class="gta-hero">
+    <span class="gta-rockstar">ROCKSTAR GAMES</span>
+    <h1 class="gta-titulo">COMPRA GTA VI</h1>
+    <span class="gta-localizacion">ELIGE TU EDICIÓN</span>
+  </div>
+
+  <div class="gta-card">
+    <h2 class="gta-card-titulo">Selecciona una edición</h2>
+    <p class="gta-card-texto">Elige la versión que prefieras y continúa para completar el pago mediante PayPal.</p>
+  </div>
+
+  <form class="gta-card compra-formulario" id="compra-formulario">
+    <fieldset class="compra-opciones">
+      <legend>Ediciones disponibles</legend>
+      <label class="compra-opcion">
+        <input type="radio" name="edicion" value="200" required>
+        <span class="compra-opcion-texto">
+          <strong>GTA VI Deluxe</strong>
+          <span>Edición Deluxe</span>
+          <span class="compra-precio">200 €</span>
+        </span>
+      </label>
+      <label class="compra-opcion">
+        <input type="radio" name="edicion" value="100" required>
+        <span class="compra-opcion-texto">
+          <strong>GTA VI normal</strong>
+          <span>Edición estándar</span>
+          <span class="compra-precio">100 €</span>
+        </span>
+      </label>
+      <label class="compra-opcion">
+        <input type="radio" name="edicion" value="150" required>
+        <span class="compra-opcion-texto">
+          <strong>GTA VI para PC</strong>
+          <span>Edición para ordenador</span>
+          <span class="compra-precio">150 €</span>
+        </span>
+      </label>
+    </fieldset>
+    <button class="compra-boton" type="submit">Continuar a PayPal</button>
+    <p class="compra-aviso">
+      Antes de publicar la página, sustituye <strong>https://www.paypal.me/TU_USUARIO</strong> por tu enlace de PayPal.Me.
+    </p>
+  </form>
+
+  <script>
+    const paypalUrl = "https://www.paypal.me/TU_USUARIO";
+    const compraFormulario = document.getElementById("compra-formulario");
+
+    compraFormulario.addEventListener("submit", function (evento) {
+      evento.preventDefault();
+      const edicion = compraFormulario.elements.edicion.value;
+      const enlacePago = `${paypalUrl}/${edicion}EUR`;
+      window.open(enlacePago, "_blank", "noopener,noreferrer");
+    });
+  </script>
+</body>
+</html>
