@@ -1,0 +1,36 @@
+body {
+    background-color: #0879e8;
+    color: white;
+    font-family: Arial;
+}
+
+h1 {
+    background-color: #008080;
+    color: white;
+    font-family: Verdana, Arial;
+    font-size: 50px;
+    text-align: center;
+    text-decoration: underline;
+}
+
+p {
+    font-family: Arial, Helvetica;
+}
+
+table {
+    border-spacing: 2px;
+    width: 300px;
+}
+
+td {
+    background-color: black;
+    color: white;
+    font-family: Verdana, Arial;
+    font-size: 13px;
+    text-align: center;
+}
+
+h1.prueba,
+h2.prueba {
+    display: none;
+}
