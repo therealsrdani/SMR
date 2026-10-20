@@ -1,0 +1,15 @@
+Para completar la tabla del ejercicio 7, lee lo siguiente sobre la pseudo clase :nth-child
+
+https://developer.mozilla.org/es/docs/Web/CSS/:nth-child
+
+Para evitar ver separación entre las cabeceras de la tabla usa:   
+
+--> border-collapse: collapse;
+
+Para el mensaje de abajo: 
+  * Debes usar las propiedades border-top, border-left...
+  * Añádele margen con la propiedad margin-left, margin-right...
+  * Para que tenga más relleno, usa la propiedad padding
+
+
+https://www.w3schools.com/css/css_border.asp

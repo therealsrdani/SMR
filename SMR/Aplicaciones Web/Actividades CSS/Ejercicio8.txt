@@ -1,0 +1,8 @@
+Ejercicio 8:
+
+- Usa las imágenes del simbolo_x y simbolo_circulo
+
+- Hay 3 tipos de tablas. Se deben de crear 3 clases para tablas, pero observa la última
+tabla.
+
+- La última tabla no tiene ningún estilo. Sólo <table align="center"> ... </table>
