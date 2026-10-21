@@ -3,55 +3,67 @@
 <head>
 	<title> EJERCICIO 3 </title>
 	<meta charset="UTF-8">
-	<!--Comentario-->
-<style>
-/*Lorem ipsum ejercicio
---> Título h1
---> ipsum subíndice azul
---> ejercicio superíndice verde
-*/
-
-/* Lorem ipsum clásico
---> color: #F60028
---> cursiva
-*/
-
-/*Párrafo naranja:
---> Margen (margin): todos los lados 50px salvo el izquierdo (5px)
---> Color de fondo: #FFCC99
---> Borde: 2 px sólido con color #FF9900;
-*/
-
-/*Primera barra horizontal
---> anchura: 50%
---> altura: 3px
---> color: #007BF6
-/*
-
-/*Párrafo con fondo negro y color amarillo:
---> Color de fondo negro
---> Color amarillo
---> Cursiva
-*/
-
-/*Párrafo centrado
---> Centrar texto
-*/
-
-/*Barra 2
---> anchura: 50%
---> altura: 3px
---> color: #6700F5
-*/
-
-/*Imagen
---> Centrada: margin, display
---> Altura: 150px
---> Anchura: 250px
-*/
-
-</style>
+	<style>
+		body {
+			margin: 5px;
+		}
+		h1 sub {
+			color: blue;
+		}
+		h1 sup {
+			color: #00e600;
+			font-style: italic;
+		}
+		h4 {
+			color: #F60028;
+			font-style: italic;
+		}
+		.parrafo-naranja {
+			margin: 0 0 15px;
+			padding: 50px 50px 50px 5px;
+			background-color: #FFCC99;
+			border: 2px solid #FF9900;
+		}
+		.barra-azul,
+		.barra-morada {
+			width: 50%;
+			height: 3px;
+			border: 0;
+		}
+		.barra-azul {
+			background-color: #007BF6;
+		}
+		.barra-morada {
+			background-color: #6700F5;
+		}
+		.pirata {
+			font-weight: bold;
+			font-style: italic;
+		}
+		.pirata span {
+			color: yellow;
+			background-color: black;
+		}
+		.centrado {
+			text-align: center;
+		}
+		.imagen-pirata {
+			display: block;
+			width: 250px;
+			height: 150px;
+			margin: 0 auto;
+		}
+	</style>
 </head>
 <body>
-
+	<h1>Lorem <sub>Ipsum</sub> <sup>ejercicios</sup></h1>
+	<h4>Lorem Ipsum clásico</h4>
+	<p class="parrafo-naranja">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur volutpat risus turpis. Nam elementum ornare nulla et dictum. Nullam laoreet hendrerit diam, id vulputate felis ultrices a. Phasellus luctus consectetur leo ut interdum. Duis pellentesque odio eget suscipit condimentum. Phasellus massa justo, convallis id risus eget, ullamcorper cursus neque.</p>
+	<hr class="barra-azul">
+	<h3>Yar Pirate Ipsum</h3>
+	<p class="pirata"><span>Prow scuttle parrel provost Sail ho shrouds spirits boom mizzenmast yardarm. Pinnace holystone mizzenmast quarter crow's nest nipperkin grog yardarm hempen halter furl. Swab barque interloper chantey doubloon starboard grog black jack gangway rutters.</span></p>
+	<p class="centrado">Deadlights jack lad schooner scallywag dance the hempen jig carouser broadside cable strike colors. Bring a spring upon her cable holystone blow the man down spanker Shiver me timbers to go on account lookout wherry doubloon chase. Belay yo-ho-ho keelhaul squiffy black spot yardarm spyglass sheet transom heave to.</p>
+	<img class="imagen-pirata" src="../img/barbanegra.jpg" alt="Ilustración del pirata Barbanegra">
+	<hr class="barra-morada">
+</body>
 </html>

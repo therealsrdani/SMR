@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Ejercicio 8</title>
+    <style>
+      body {
+        margin: 7px 4px;
+        font-family: "Times New Roman", Times, serif;
+      }
+
+      .tablas {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+      }
+
+      table {
+        border-collapse: collapse;
+      }
+
+      td {
+        width: 82px;
+        height: 84px;
+        padding: 0;
+        border: 1px solid #fff;
+        background-color: #ffbaba;
+        text-align: center;
+        vertical-align: middle;
+      }
+
+      td.ocupada {
+        background-color: #fff;
+      }
+
+      td.vacia {
+        background-color: #ffbaba;
+      }
+
+      td img {
+        display: block;
+        width: 80px;
+        height: 80px;
+      }
+
+      .tabla-morada {
+        border: 2px solid #bd32d4;
+      }
+
+      .tabla-morada td.vacia {
+        background-color: #efd6fc;
+      }
+
+      .tabla-verde {
+        border: 4px solid #59f500;
+      }
+
+      .tabla-cuadriculada {
+        border: 2px solid #001dff;
+        border-collapse: separate;
+        border-spacing: 2px;
+      }
+
+      .tabla-cuadriculada td {
+        border: 2px solid #19d44a;
+      }
+
+      .parrafo {
+        margin: 12px 0 28px;
+        border: 1px solid #bd32d4;
+        background-color: #ffd531;
+        text-align: center;
+        font-variant: small-caps;
+      }
+
+    </style>
+  </head>
+  <body>
+    <div class="tablas">
+      <table class="tabla-morada" aria-label="Tablero morado">
+        <tbody>
+          <tr>
+            <td class="ocupada"><img src="../img/simbolo_circulo.jpg" alt="Círculo" /></td>
+            <td class="vacia"></td>
+            <td class="ocupada"><img src="../img/simbolo_x.jpg" alt="Equis" /></td>
+          </tr>
+          <tr>
+            <td class="ocupada"><img src="../img/simbolo_circulo.jpg" alt="Círculo" /></td>
+            <td class="ocupada"><img src="../img/simbolo_x.jpg" alt="Equis" /></td>
+            <td class="vacia"></td>
+          </tr>
+          <tr>
+            <td class="ocupada"><img src="../img/simbolo_x.jpg" alt="Equis" /></td>
+            <td class="vacia"></td>
+            <td class="vacia"></td>
+          </tr>
+        </tbody>
+      </table>
+
+      <table class="tabla-verde" aria-label="Tablero verde">
+        <tbody>
+          <tr>
+            <td class="ocupada"><img src="../img/simbolo_circulo.jpg" alt="Círculo" /></td>
+            <td class="vacia"></td>
+            <td class="ocupada"><img src="../img/simbolo_x.jpg" alt="Equis" /></td>
+          </tr>
+          <tr>
+            <td class="ocupada"><img src="../img/simbolo_circulo.jpg" alt="Círculo" /></td>
+            <td class="ocupada"><img src="../img/simbolo_x.jpg" alt="Equis" /></td>
+            <td class="vacia"></td>
+          </tr>
+          <tr>
+            <td class="ocupada"><img src="../img/simbolo_circulo.jpg" alt="Círculo" /></td>
+            <td class="vacia"></td>
+            <td class="vacia"></td>
+          </tr>
+        </tbody>
+      </table>
+
+      <table class="tabla-cuadriculada" aria-label="Tablero con cuadrícula verde">
+        <tbody>
+          <tr>
+            <td class="ocupada"><img src="../img/simbolo_x.jpg" alt="Equis" /></td>
+            <td class="ocupada"><img src="../img/simbolo_x.jpg" alt="Equis" /></td>
+            <td class="ocupada"><img src="../img/simbolo_x.jpg" alt="Equis" /></td>
+          </tr>
+          <tr>
+            <td class="ocupada"><img src="../img/simbolo_x.jpg" alt="Equis" /></td>
+            <td class="ocupada"><img src="../img/simbolo_circulo.jpg" alt="Círculo" /></td>
+            <td class="ocupada"><img src="../img/simbolo_circulo.jpg" alt="Círculo" /></td>
+          </tr>
+          <tr>
+            <td class="ocupada"><img src="../img/simbolo_circulo.jpg" alt="Círculo" /></td>
+            <td class="ocupada"><img src="../img/simbolo_x.jpg" alt="Equis" /></td>
+            <td class="vacia"></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <p class="parrafo">PARRAFO CON UN ESTILO - PERTENECE A LA CLASE .parrafo</p>
+
+    <table align="center">
+      <tbody>
+        <tr>
+          <td class="ocupada"><img src="../img/simbolo_circulo.jpg" alt="Círculo" /></td>
+          <td class="vacia"></td>
+          <td class="ocupada"><img src="../img/simbolo_x.jpg" alt="Equis" /></td>
+        </tr>
+        <tr>
+          <td class="ocupada"><img src="../img/simbolo_circulo.jpg" alt="Círculo" /></td>
+          <td class="ocupada"><img src="../img/simbolo_x.jpg" alt="Equis" /></td>
+          <td class="vacia"></td>
+        </tr>
+        <tr>
+          <td class="ocupada"><img src="../img/simbolo_x.jpg" alt="Equis" /></td>
+          <td class="vacia"></td>
+          <td class="vacia"></td>
+        </tr>
+      </tbody>
+    </table>
+  </body>
+</html>

@@ -1,0 +1,31 @@
+body {
+    margin: 200px left;
+    background-color: #E2E2E2;
+}
+h1 {
+    margin: 300px right;
+    padding: 5px;
+    border: 5px solid red;
+    font-family: "Comic Sans MS";
+    text-align: center;
+    width: 900px;
+    margin: left auto;
+}
+h3 {
+    margin: 300px right;
+    text-align: right;
+    width: 1100px;
+}
+p {
+    padding: 10px top 10px bottom;
+    border: 10px solid blue;
+    background-color: #01ffff;
+}
+ul {
+    background-color: #af62f0;
+    border: 2px solid #01ffff;
+}
+li{
+    padding: 10px;
+    border: 2px solid #01ffff;
+}

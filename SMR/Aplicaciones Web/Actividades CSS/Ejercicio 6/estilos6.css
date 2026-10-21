@@ -1,0 +1,63 @@
+body {
+    margin: 10px;
+    font-family: "Times New Roman", Times, serif;
+}
+
+h1 {
+    margin: 24px 0;
+    color: blueviolet;
+    font-size: 32px;
+    text-align: center;
+}
+
+.introduccion {
+    display: grid;
+    grid-template-columns: 38% minmax(0, 1fr);
+    gap: 10px;
+    align-items: start;
+}
+
+.goku {
+    display: block;
+    width: 100%;
+    height: auto;
+}
+
+.texto p {
+    margin: 0 0 16px;
+}
+
+.texto hr {
+    width: 85%;
+    margin: 12px auto 0;
+}
+
+.personajes {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 20px;
+    margin-top: 16px;
+}
+
+.personajes img {
+    width: auto;
+    height: 220px;
+    max-width: 45%;
+    object-fit: contain;
+}
+
+@media (max-width: 700px) {
+    .introduccion {
+        grid-template-columns: 1fr;
+    }
+
+    .goku {
+        max-width: 100%;
+    }
+
+    .personajes img {
+        height: auto;
+        max-height: 220px;
+    }
+}

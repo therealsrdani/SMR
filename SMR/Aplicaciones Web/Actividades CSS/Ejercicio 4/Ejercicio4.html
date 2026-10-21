@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Ejercicio 4</title>
+    <style>
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        min-height: 100vh;
+        background: #fff;
+      }
+
+      h1 {
+        width: max-content;
+        margin: 18px auto;
+        padding-top: 2px;
+        color: #00f;
+        border-top: 3px solid #00f;
+        font-family: "Times New Roman", Times, serif;
+        font-size: 32px;
+        font-style: italic;
+        font-weight: bold;
+        line-height: 1.2;
+        text-align: center;
+        text-decoration: underline overline;
+      }
+
+      .layout {
+        display: grid;
+        grid-template-columns: repeat(3, max-content);
+        gap: 4px;
+        align-items: end;
+        justify-content: start;
+        margin: 0 8px;
+      }
+
+      .card {
+        width: max-content;
+        height: max-content;
+        background: #fff;
+      }
+
+      .card img {
+        display: block;
+        width: 288px;
+        height: 192px;
+      }
+
+      .gray {
+        padding: 48px;
+        border: 1px solid #777;
+      }
+
+      .dotted {
+        padding: 0 48px 48px;
+        border: 4px dotted #00f;
+      }
+
+      .purple {
+        padding: 48px 0 48px 48px;
+        border: 6px solid #8f2bbf;
+      }
+
+      .green {
+        padding: 48px 48px 0;
+        border: 6px solid #2ba866;
+      }
+
+      .orange {
+        padding: 48px 48px 48px 0;
+        border: 8px double #d9a929;
+      }
+
+      @media (max-width: 900px) {
+        .layout {
+          grid-template-columns: repeat(2, max-content);
+        }
+      }
+
+      @media (max-width: 640px) {
+        h1 {
+          font-size: 26px;
+        }
+
+        .layout {
+          grid-template-columns: max-content;
+          justify-content: center;
+        }
+
+        .card {
+          padding: 16px;
+        }
+
+        .card img {
+          width: min(288px, 72vw);
+          height: auto;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Ejercicio con padding y borders</h1>
+
+    <main class="layout">
+      <div class="card gray">
+        <img src="../img/goku.jpg" alt="Goku con su traje naranja" />
+      </div>
+      <div class="card dotted">
+        <img src="../img/goku.jpg" alt="Goku con su traje naranja" />
+      </div>
+      <div class="card purple">
+        <img src="../img/goku.jpg" alt="Goku con su traje naranja" />
+      </div>
+      <div class="card green">
+        <img src="../img/goku.jpg" alt="Goku con su traje naranja" />
+      </div>
+      <div class="card orange">
+        <img src="../img/goku.jpg" alt="Goku con su traje naranja" />
+      </div>
+    </main>
+  </body>
+</html>
