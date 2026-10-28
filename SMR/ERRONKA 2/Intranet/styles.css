@@ -760,6 +760,125 @@ p {
   font-size: 11px;
 }
 
+.request-tags {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 6px;
+}
+
+.status-en_revision {
+  background: #fff3d8;
+  color: #79550a;
+}
+
+.status-cerrada {
+  background: #f1f3f2;
+  color: #56635c;
+}
+
+.request-messages {
+  display: grid;
+  gap: 8px;
+  margin-top: 14px;
+  padding-top: 12px;
+  border-top: 1px solid var(--line);
+}
+
+.request-messages h4 {
+  margin: 0;
+  font-size: 13px;
+}
+
+.request-no-messages {
+  margin: 0;
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.request-message {
+  padding: 10px;
+  border-radius: 4px;
+  background: #f7f8f7;
+}
+
+.request-message strong,
+.request-message small {
+  display: block;
+  color: var(--muted);
+  font-size: 11px;
+}
+
+.request-message p {
+  margin: 6px 0;
+  font-size: 13px;
+  line-height: 1.5;
+  white-space: pre-wrap;
+}
+
+.request-message-form {
+  display: grid;
+  gap: 8px;
+  margin-top: 12px;
+}
+
+.request-message-form label {
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.request-message-form textarea {
+  width: 100%;
+  padding: 9px;
+  border: 1px solid #cbd5ce;
+  border-radius: 4px;
+  resize: vertical;
+}
+
+.request-message-form .button,
+.request-state-button {
+  justify-self: start;
+}
+
+.access-denied {
+  display: grid;
+  min-height: 55vh;
+  align-content: center;
+  justify-items: center;
+  padding: 30px;
+  background: #171d19;
+  color: #fff;
+  text-align: center;
+}
+
+.access-denied[hidden],
+#responses-content[hidden] {
+  display: none;
+}
+
+.access-denied p {
+  margin: 0 0 12px;
+  color: #f1a4a4;
+  font-size: 13px;
+  font-weight: 800;
+  letter-spacing: 0.22em;
+}
+
+.access-denied h1 {
+  max-width: 760px;
+  margin: 0;
+  color: #fff;
+  font-size: clamp(30px, 6vw, 64px);
+  font-weight: 900;
+  line-height: 1.05;
+  letter-spacing: 0.02em;
+}
+
+.access-denied span {
+  margin-top: 18px;
+  color: #c8d0ca;
+}
+
 .request-aside {
   display: grid;
   gap: 12px;

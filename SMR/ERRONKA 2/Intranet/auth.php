@@ -52,6 +52,14 @@ if (authenticated && window.self !== window.top) {
 
 if (authenticated && window.intranetUser) {
   const { name, role, roleKey, canManage } = window.intranetUser;
+  const isDirector = roleKey === "director";
+  const responsesContent = document.querySelector("#responses-content");
+  const responsesDenied = document.querySelector("#responses-denied");
+  if (responsesContent && responsesDenied) {
+    responsesContent.hidden = !isDirector;
+    responsesDenied.hidden = isDirector;
+  }
+
   document.querySelectorAll(".profile").forEach((profile) => {
     const nameElement = profile.querySelector(".profile-name");
     const avatar = profile.querySelector(".avatar");

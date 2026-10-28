@@ -6,9 +6,4 @@ if (($_SESSION['authenticated'] ?? false) !== true) {
     exit;
 }
 
-if (strtolower(trim((string) ($_SESSION['rol'] ?? ''))) !== 'director') {
-    http_response_code(403);
-    exit('Acceso restringido al rol Director.');
-}
-
 require __DIR__ . '/respuestas.html';

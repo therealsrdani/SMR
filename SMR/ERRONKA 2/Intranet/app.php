@@ -7,6 +7,12 @@ if (($_SESSION['authenticated'] ?? false) !== true) {
 }
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $csrfToken = $_POST['csrf-token'] ?? '';
+    if (!is_string($csrfToken) || !isset($_SESSION['csrf_token']) || !hash_equals($_SESSION['csrf_token'], $csrfToken)) {
+        http_response_code(403);
+        exit('La sesión del formulario ha caducado. Recarga la página e inténtalo de nuevo.');
+    }
+
     $requestType = $_POST['request-type'] ?? '';
     $startDate = $_POST['start-date'] ?? '';
     $endDate = $_POST['end-date'] ?? '';
@@ -21,7 +27,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         && $end >= $start;
     $validRequestType = is_string($requestType) && in_array($requestType, $allowedTypes, true);
 
-    if (!$validRequestType || !$validDates || !is_string($comments)) {
+    if (!$validRequestType || !$validDates || !is_string($comments) || strlen($comments) > 5000) {
         header('Location: solicitudes.html?request_error=1', true, 303);
         exit;
     }
@@ -51,6 +57,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     $employeeId = (int) ($_SESSION['user_id'] ?? 0);
     $username = (string) ($_SESSION['username'] ?? '');
+    if ($employeeId < 1 || $username === '') {
+        http_response_code(403);
+        exit('La sesión no contiene un usuario válido.');
+    }
     if (!$stmt->bind_param('isssss', $employeeId, $username, $requestType, $startDate, $endDate, $comments)) {
         http_response_code(500);
         exit('No se pudo preparar el guardado de la solicitud.');
@@ -73,6 +83,11 @@ if (leaveForm) {
   const startDate = document.querySelector("#start-date");
   const endDate = document.querySelector("#end-date");
   const message = document.querySelector("#request-message");
+  const csrfInput = document.createElement("input");
+  csrfInput.type = "hidden";
+  csrfInput.name = "csrf-token";
+  csrfInput.value = window.intranetUser.csrfToken;
+  leaveForm.append(csrfInput);
 
   const query = new URLSearchParams(window.location.search);
   if (query.has("request_submitted")) {
@@ -89,21 +104,182 @@ if (leaveForm) {
   });
 }
 
+const requestStatusLabels = {
+  enviada: "Enviada",
+  en_revision: "En revisión",
+  cerrada: "Cerrada"
+};
+const requestDateLabels = new Intl.DateTimeFormat("es", { day: "numeric", month: "long", year: "numeric" });
+
+function formatRequestDate(value) {
+  const [year, month, day] = value.split("-").map(Number);
+  return requestDateLabels.format(new Date(year, month - 1, day));
+}
+
+function createRequestCard(item, canManage) {
+  const card = document.createElement("article");
+  card.className = "card response-card";
+  const heading = document.createElement("div");
+  heading.className = "response-card-heading";
+  const title = document.createElement("h3");
+  title.textContent = item.usuario;
+  const tags = document.createElement("div");
+  tags.className = "request-tags";
+  const type = document.createElement("span");
+  type.className = "tag tag-green";
+  type.textContent = item.tipo;
+  const status = document.createElement("span");
+  status.className = `tag request-status status-${item.estado}`;
+  status.textContent = requestStatusLabels[item.estado] || item.estado;
+  tags.append(type, status);
+  heading.append(title, tags);
+
+  const dates = document.createElement("p");
+  dates.className = "response-dates";
+  dates.textContent = `${formatRequestDate(item.fecha_inicio)} – ${formatRequestDate(item.fecha_fin)}`;
+  const comments = document.createElement("p");
+  comments.className = "response-comments";
+  comments.textContent = item.comentarios || "Sin comentarios adicionales.";
+  const submitted = document.createElement("small");
+  submitted.className = "response-submitted";
+  submitted.textContent = `Enviada ${new Date(item.creada_en.replace(" ", "T")).toLocaleString("es")}`;
+  card.append(heading, dates, comments, submitted);
+
+  const messages = document.createElement("div");
+  messages.className = "request-messages";
+  const messagesTitle = document.createElement("h4");
+  messagesTitle.textContent = "Conversación";
+  messages.append(messagesTitle);
+  if (!item.mensajes.length) {
+    const emptyMessages = document.createElement("p");
+    emptyMessages.className = "request-no-messages";
+    emptyMessages.textContent = "Todavía no hay respuestas.";
+    messages.append(emptyMessages);
+  } else {
+    item.mensajes.forEach((entry) => {
+      const message = document.createElement("article");
+      message.className = "request-message";
+      const messageHeading = document.createElement("strong");
+      messageHeading.textContent = `${entry.autor} · ${entry.rol}`;
+      const content = document.createElement("p");
+      content.textContent = entry.mensaje;
+      const timestamp = document.createElement("small");
+      timestamp.textContent = new Date(entry.creada_en.replace(" ", "T")).toLocaleString("es");
+      message.append(messageHeading, content, timestamp);
+      messages.append(message);
+    });
+  }
+  card.append(messages);
+
+  if (canManage && item.estado !== "cerrada") {
+    const button = document.createElement("button");
+    button.className = "button button-secondary request-state-button";
+    button.type = "button";
+    button.dataset.requestStatus = item.estado === "enviada" ? "en_revision" : "cerrada";
+    button.dataset.requestId = item.id;
+    button.textContent = item.estado === "enviada" ? "Marcar en revisión" : "Cerrar solicitud";
+    card.append(button);
+  }
+
+  if (item.estado === "en_revision") {
+    const form = document.createElement("form");
+    form.className = "request-message-form";
+    form.dataset.requestId = item.id;
+    const label = document.createElement("label");
+    label.textContent = canManage ? "Responder al emisor" : "Enviar un mensaje";
+    const textarea = document.createElement("textarea");
+    textarea.name = "mensaje";
+    textarea.rows = 3;
+    textarea.maxLength = 2000;
+    textarea.required = true;
+    textarea.placeholder = "Escribe tu mensaje...";
+    const submit = document.createElement("button");
+    submit.className = "button button-primary";
+    submit.type = "submit";
+    submit.textContent = "Enviar mensaje";
+    form.append(label, textarea, submit);
+    card.append(form);
+  }
+  return card;
+}
+
+function setupRequestActions(container, messageElement, refresh) {
+  container.addEventListener("submit", async (event) => {
+    const form = event.target.closest(".request-message-form");
+    if (!form) return;
+    event.preventDefault();
+    const formData = new FormData(form);
+    await postRequestAction({
+      action: "message",
+      id: Number(form.dataset.requestId),
+      mensaje: formData.get("mensaje")
+    }, messageElement, refresh);
+  });
+
+  container.addEventListener("click", async (event) => {
+    const button = event.target.closest("[data-request-status]");
+    if (!button) return;
+    await postRequestAction({
+      action: "status",
+      id: Number(button.dataset.requestId),
+      estado: button.dataset.requestStatus
+    }, messageElement, refresh);
+  });
+}
+
+async function postRequestAction(data, messageElement, refresh) {
+  try {
+    const response = await fetch("api.php?resource=solicitudes", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "X-CSRF-Token": window.intranetUser.csrfToken
+      },
+      body: JSON.stringify(data)
+    });
+    const result = await response.json();
+    if (!response.ok) throw new Error(result.error || "No se pudo completar la acción.");
+    messageElement.textContent = result.message;
+    messageElement.removeAttribute("role");
+    await refresh();
+  } catch (error) {
+    messageElement.textContent = error.message;
+    messageElement.setAttribute("role", "alert");
+  }
+}
+
+const myRequestsList = document.querySelector("#my-requests-list");
+
+if (myRequestsList) {
+  const message = document.querySelector("#my-requests-message");
+  const emptyState = document.querySelector("#my-requests-empty");
+  const renderMyRequests = async () => {
+    try {
+      const response = await fetch("api.php?resource=solicitudes&scope=mine");
+      const result = await response.json();
+      if (!response.ok) throw new Error(result.error || "No se pudieron cargar tus solicitudes.");
+      myRequestsList.replaceChildren(...result.items.map((item) => createRequestCard(item, false)));
+      emptyState.hidden = result.items.length > 0;
+      message.textContent = "";
+      message.setAttribute("role", "status");
+    } catch (error) {
+      message.textContent = error.message;
+      message.setAttribute("role", "alert");
+      emptyState.hidden = true;
+    }
+  };
+  setupRequestActions(myRequestsList, message, renderMyRequests);
+  renderMyRequests();
+}
+
 const responseList = document.querySelector("#response-list");
 
-if (responseList) {
+if (responseList && window.intranetUser?.roleKey === "director") {
   const message = document.querySelector("#responses-message");
   const typeChart = document.querySelector("#type-chart");
   const monthChart = document.querySelector("#month-chart");
   const emptyState = document.querySelector("#responses-empty");
   const monthLabels = new Intl.DateTimeFormat("es", { month: "short" });
-  const dateLabels = new Intl.DateTimeFormat("es", { day: "numeric", month: "long", year: "numeric" });
-
-  const formatDate = (value) => {
-    const [year, month, day] = value.split("-").map(Number);
-    return dateLabels.format(new Date(year, month - 1, day));
-  };
-
   const createBar = (label, count, maximum) => {
     const row = document.createElement("div");
     row.className = "bar-chart-row";
@@ -162,36 +338,29 @@ if (responseList) {
 
     responseList.replaceChildren();
     items.forEach((item) => {
-      const card = document.createElement("article");
-      card.className = "card response-card";
-      const heading = document.createElement("div");
-      heading.className = "response-card-heading";
-      const employee = document.createElement("h3");
-      employee.textContent = item.usuario;
-      const type = document.createElement("span");
-      type.className = "tag tag-green";
-      type.textContent = item.tipo;
-      heading.append(employee, type);
-      const dates = document.createElement("p");
-      dates.className = "response-dates";
-      dates.textContent = `${formatDate(item.fecha_inicio)} – ${formatDate(item.fecha_fin)}`;
-      const comments = document.createElement("p");
-      comments.className = "response-comments";
-      comments.textContent = item.comentarios || "Sin comentarios adicionales.";
-      const submitted = document.createElement("small");
-      submitted.className = "response-submitted";
-      submitted.textContent = `Enviada ${new Date(item.creada_en.replace(" ", "T")).toLocaleString("es")}`;
-      card.append(heading, dates, comments, submitted);
-      responseList.append(card);
+      responseList.append(createRequestCard(item, true));
     });
     emptyState.hidden = items.length > 0;
   };
 
-  fetch("api.php?resource=solicitudes")
-    .then(async (response) => {
-      const result = await response.json();
-      if (!response.ok) throw new Error(result.error || "No se pudieron cargar las solicitudes.");
-      renderResponses(result.items);
+  const refreshResponses = async () => {
+    const response = await fetch("api.php?resource=solicitudes&scope=all");
+    const result = await response.json();
+    if (!response.ok) throw new Error(result.error || "No se pudieron cargar las solicitudes.");
+    renderResponses(result.items);
+  };
+
+  setupRequestActions(responseList, message, async () => {
+    try {
+      await refreshResponses();
+    } catch (error) {
+      message.textContent = error.message;
+      message.setAttribute("role", "alert");
+    }
+  });
+
+  refreshResponses()
+    .then(() => {
       message.textContent = "";
     })
     .catch((error) => {

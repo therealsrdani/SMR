@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#123b35">
+  <title>Mis solicitudes | Intranet</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar">
+      <a class="brand" href="index.html" aria-label="Intranet, inicio"><span class="brand-mark">I</span><span>[Empresa]<small>ESPACIO DE EQUIPO</small></span></a>
+      <p class="nav-caption">MENÚ PRINCIPAL</p>
+      <nav class="side-nav" aria-label="Navegación principal">
+        <a class="nav-link" href="index.html"><span class="nav-icon">⌂</span>Inicio</a>
+        <a class="nav-link" href="solicitudes.html"><span class="nav-icon">＋</span>Solicitudes</a>
+        <a class="nav-link active" href="mis-solicitudes.html" aria-current="page"><span class="nav-icon">☷</span>Mis solicitudes</a>
+        <a class="nav-link" href="respuestas.php" data-role-exact="Director"><span class="nav-icon">▤</span>Respuestas</a>
+        <a class="nav-link" href="horarios.html"><span class="nav-icon">▦</span>Horarios</a>
+        <a class="nav-link" href="productos.html"><span class="nav-icon">◇</span>Catálogo</a>
+      </nav>
+      <div class="sidebar-bottom"><div class="sidebar-help"><span class="help-icon">?</span><span>¿Necesitas ayuda?<small>Contacta con RR. HH.</small></span></div><a class="logout-link" href="logout.php">Cerrar sesión</a></div>
+    </aside>
+    <main class="main-area">
+      <header class="topbar"><div><p class="breadcrumb">INTRANET <span>/</span> MIS SOLICITUDES</p><p class="topbar-date">Seguimiento de tus peticiones</p></div><div class="profile"><span class="status-dot"></span><span class="avatar">EM</span><span class="profile-name">Nombre del empleado<small>Empleado</small></span></div></header>
+      <div class="page-content">
+        <section class="page-intro"><p class="eyebrow">SEGUIMIENTO</p><h1>Mis solicitudes</h1><p>Consulta el estado de tus peticiones y las respuestas de Dirección. Mientras estén en revisión, puedes enviar mensajes.</p></section>
+        <div class="section-heading"><div><p class="eyebrow">TU HISTORIAL</p><h2>Solicitudes enviadas</h2></div><a class="button button-primary" href="solicitudes.html">＋ Nueva solicitud</a></div>
+        <p id="my-requests-message" class="form-message" role="status" aria-live="polite">Cargando tus solicitudes...</p>
+        <div id="my-requests-list" class="response-list"></div>
+        <p id="my-requests-empty" class="card empty-state" hidden>Aún no has enviado ninguna solicitud.</p>
+        <footer class="page-footer">[Nombre de la empresa] · Intranet <span>Información interna</span></footer>
+      </div>
+    </main>
+  </div>
+  <script src="auth.php"></script>
+  <script src="app.php"></script>
+</body>
+</html>

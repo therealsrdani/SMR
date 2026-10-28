@@ -22,22 +22,31 @@ las direcciones de las imágenes por las fotografías que quieras utilizar.
 Páginas privadas:
 - portal.html: marco común con menú, encabezado y el iframe de contenido.
 - index.html: tablón de anuncios y accesos rápidos.
-- solicitudes.html: formulario de vacaciones y permisos.
-- respuestas.php y respuestas.html: acceso protegido y plantilla del panel gráfico de respuestas, solo para el rol Director.
+- solicitudes.html: formulario para crear solicitudes de vacaciones y permisos.
+- mis-solicitudes.html: historial, estado y conversación de las solicitudes propias.
+- respuestas.php y respuestas.html: panel de gestión para Director. Otros roles autenticados ven un aviso destacado de falta de permisos.
 - horarios.html: tabla de horarios por equipo.
 - productos.html: galería con búsqueda de productos y precios.
 - gestion.sql: tablas persistentes del catálogo y los horarios.
 
 La sesión de acceso y el formulario de solicitudes se gestionan en PHP. Para
-guardar las solicitudes, ejecuta solicitudes.sql en MySQL/MariaDB (crea la tabla
-solicitudes_ausencia dentro de la base empresa). El formulario guarda el ID y
-usuario de la sesión, el tipo, las fechas, los comentarios y la fecha de envío.
+guardar las solicitudes en una instalación nueva, ejecuta solicitudes.sql en
+MySQL/MariaDB. Si ya tenías creada la tabla solicitudes_ausencia con la versión
+anterior, ejecuta una sola vez actualizar_solicitudes.sql para añadir el estado
+y crear la tabla de mensajes.
+El formulario guarda el ID y usuario de la sesión, el tipo, las fechas, los
+comentarios y la fecha de envío. Las solicitudes empiezan como «Enviada»;
+Director puede pasarlas a «En revisión» y después «Cerrada». El emisor puede
+consultar el estado y la conversación en «Mis solicitudes». Solo cuando está
+en revisión el emisor y Director pueden enviar mensajes; las solicitudes
+enviadas o cerradas no aceptan mensajes.
+respuestas.php requiere una sesión iniciada y muestra el panel solo al rol
+exacto «Director»; el resto de los roles autenticados ve «NO TIENES PERMISOS
+PARA ACCEDER». La API valida los permisos independientemente de lo que muestre
+la interfaz. Director Ejecutivo y los demás roles no pueden gestionar ni
+consultar solicitudes ajenas.
 La conexión usa localhost, usuario root, contraseña vacía y base empresa;
-ajusta esos datos en app.php si tu instalación es diferente.
-Las respuestas se consultan en respuestas.php; el HTML del panel está separado
-en respuestas.html. La página y su API validan el acceso en el servidor y están
-limitadas al rol exacto «Director»; «Director Ejecutivo» y los demás roles no
-pueden consultar este registro.
+ajusta esos datos en app.php y api.php si tu instalación es diferente.
 
 Ejecuta también gestion.sql en MySQL/MariaDB para crear las tablas productos y
 horarios en la base empresa. Los datos se consultan desde la base de datos.

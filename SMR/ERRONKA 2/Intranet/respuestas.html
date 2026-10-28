@@ -15,6 +15,7 @@
       <nav class="side-nav" aria-label="Navegación principal">
         <a class="nav-link" href="index.html"><span class="nav-icon">⌂</span>Inicio</a>
         <a class="nav-link" href="solicitudes.html"><span class="nav-icon">＋</span>Solicitudes</a>
+        <a class="nav-link" href="mis-solicitudes.html"><span class="nav-icon">☷</span>Mis solicitudes</a>
         <a class="nav-link active" href="respuestas.php" aria-current="page" data-role-exact="Director"><span class="nav-icon">▤</span>Respuestas</a>
         <a class="nav-link" href="horarios.html"><span class="nav-icon">▦</span>Horarios</a>
         <a class="nav-link" href="productos.html"><span class="nav-icon">◇</span>Catálogo</a>
@@ -23,7 +24,12 @@
     </aside>
     <main class="main-area">
       <header class="topbar"><div><p class="breadcrumb">INTRANET <span>/</span> RESPUESTAS</p><p class="topbar-date">Panel privado de Dirección</p></div><div class="profile"><span class="status-dot"></span><span class="avatar">D</span><span class="profile-name">Director<small>Director</small></span></div></header>
-      <div class="page-content">
+      <section id="responses-denied" class="access-denied" role="alert" hidden>
+        <p>ACCESO RESTRINGIDO</p>
+        <h1>NO TIENES PERMISOS PARA ACCEDER</h1>
+        <span>Esta sección está reservada al rango Director.</span>
+      </section>
+      <div id="responses-content" class="page-content" hidden>
         <section class="page-intro"><p class="eyebrow">GESTIÓN DE PERSONAS</p><h1>Respuestas del formulario</h1><p>Consulta de forma visual las solicitudes de vacaciones y permisos enviadas por el equipo.</p></section>
         <p id="responses-message" class="form-message" role="status" aria-live="polite">Cargando las respuestas...</p>
         <section class="response-metrics" aria-label="Resumen de solicitudes">
