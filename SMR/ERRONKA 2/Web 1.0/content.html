@@ -16,6 +16,10 @@
       font-family: Arial, Helvetica, sans-serif;
     }
 
+    h1 {
+      text-align: center;
+    }
+
     .frame-page {
       overflow: auto;
     }
@@ -30,33 +34,134 @@
       color: #102b32;
     }
 
-    .site-content h1 {
-      margin: 0 0 1rem;
-      text-align: center;
-      font-size: clamp(2.5rem, 8vw, 4rem);
-      font-weight: 500;
-    }
-
     .site-content section {
       max-width: 48rem;
-      margin: 2.5rem auto 0;
-      padding-top: 1rem;
-      border-top: 1px solid rgb(16 43 50 / 25%);
+      margin: 0 auto 1.5rem;
+      padding: clamp(1.25rem, 4vw, 2rem);
+      border-left: 5px solid #348c91;
+      border-radius: 0.75rem;
+      background: rgb(255 255 255 / 78%);
+      box-shadow: 0 0.5rem 1.5rem rgb(16 43 50 / 10%);
+    }
+
+    .site-content h1,
+    .site-content h2 {
+      margin: 0 0 0.75rem;
+    }
+
+    .site-content h1 {
+      font-size: clamp(2rem, 6vw, 3rem);
+      font-weight: 600;
+    }
+
+    .site-content h2 {
+      font-size: clamp(1.5rem, 4vw, 2rem);
+    }
+
+    .site-content p {
+      margin: 0;
+      line-height: 1.65;
+    }
+
+    #proiektua {
+      border-left-color: #db9b36;
+    }
+
+    #kontaktua {
+      border-left-color: #5484ba;
+    }
+
+    #acceso {
+      border-left-color: #739c5a;
+    }
+
+    .employee-access > p {
+      margin-bottom: 1rem;
+      color: #52656a;
+    }
+
+    .login-field {
+      display: grid;
+      gap: 0.4rem;
+      margin-top: 1rem;
+    }
+
+    .login-field label {
+      font-size: 0.9rem;
+      font-weight: 700;
+    }
+
+    .login-field input {
+      width: 100%;
+      min-height: 2.7rem;
+      padding: 0.65rem 0.75rem;
+      border: 1px solid #9ab5b7;
+      border-radius: 0.35rem;
+      font: inherit;
+    }
+
+    .login-field input:focus {
+      outline: 3px solid rgb(50 100 155 / 25%);
+      border-color: #32649b;
+    }
+
+    .login-button {
+      min-height: 2.8rem;
+      margin-top: 1.25rem;
+      padding: 0 1rem;
+      border: 0;
+      border-radius: 0.35rem;
+      background: #253f61;
+      color: #fff;
+      cursor: pointer;
+      font: inherit;
+      font-weight: 700;
+    }
+
+    .login-button:hover {
+      background: #172f4d;
+    }
+
+    .login-message {
+      min-height: 1.25em;
+      margin-bottom: 0;
+      color: #a42626;
+      font-size: 0.9rem;
     }
   </style>
 </head>
 <body class="frame-page content-page">
   <main class="site-content">
-    <h1>CONTENIDO</h1>
-    <p hidden>Contenido principal.</p>
-    <section hidden id="proiektua">
-      <h2 hidden>PROYECTO</h2>
-      <p hidden>Información sobre el proyecto.</p>
+    <section id="inicio" aria-labelledby="home-title">
+      <h1> CONTENIDO </h1>
+      <h1 hidden id="home-title">PORTAL DE EMPRESA</h1>
+      <p hidden>Bienvenido/a al portal de la empresa. Utiliza el menú de navegación para consultar cada sección.</p>
     </section>
-    <section hidden id="kontaktua">
-      <h2 hidden>CONTACTO</h2>
-      <p hidden>Información de contacto.</p>
+    <section id="proiektua" aria-labelledby="project-title">
+      <h2 id="project-title">PROYECTO</h2>
+      <p>En esta sección encontrarás información sobre el proyecto y sus objetivos.</p>
+    </section>
+    <section id="kontaktua" aria-labelledby="contact-title">
+      <h2 id="contact-title">CONTACTO</h2>
+      <p>Para cualquier consulta relacionada con la empresa, contacta con el área responsable.</p>
+    </section>
+    <section class="employee-access" id="acceso" aria-labelledby="access-title">
+      <h2 id="access-title">ACCESO DE EMPLEADOS</h2>
+      <p>Introduce tu usuario y contraseña para entrar en el espacio privado de la empresa.</p>
+      <form id="login-form">
+        <div class="login-field">
+          <label for="username">Usuario</label>
+          <input id="username" name="username" type="text" autocomplete="username" required>
+        </div>
+        <div class="login-field">
+          <label for="password">Contraseña</label>
+          <input id="password" name="password" type="password" autocomplete="current-password" required>
+        </div>
+        <button class="login-button" type="submit">Entrar en la intranet</button>
+        <p id="login-message" class="login-message" role="status" aria-live="polite"></p>
+      </form>
     </section>
   </main>
+  <script src="login.js"></script>
 </body>
 </html>

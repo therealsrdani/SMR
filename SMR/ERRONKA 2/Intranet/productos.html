@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#123b35">
+  <title>Catálogo de productos | Intranet</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar">
+      <a class="brand" href="index.html" aria-label="Intranet, inicio"><span class="brand-mark">I</span><span>[Empresa]<small>ESPACIO DE EQUIPO</small></span></a>
+      <p class="nav-caption">MENÚ PRINCIPAL</p>
+      <nav class="side-nav" aria-label="Navegación principal">
+        <a class="nav-link" href="index.html"><span class="nav-icon">⌂</span>Inicio</a>
+        <a class="nav-link" href="solicitudes.html"><span class="nav-icon">＋</span>Solicitudes</a>
+        <a class="nav-link" href="horarios.html"><span class="nav-icon">▦</span>Horarios</a>
+        <a class="nav-link active" href="productos.html" aria-current="page"><span class="nav-icon">◇</span>Catálogo</a>
+      </nav>
+      <div class="sidebar-bottom"><div class="sidebar-help"><span class="help-icon">?</span><span>¿Necesitas ayuda?<small>Contacta con RR. HH.</small></span></div><a class="logout-link" data-logout href="../Web 1.0/index.html">Cerrar sesión</a></div>
+    </aside>
+    <main class="main-area">
+      <header class="topbar"><div><p class="breadcrumb">INTRANET <span>/</span> CATÁLOGO</p><p class="topbar-date">Espacio privado para el equipo</p></div><div class="profile"><span class="status-dot"></span><span class="avatar">EM</span><span class="profile-name">Nombre del empleado<small>Empleado</small></span></div></header>
+      <div class="page-content">
+        <section class="page-intro"><p class="eyebrow">CATÁLOGO INTERNO</p><h1>Productos y precios</h1><p>Sustituye los ejemplos por los productos, imágenes y precios de la empresa.</p></section>
+        <section class="catalog-toolbar" aria-label="Filtros del catálogo">
+          <div><p class="eyebrow">CATÁLOGO INTERNO</p><p class="catalog-count" id="catalog-count">6 productos</p></div>
+          <label class="search-box"><span aria-hidden="true">⌕</span><span class="visually-hidden">Buscar producto</span><input id="product-search" type="search" placeholder="Buscar productos..." autocomplete="off"></label>
+        </section>
+        <section class="product-grid" id="product-grid" aria-label="Galería de productos">
+          <article class="product-card" data-name="producto 1"><div class="product-image"><img src="https://images.unsplash.com/photo-1553062407-98eeb64c6a62?auto=format&amp;fit=crop&amp;w=800&amp;q=85" alt="Imagen de referencia del producto 1" loading="lazy"><span class="product-category">[Categoría]</span></div><div class="product-info"><h2>[Nombre del producto 1]</h2><p>[Descripción del producto]</p><div class="product-bottom"><span class="product-price">[Precio] €</span><span class="stock-label">[Disponibilidad]</span></div></div></article>
+          <article class="product-card" data-name="producto 2"><div class="product-image"><img src="https://images.unsplash.com/photo-1602143407151-7111542de6e8?auto=format&amp;fit=crop&amp;w=800&amp;q=85" alt="Imagen de referencia del producto 2" loading="lazy"><span class="product-category">[Categoría]</span></div><div class="product-info"><h2>[Nombre del producto 2]</h2><p>[Descripción del producto]</p><div class="product-bottom"><span class="product-price">[Precio] €</span><span class="stock-label">[Disponibilidad]</span></div></div></article>
+          <article class="product-card" data-name="producto 3"><div class="product-image"><img src="https://images.unsplash.com/photo-1531346878377-a5be20888e57?auto=format&amp;fit=crop&amp;w=800&amp;q=85" alt="Imagen de referencia del producto 3" loading="lazy"><span class="product-category">[Categoría]</span></div><div class="product-info"><h2>[Nombre del producto 3]</h2><p>[Descripción del producto]</p><div class="product-bottom"><span class="product-price">[Precio] €</span><span class="stock-label">[Disponibilidad]</span></div></div></article>
+          <article class="product-card" data-name="producto 4"><div class="product-image"><img src="https://images.unsplash.com/photo-1514228742587-6b1558fcca3d?auto=format&amp;fit=crop&amp;w=800&amp;q=85" alt="Imagen de referencia del producto 4" loading="lazy"><span class="product-category">[Categoría]</span></div><div class="product-info"><h2>[Nombre del producto 4]</h2><p>[Descripción del producto]</p><div class="product-bottom"><span class="product-price">[Precio] €</span><span class="stock-label">[Disponibilidad]</span></div></div></article>
+          <article class="product-card" data-name="producto 5"><div class="product-image"><img src="https://images.unsplash.com/photo-1556821840-3a63f95609a7?auto=format&amp;fit=crop&amp;w=800&amp;q=85" alt="Imagen de referencia del producto 5" loading="lazy"><span class="product-category">[Categoría]</span></div><div class="product-info"><h2>[Nombre del producto 5]</h2><p>[Descripción del producto]</p><div class="product-bottom"><span class="product-price">[Precio] €</span><span class="stock-label">[Disponibilidad]</span></div></div></article>
+          <article class="product-card" data-name="producto 6"><div class="product-image"><img src="https://images.unsplash.com/photo-1590874103328-eac38a683ce7?auto=format&amp;fit=crop&amp;w=800&amp;q=85" alt="Imagen de referencia del producto 6" loading="lazy"><span class="product-category">[Categoría]</span></div><div class="product-info"><h2>[Nombre del producto 6]</h2><p>[Descripción del producto]</p><div class="product-bottom"><span class="product-price">[Precio] €</span><span class="stock-label">[Disponibilidad]</span></div></div></article>
+          <p class="empty-state" id="empty-state" hidden>No hay productos que coincidan con la búsqueda.</p>
+        </section>
+        <p class="catalog-note">[Añade aquí las condiciones de precios o disponibilidad.]</p>
+        <footer class="page-footer">[Nombre de la empresa] · Intranet <span>Información interna</span></footer>
+      </div>
+    </main>
+  </div>
+  <script src="auth.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#123b35">
+  <title>Horarios | Intranet</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar">
+      <a class="brand" href="index.html" aria-label="Intranet, inicio"><span class="brand-mark">I</span><span>[Empresa]<small>ESPACIO DE EQUIPO</small></span></a>
+      <p class="nav-caption">MENÚ PRINCIPAL</p>
+      <nav class="side-nav" aria-label="Navegación principal">
+        <a class="nav-link" href="index.html"><span class="nav-icon">⌂</span>Inicio</a>
+        <a class="nav-link" href="solicitudes.html"><span class="nav-icon">＋</span>Solicitudes</a>
+        <a class="nav-link active" href="horarios.html" aria-current="page"><span class="nav-icon">▦</span>Horarios</a>
+        <a class="nav-link" href="productos.html"><span class="nav-icon">◇</span>Catálogo</a>
+      </nav>
+      <div class="sidebar-bottom"><div class="sidebar-help"><span class="help-icon">?</span><span>¿Necesitas ayuda?<small>Contacta con RR. HH.</small></span></div><a class="logout-link" data-logout href="../Web 1.0/index.html">Cerrar sesión</a></div>
+    </aside>
+    <main class="main-area">
+      <header class="topbar"><div><p class="breadcrumb">INTRANET <span>/</span> HORARIOS</p><p class="topbar-date">Espacio privado para el equipo</p></div><div class="profile"><span class="status-dot"></span><span class="avatar">EM</span><span class="profile-name">Nombre del empleado<small>Empleado</small></span></div></header>
+      <div class="page-content">
+        <section class="page-intro"><p class="eyebrow">ORGANIZACIÓN DEL EQUIPO</p><h1>Horarios de trabajo</h1><p>Consulta la jornada y los turnos de los equipos. Sustituye los campos entre corchetes por la información de la empresa.</p></section>
+        <section class="card schedule-card">
+          <div class="schedule-heading"><div><h2>Jornada semanal por equipo</h2><p>[Periodo o vigencia del horario]</p></div><span class="tag tag-green">EDITAR</span></div>
+          <div class="table-wrap">
+            <table class="data-table">
+              <thead><tr><th scope="col">Equipo</th><th scope="col">Lunes - jueves</th><th scope="col">Viernes</th><th scope="col">Modalidad</th><th scope="col">Responsable</th></tr></thead>
+              <tbody>
+                <tr><th scope="row"><span class="team-cell"><span class="team-dot dot-green"></span>[Equipo 1]</span></th><td>[Horario]</td><td>[Horario]</td><td><span class="work-mode">[Modalidad]</span></td><td>[Responsable]</td></tr>
+                <tr><th scope="row"><span class="team-cell"><span class="team-dot dot-blue"></span>[Equipo 2]</span></th><td>[Horario]</td><td>[Horario]</td><td><span class="work-mode mode-hybrid">[Modalidad]</span></td><td>[Responsable]</td></tr>
+                <tr><th scope="row"><span class="team-cell"><span class="team-dot dot-amber"></span>[Equipo 3]</span></th><td>[Horario]</td><td>[Horario]</td><td><span class="work-mode">[Modalidad]</span></td><td>[Responsable]</td></tr>
+                <tr><th scope="row"><span class="team-cell"><span class="team-dot dot-violet"></span>[Equipo 4]</span></th><td>[Horario]</td><td>[Horario]</td><td><span class="work-mode mode-shift">[Modalidad]</span></td><td>[Responsable]</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <p class="table-note"><span class="note-mark">i</span>[Añade aquí una aclaración sobre los horarios o los turnos.]</p>
+        </section>
+        <footer class="page-footer">[Nombre de la empresa] · Intranet <span>Información interna</span></footer>
+      </div>
+    </main>
+  </div>
+  <script src="auth.js"></script>
+</body>
+</html>

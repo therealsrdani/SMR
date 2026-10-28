@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#123b35">
+  <title>Solicitudes | Intranet</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar">
+      <a class="brand" href="index.html" aria-label="Intranet, inicio"><span class="brand-mark">I</span><span>[Empresa]<small>ESPACIO DE EQUIPO</small></span></a>
+      <p class="nav-caption">MENÚ PRINCIPAL</p>
+      <nav class="side-nav" aria-label="Navegación principal">
+        <a class="nav-link" href="index.html"><span class="nav-icon">⌂</span>Inicio</a>
+        <a class="nav-link active" href="solicitudes.html" aria-current="page"><span class="nav-icon">＋</span>Solicitudes</a>
+        <a class="nav-link" href="horarios.html"><span class="nav-icon">▦</span>Horarios</a>
+        <a class="nav-link" href="productos.html"><span class="nav-icon">◇</span>Catálogo</a>
+      </nav>
+      <div class="sidebar-bottom"><div class="sidebar-help"><span class="help-icon">?</span><span>¿Necesitas ayuda?<small>Contacta con RR. HH.</small></span></div><a class="logout-link" data-logout href="../Web 1.0/index.html">Cerrar sesión</a></div>
+    </aside>
+    <main class="main-area">
+      <header class="topbar"><div><p class="breadcrumb">INTRANET <span>/</span> SOLICITUDES</p><p class="topbar-date">Espacio privado para el equipo</p></div><div class="profile"><span class="status-dot"></span><span class="avatar">EM</span><span class="profile-name">Nombre del empleado<small>Empleado</small></span></div></header>
+      <div class="page-content">
+        <section class="page-intro"><p class="eyebrow">RECURSOS HUMANOS</p><h1>Solicitudes de ausencia</h1><p>Solicita vacaciones o permisos para que Recursos Humanos pueda revisar la petición.</p></section>
+        <div class="request-layout">
+          <section class="card form-card">
+            <div class="card-heading"><span class="form-icon">＋</span><div><h2>Nueva solicitud</h2><p>Completa los datos de tu petición.</p></div></div>
+            <form id="leave-form" class="leave-form">
+              <div class="field"><label for="request-type">Tipo de solicitud <span>*</span></label><select id="request-type" name="request-type" required><option value="">Selecciona una opción</option><option>Vacaciones</option><option>Asunto propio</option><option>Permiso retribuido</option><option>Otro permiso</option></select></div>
+              <div class="field-row"><div class="field"><label for="start-date">Fecha de inicio <span>*</span></label><input id="start-date" name="start-date" type="date" required></div><div class="field"><label for="end-date">Fecha de fin <span>*</span></label><input id="end-date" name="end-date" type="date" required></div></div>
+              <div class="field"><label for="comments">Comentarios <small>(opcional)</small></label><textarea id="comments" name="comments" rows="4" placeholder="Añade cualquier detalle que debamos conocer"></textarea></div>
+              <div class="form-actions"><p>Los campos marcados con <span>*</span> son obligatorios.</p><button class="button button-primary" type="submit">Enviar solicitud <span aria-hidden="true">→</span></button></div>
+              <p id="request-message" class="form-message" role="status" aria-live="polite"></p>
+            </form>
+          </section>
+          <aside class="request-aside">
+            <section class="card info-card"><span class="info-icon">i</span><h2>¿Qué ocurre después?</h2><ol class="steps"><li><span>1</span><p>Recursos Humanos revisará la solicitud.</p></li><li><span>2</span><p>Se comprobará la disponibilidad con la persona responsable.</p></li><li><span>3</span><p>Recibirás una respuesta por el canal habitual de la empresa.</p></li></ol></section>
+            <section class="card balance-card"><p class="eyebrow">RECUERDA</p><h2>Planifica con tiempo</h2><p>Envía tu solicitud con la antelación indicada por la empresa.</p></section>
+          </aside>
+        </div>
+        <footer class="page-footer">[Nombre de la empresa] · Intranet <span>Información interna</span></footer>
+      </div>
+    </main>
+  </div>
+  <script src="auth.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

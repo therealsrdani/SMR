@@ -27,18 +27,24 @@
     .site-navigation {
       display: flex;
       min-height: 100%;
-      flex-direction: column;
+      align-items: center;
       justify-content: center;
-      gap: 0.5rem;
-      padding: 1.25rem;
-      border-right: 2px solid #171717;
+      flex-wrap: wrap;
+      gap: 0.5rem 1rem;
+      padding: 0.5rem 1rem;
+      border-bottom: 2px solid #171717;
+    }
+
+    .site-navigation h1 {
+      margin: 0 0.5rem 0 0;
+      font-size: 1rem;
     }
 
     .site-navigation a {
-      padding: 0.8rem 0.7rem;
+      padding: 0.65rem 0.85rem;
       border-radius: 0.35rem;
       color: #172033;
-      font-size: 1.05rem;
+      font-size: 1rem;
       text-decoration: none;
     }
 
@@ -50,27 +56,30 @@
 
     @media (max-width: 620px) {
       .site-navigation {
-        flex-direction: row;
-        flex-wrap: wrap;
-        align-items: center;
-        justify-content: center;
-        padding: 0.6rem;
-        border-right: 0;
-        border-bottom: 2px solid #171717;
+        gap: 0.25rem;
+        padding: 0.45rem;
       }
 
       .site-navigation a {
-        padding: 0.65rem;
+        padding: 0.55rem 0.65rem;
+        font-size: 0.9rem;
+      }
+
+      .site-navigation h1 {
+        width: 100%;
+        margin: 0;
+        text-align: center;
       }
     }
   </style>
 </head>
 <body class="frame-page navigation-page">
   <nav class="site-navigation" aria-label="Nabigazio menua">
-    <h1> NAVEGACIÓN </h1>
-    <a hidden href="content.html" target="contenido">Inicio</a><br>
-    <a hidden href="content.html#proiektua" target="contenido">Proyecto</a><br>
-    <a hidden href="content.html#kontaktua" target="contenido">Contacto</a><br>
+    <h1>NAVEGACIÓN</h1>
+    <a hidden href="content.html#inicio" target="contenido">Inicio</a>
+    <a hidden href="content.html#proiektua" target="contenido">Proyecto</a>
+    <a hidden href="content.html#kontaktua" target="contenido">Contacto</a>
+    <a hidden href="content.html#acceso" target="contenido">Acceso de empleados</a>
   </nav>
 </body>
 </html>
