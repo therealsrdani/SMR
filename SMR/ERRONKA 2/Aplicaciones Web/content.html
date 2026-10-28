@@ -3,19 +3,59 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="styles.css">
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    html,
+    body {
+      width: 100%;
+      height: 100%;
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+    }
+
+    .frame-page {
+      overflow: auto;
+    }
+
+    .content-page {
+      background: #c9fbfa;
+    }
+
+    .site-content {
+      min-height: 100%;
+      padding: clamp(1.5rem, 5vw, 3.5rem);
+      color: #102b32;
+    }
+
+    .site-content h1 {
+      margin: 0 0 1rem;
+      text-align: center;
+      font-size: clamp(2.5rem, 8vw, 4rem);
+      font-weight: 500;
+    }
+
+    .site-content section {
+      max-width: 48rem;
+      margin: 2.5rem auto 0;
+      padding-top: 1rem;
+      border-top: 1px solid rgb(16 43 50 / 25%);
+    }
+  </style>
 </head>
 <body class="frame-page content-page">
   <main class="site-content">
     <h1>CONTENIDO</h1>
-    <p>Contenido principal.</p>
-    <section id="proiektua">
-      <h2>PROYECTO</h2>
-      <p>Información sobre el proyecto.</p>
+    <p hidden>Contenido principal.</p>
+    <section hidden id="proiektua">
+      <h2 hidden>PROYECTO</h2>
+      <p hidden>Información sobre el proyecto.</p>
     </section>
-    <section id="kontaktua">
-      <h2>CONTACTO</h2>
-      <p>Información de contacto.</p>
+    <section hidden id="kontaktua">
+      <h2 hidden>CONTACTO</h2>
+      <p hidden>Información de contacto.</p>
     </section>
   </main>
 </body>

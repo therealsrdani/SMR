@@ -1,7 +1,9 @@
-- 1.0 webgune bat sor ezazue klasean ikusitako HTML elementu guztiak erabiliz.
-- Elementuez gain, web-orri guztietan ikusiko diren nabigazio menua, goiburua eta
-  oin-orri sortu behar dituzue. Horretarako, <iframe> etiketa erabili behar duzue.
-- Oharra: CSS ez duzue erabili behar. Hala ere, beharrezkoa izango balitz, “style”
-  atributua erabil dezakezue.
-- Webgunearen itxura orokorrak hurrengo irudian aurkezten den eskemaren antzekoa
-  izan behar du (beste ordena batean jar daitezke atal nagusiak).
+ERRONKA 2:
+- Aplicaciones Web
+
+    WEB PÚBLICA:
+        - Utilizando todos los conocimientos HTML y CSS.
+        - Menú de navegación, encabezado y pie de página:
+            - Para eso usaremos un <iframe>.
+        - El CSS estará basado en el <style>.
+        - La apariencia principal funcionará como en el archivo de la carpeta apariencia.
