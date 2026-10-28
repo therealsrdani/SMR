@@ -1,3 +1,6 @@
+<?php
+header('Content-Type: application/javascript; charset=utf-8');
+?>
 const contentFrame = document.querySelector("#intranet-content");
 const navigationLinks = document.querySelectorAll(".side-nav [data-page]");
 

@@ -4,8 +4,10 @@ Abre ../Web 1.0/index.html y utiliza el formulario «Acceso de empleados».
 Al introducir las credenciales de demostración correctamente, el formulario
 se valida en Web 1.0/login.php y se abrirá portal.html. Necesitas servir el
 proyecto con PHP; no funcionará abriendo index.html directamente como archivo.
-El menú y el encabezado permanecen fijos mientras las secciones se cargan
-dentro del iframe central.
+Las páginas de la intranet conservan sus archivos HTML. Los antiguos scripts
+JavaScript se sirven desde auth.php, app.php y portal.php.
+En Web 1.0, el script también se sirve desde login.php; las páginas index.html
+y content.html se conservan.
 
 Credenciales de demostración:
 - Usuario: empleado
@@ -24,12 +26,13 @@ Páginas privadas:
 - horarios.html: tabla de horarios por equipo.
 - productos.html: galería con búsqueda de productos y precios.
 
-La intranet es una maqueta de HTML, CSS, JavaScript y PHP. El acceso al portal
-privado sigue siendo una comprobación del navegador porque las páginas de la
-intranet son estáticas; no uses esta maqueta para proteger información real.
-El formulario de solicitudes solo muestra una confirmación en pantalla. Para
-proteger información real y procesar solicitudes, hace falta conectar las
-páginas privadas a un servidor.
+La sesión de acceso y la validación del formulario de solicitudes se gestionan
+en PHP. El catálogo y la navegación instantánea siguen necesitando JavaScript
+en el navegador; PHP sirve ese código desde archivos .php. Las páginas HTML
+son estáticas y no pueden bloquearse por sesión en el servidor sin cambiar su
+extensión o configurar reglas en el servidor web. No uses esta maqueta para
+proteger información real. El formulario de solicitudes solo muestra una
+confirmación y no guarda los datos.
 Las fotografías del catálogo y las tipografías se cargan desde servicios
 externos, por lo que necesitan conexión a Internet.
 
