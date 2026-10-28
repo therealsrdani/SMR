@@ -2,7 +2,8 @@ INTRANET
 
 Abre ../Web 1.0/index.html y utiliza el formulario «Acceso de empleados».
 Al introducir las credenciales de demostración correctamente se abrirá
-index.html, el tablón privado de la intranet.
+portal.html. El menú y el encabezado permanecen fijos mientras las secciones
+se cargan dentro del iframe central.
 
 Credenciales de demostración:
 - Usuario: empleado
@@ -15,6 +16,7 @@ información real de la empresa. En productos.html puedes sustituir también
 las direcciones de las imágenes por las fotografías que quieras utilizar.
 
 Páginas privadas:
+- portal.html: marco común con menú, encabezado y el iframe de contenido.
 - index.html: tablón de anuncios y accesos rápidos.
 - solicitudes.html: formulario de vacaciones y permisos.
 - horarios.html: tabla de horarios por equipo.

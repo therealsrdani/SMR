@@ -35,6 +35,6 @@ if (loginForm) {
     }
 
     sessionStorage.setItem(sessionKey, "true");
-    window.top.location.href = "../Intranet/index.html";
+    window.top.location.href = "../Intranet/portal.html";
   });
 }

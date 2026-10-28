@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#123b35">
+  <title>Intranet | Espacio de equipo</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="app-shell portal-shell">
+    <aside class="sidebar">
+      <a class="brand" href="index.html" target="intranet-content" aria-label="Intranet, inicio">
+        <span class="brand-mark">I</span>
+        <span>[Empresa]<small>ESPACIO DE EQUIPO</small></span>
+      </a>
+      <p class="nav-caption">MENÚ PRINCIPAL</p>
+      <nav class="side-nav" aria-label="Navegación principal">
+        <a class="nav-link active" href="index.html" target="intranet-content" data-page="index.html" aria-current="page"><span class="nav-icon">⌂</span>Inicio</a>
+        <a class="nav-link" href="solicitudes.html" target="intranet-content" data-page="solicitudes.html"><span class="nav-icon">＋</span>Solicitudes</a>
+        <a class="nav-link" href="horarios.html" target="intranet-content" data-page="horarios.html"><span class="nav-icon">▦</span>Horarios</a>
+        <a class="nav-link" href="productos.html" target="intranet-content" data-page="productos.html"><span class="nav-icon">◇</span>Catálogo</a>
+      </nav>
+      <div class="sidebar-bottom">
+        <div class="sidebar-help"><span class="help-icon">?</span><span>¿Necesitas ayuda?<small>Contacta con RRHH.</small></span></div>
+        <a class="logout-link" data-logout href="../Web 1.0/index.html">Cerrar sesión</a>
+      </div>
+    </aside>
+
+    <header class="topbar">
+      <div><p class="breadcrumb">INTRANET <span>/</span> ESPACIO DE EQUIPO</p><p class="topbar-date">Tu espacio privado de trabajo</p></div>
+      <div class="profile"><span class="status-dot"></span><span class="avatar">EM</span><span class="profile-name">Asd asdasd asd<small>Director Ejecutivo</small></span></div>
+    </header>
+
+    <main class="main-area">
+      <iframe id="intranet-content" class="portal-content" src="index.html" name="intranet-content" title="Contenido de la intranet"></iframe>
+    </main>
+  </div>
+  <script src="auth.js"></script>
+  <script src="portal.js"></script>
+</body>
+</html>
