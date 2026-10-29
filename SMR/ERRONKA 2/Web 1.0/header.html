@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="eu">
+<html lang="es">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -13,29 +13,59 @@
       width: 100%;
       height: 100%;
       margin: 0;
-      font-family: Arial, Helvetica, sans-serif;
+      font-family: "Segoe UI", Arial, sans-serif;
     }
 
     .frame-page {
-      overflow: auto;
+      overflow: hidden;
     }
 
     .header-page {
-      background: #91abd8;
+      background: #fff;
     }
 
     .site-header {
-      display: grid;
+      display: flex;
       min-height: 100%;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 0.75rem max(1.25rem, calc((100vw - 1200px) / 2));
+      border-bottom: 1px solid #dfe5e1;
+      color: #26332d;
+    }
+
+    .brand-mark {
+      display: grid;
+      width: 2.5rem;
+      height: 2.5rem;
+      flex: 0 0 auto;
       place-items: center;
-      border-bottom: 2px solid #171717;
-      color: #101820;
-      font-size: clamp(1.7rem, 4vw, 2.5rem);
-      letter-spacing: 0.04em;
+      border-radius: 0.35rem;
+      background: #276749;
+      color: #fff;
+      font-size: 1.25rem;
+      font-weight: 700;
+    }
+
+    .brand-name {
+      font-size: 1rem;
+      font-weight: 700;
+    }
+
+    .brand-name small {
+      display: block;
+      margin-top: 0.15rem;
+      color: #68756e;
+      font-size: 0.65rem;
+      font-weight: 400;
+      letter-spacing: 0.06em;
     }
   </style>
 </head>
 <body class="frame-page header-page">
-  <header class="site-header">CABECERA</header>
+  <header class="site-header">
+    <span class="brand-mark" aria-hidden="true">E</span>
+    <span class="brand-name">[Empresa]<small>ESPACIO DE EQUIPO</small></span>
+  </header>
 </body>
 </html>
