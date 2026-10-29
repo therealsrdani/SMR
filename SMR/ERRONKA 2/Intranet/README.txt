@@ -47,6 +47,8 @@ PAGINAS Y FUNCIONES
   con resumen, graficos, lista y gestion del estado y los mensajes.
 - horarios.html: consulta y gestion de horarios por equipo.
 - productos.html: catalogo con busqueda y gestion de productos.
+- equipo.html: presentacion del equipo fundador y espacios para inversores,
+  promotores y colaboradores.
 - styles.css: estilos compartidos de las paginas de la intranet.
 - auth.php, app.php y portal.php: sirven JavaScript de la aplicacion y conectan
   las acciones de la interfaz con PHP.
@@ -72,6 +74,8 @@ PERSONALIZACION Y LIMITACIONES
 Sustituye los textos entre corchetes de las paginas por informacion real de la
 empresa. En productos.html puedes completar o cambiar las imagenes, condiciones
 y datos del catalogo. Los avisos y horarios deben mantenerse actualizados.
+En equipo.html puedes actualizar los perfiles y completar las URLs de la red
+de apoyo.
 
 Las paginas principales son HTML estaticos: la comprobacion de sesion en estas
 paginas se apoya en JavaScript. No las consideres una barrera suficiente para

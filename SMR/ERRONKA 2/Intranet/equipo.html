@@ -1,0 +1,161 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <link rel="icon" type="image/png" href="img/logo.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f7f8f7">
+  <title>Equipo | Kalvex</title>
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    .team-intro {
+      margin-bottom: 28px;
+      padding: 22px;
+      border: 1px solid var(--line);
+      border-top: 3px solid var(--green);
+      border-radius: 5px;
+      background: var(--white);
+    }
+
+    .team-intro h1 {
+      margin: 0;
+      font-size: clamp(24px, 3vw, 32px);
+    }
+
+    .team-intro > p:last-child {
+      margin: 8px 0 0;
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.6;
+    }
+
+    .team-section {
+      margin-top: 28px;
+    }
+
+    .team-section h2 {
+      margin: 0 0 6px;
+      font-size: 20px;
+    }
+
+    .team-description {
+      margin: 0 0 14px;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.6;
+    }
+
+    .team-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(min(100%, 220px), 1fr));
+      gap: 12px;
+    }
+
+    .team-card {
+      overflow: hidden;
+      border: 1px solid var(--line);
+      border-radius: 5px;
+      background: var(--white);
+    }
+
+    .team-photo {
+      display: block;
+      width: 100%;
+      height: 240px;
+      object-fit: cover;
+      object-position: center 35%;
+      background: #edf4ef;
+    }
+
+    .team-card-content {
+      padding: 14px;
+    }
+
+    .team-card h3,
+    .team-placeholder h3 {
+      margin: 0 0 5px;
+      font-size: 15px;
+    }
+
+    .team-role {
+      margin: 0;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.5;
+    }
+
+    .team-placeholder {
+      min-height: 100%;
+      padding: 16px;
+      border: 1px dashed #b9c9bf;
+      border-radius: 5px;
+      background: var(--white);
+    }
+
+    .team-placeholder h3 {
+      color: var(--green);
+    }
+  </style>
+</head>
+<body>
+  <main class="main-area">
+    <div class="page-content">
+      <header class="team-intro">
+        <p class="eyebrow">KALVEX · PERSONAS</p>
+        <h1>Conoce al equipo</h1>
+        <p>Las personas que impulsan el proyecto desde sus primeros pasos.</p>
+      </header>
+
+      <section class="team-section" aria-labelledby="founders-title">
+        <h2 id="founders-title">Equipo fundador</h2>
+        <p class="team-description">Un equipo multidisciplinar que trabaja para hacer crecer Kalvex.</p>
+        <div class="team-grid">
+          <article class="team-card">
+            <img class="team-photo" src="img/eva.jpeg" alt="Eva García Marín">
+            <div class="team-card-content">
+              <h3>Eva García Marín</h3>
+              <p class="team-role">Fundación · Administrativa</p>
+            </div>
+          </article>
+          <article class="team-card">
+            <img class="team-photo" src="img/xabi.png" alt="Xabier Enrique García">
+            <div class="team-card-content">
+              <h3>Xabier Enrique García</h3>
+              <p class="team-role">Fundación · Sistemas</p>
+            </div>
+          </article>
+          <article class="team-card">
+            <img class="team-photo" src="img/dani.jpg" alt="Daniel Ruiz Zalduendo">
+            <div class="team-card-content">
+              <h3>Daniel Ruiz Zalduendo</h3>
+              <p class="team-role">Fundación · Desarrollo legal y programación</p>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <section class="team-section" aria-labelledby="community-title">
+        <h2 id="community-title">Red de apoyo</h2>
+        <p class="team-description">Completa estos espacios con el nombre, una breve presentación y la URL de cada entidad o persona.</p>
+        <div class="team-grid">
+          <article class="team-placeholder">
+            <h3>Inversores</h3>
+            <p class="team-role">Añade aquí inversores y sus enlaces.</p>
+          </article>
+          <article class="team-placeholder">
+            <h3>Promotores</h3>
+            <p class="team-role">Añade aquí promotores del proyecto y sus enlaces.</p>
+          </article>
+          <article class="team-placeholder">
+            <h3>Colaboradores</h3>
+            <p class="team-role">Añade aquí colaboradores y sus enlaces.</p>
+          </article>
+        </div>
+      </section>
+
+      <footer class="page-footer">Kalvex · Intranet <span>Información interna</span></footer>
+    </div>
+  </main>
+  <script src="auth.php"></script>
+</body>
+</html>

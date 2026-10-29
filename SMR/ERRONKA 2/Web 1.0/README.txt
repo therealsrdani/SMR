@@ -14,6 +14,8 @@ ARCHIVOS PRINCIPALES
 - header.html: logotipo y nombre de la empresa.
 - navigation.html: enlaces que cambian la seccion mostrada en el contenido.
 - content.html: inicio, proyecto, contacto y formulario de acceso.
+- equipo.html: presentacion del equipo fundador y espacios para inversores,
+  promotores y colaboradores.
 - footer.html: pie del portal.
 - login.php: valida las credenciales contra la tabla usuarios y sirve tambien
   el JavaScript utilizado por el contenido.
@@ -46,6 +48,8 @@ para ajustarlos a tu entorno.
 
 Modifica los textos de content.html para completar la informacion real de la
 empresa. Cambia los recursos en img/ si quieres usar otros logotipos o imagenes.
+En equipo.html puedes actualizar los perfiles y completar las URLs de la red
+de apoyo.
 La navegacion entre secciones se realiza dentro del marco de contenido; el
 formulario de acceso se envia a login.php y, si las credenciales son validas,
 redirige a ../Intranet/portal.html.

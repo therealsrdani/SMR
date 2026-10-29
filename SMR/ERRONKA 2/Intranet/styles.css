@@ -188,11 +188,11 @@ textarea {
 }
 
 .avatar {
-  display: grid;
+  display: block;
   width: 28px;
   height: 28px;
-  place-items: center;
   border-radius: 50%;
+  object-fit: cover;
   background: #edf4ef;
   color: var(--green);
   font-size: 10px;
@@ -345,14 +345,12 @@ p {
 }
 
 .mini-avatar {
-  display: grid;
+  display: block;
   width: 22px;
   height: 22px;
-  place-items: center;
   border-radius: 50%;
+  object-fit: cover;
   background: #edf4ef;
-  color: var(--green);
-  font-size: 10px;
 }
 
 .text-link {
