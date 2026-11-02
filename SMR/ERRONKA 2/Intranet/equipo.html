@@ -45,13 +45,60 @@
       line-height: 1.6;
     }
 
-    .team-grid {
+    .team-carousel-controls {
+      display: flex;
+      justify-content: flex-end;
+      gap: 8px;
+      margin: 0 0 10px;
+    }
+
+    .team-carousel-button {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(min(100%, 220px), 1fr));
+      width: 36px;
+      height: 36px;
+      place-items: center;
+      border: 1px solid var(--line);
+      border-radius: 5px;
+      background: var(--white);
+      color: var(--green);
+      cursor: pointer;
+      font-size: 22px;
+      line-height: 1;
+    }
+
+    .team-carousel-button:disabled {
+      color: var(--muted);
+      cursor: default;
+      opacity: 0.45;
+    }
+
+    .team-grid {
+      display: flex;
       gap: 12px;
+      overflow-x: auto;
+      overscroll-behavior-inline: contain;
+      padding-bottom: 8px;
+      scroll-behavior: smooth;
+      scroll-snap-type: x proximity;
+      scrollbar-width: thin;
+      cursor: grab;
+    }
+
+    .team-grid.is-dragging {
+      cursor: grabbing;
+      scroll-behavior: auto;
+      scroll-snap-type: none;
+      user-select: none;
+    }
+
+    .team-card,
+    .team-placeholder {
+      flex: 0 0 clamp(220px, 28vw, 280px);
+      scroll-snap-align: start;
     }
 
     .team-card {
+      min-width: 0;
       overflow: hidden;
       border: 1px solid var(--line);
       border-radius: 5px;
@@ -65,6 +112,7 @@
       object-fit: cover;
       object-position: center 35%;
       background: #edf4ef;
+      pointer-events: none;
     }
 
     .team-card-content {
@@ -86,7 +134,8 @@
 
     .team-placeholder {
       min-height: 100%;
-      padding: 16px;
+      padding: 0;
+      overflow: hidden;
       border: 1px dashed #b9c9bf;
       border-radius: 5px;
       background: var(--white);
@@ -94,6 +143,12 @@
 
     .team-placeholder h3 {
       color: var(--green);
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .team-grid {
+        scroll-behavior: auto;
+      }
     }
   </style>
 </head>
@@ -108,47 +163,78 @@
 
       <section class="team-section" aria-labelledby="founders-title">
         <h2 id="founders-title">Equipo fundador</h2>
-        <p class="team-description">Un equipo multidisciplinar que trabaja para hacer crecer Kalvex.</p>
-        <div class="team-grid">
+        <p class="team-description">La directiva de Kalvex, compuesta por las personas clave que lideran el proyecto.</p>
+        <div class="team-carousel-controls" role="group" aria-label="Controles del equipo fundador">
+          <button class="team-carousel-button" type="button" aria-label="Desplazar hacia la izquierda" data-scroll="prev">&#8249;</button>
+          <button class="team-carousel-button" type="button" aria-label="Desplazar hacia la derecha" data-scroll="next">&#8250;</button>
+        </div>
+        <div class="team-grid" tabindex="0" role="region" aria-label="Equipo fundador">
           <article class="team-card">
             <img class="team-photo" src="img/eva.jpeg" alt="Eva García Marín">
             <div class="team-card-content">
               <h3>Eva García Marín</h3>
-              <p class="team-role">Fundación · Administrativa</p>
+              <p class="team-role">Fundación <strong>·</strong> Asistente de Sistemas</p>
             </div>
           </article>
           <article class="team-card">
             <img class="team-photo" src="img/xabi.png" alt="Xabier Enrique García">
             <div class="team-card-content">
               <h3>Xabier Enrique García</h3>
-              <p class="team-role">Fundación · Sistemas</p>
+              <p class="team-role">Fundación <strong>·</strong> Sistemas</p>
             </div>
           </article>
           <article class="team-card">
             <img class="team-photo" src="img/dani.jpg" alt="Daniel Ruiz Zalduendo">
             <div class="team-card-content">
               <h3>Daniel Ruiz Zalduendo</h3>
-              <p class="team-role">Fundación · Desarrollo legal y programación</p>
+              <p class="team-role">Fundación <strong>·</strong> Desarrollo legal y programación</p>
             </div>
           </article>
         </div>
       </section>
 
       <section class="team-section" aria-labelledby="community-title">
-        <h2 id="community-title">Red de apoyo</h2>
-        <p class="team-description">Completa estos espacios con el nombre, una breve presentación y la URL de cada entidad o persona.</p>
-        <div class="team-grid">
+        <h2 id="community-title">Colaboradores Oficiales</h2>
+        <p class="team-description">Personas que brindan apoyo al proyecto de Kalvex.</p>
+        <div class="team-carousel-controls" role="group" aria-label="Controles de colaboradores">
+          <button class="team-carousel-button" type="button" aria-label="Desplazar hacia la izquierda" data-scroll="prev">&#8249;</button>
+          <button class="team-carousel-button" type="button" aria-label="Desplazar hacia la derecha" data-scroll="next">&#8250;</button>
+        </div>
+        <div class="team-grid" tabindex="0" role="region" aria-label="Colaboradores oficiales">
           <article class="team-placeholder">
-            <h3>Inversores</h3>
-            <p class="team-role">Añade aquí inversores y sus enlaces.</p>
+            <img class="team-photo" src="img/ivan.png" alt="Iván Ramirez">
+            <div class="team-card-content">
+              <h3>Iván Ramirez</h3>
+              <p class="team-role">Miembro que proporcionó apoyo en la gestión del proyecto.</p>
+            </div>
           </article>
           <article class="team-placeholder">
-            <h3>Promotores</h3>
-            <p class="team-role">Añade aquí promotores del proyecto y sus enlaces.</p>
+            <img class="team-photo" src="img/mikel.png" alt="Mikel Martinez de Zuazo">
+            <div class="team-card-content">
+              <h3>Mikel Martinez de Zuazo</h3>
+              <p class="team-role">Miembro que proporcionó presupuesto para Sistemas.</p>
+            </div>
           </article>
           <article class="team-placeholder">
-            <h3>Colaboradores</h3>
-            <p class="team-role">Añade aquí colaboradores y sus enlaces.</p>
+            <img class="team-photo" src="img/raimon.png" alt="Raimon Tortajada">
+            <div class="team-card-content">
+              <h3>Raimon Tortajada</h3>
+              <p class="team-role">Miembro que proporcionó apoyo en la gestión del proyecto.</p>
+            </div>
+          </article>
+          <article class="team-placeholder">
+            <img class="team-photo" src="img/ugaitz.png" alt="Ugaitz Naya">
+            <div class="team-card-content">
+              <h3>Ugaitz Naya</h3>
+              <p class="team-role">Miembro que proporcionó apoyo en la gestión del proyecto.</p>
+            </div>
+          </article>
+          <article class="team-placeholder">
+            <img class="team-photo" src="img/josu.png" alt="Josu Lopez">
+            <div class="team-card-content">
+              <h3>Josu Lopez</h3>
+              <p class="team-role">Miembro que proporcionó apoyo en la gestión del proyecto.</p>
+            </div>
           </article>
         </div>
       </section>
@@ -156,6 +242,56 @@
       <footer class="page-footer">Kalvex · Intranet <span>Información interna</span></footer>
     </div>
   </main>
+  <script>
+    document.querySelectorAll(".team-section").forEach((section) => {
+      const carousel = section.querySelector(".team-grid");
+      const buttons = section.querySelectorAll(".team-carousel-button");
+      let isDragging = false;
+      let startX = 0;
+      let startScrollLeft = 0;
+
+      const updateButtons = () => {
+        const maxScroll = carousel.scrollWidth - carousel.clientWidth;
+        buttons.forEach((button) => {
+          button.disabled = button.dataset.scroll === "prev"
+            ? carousel.scrollLeft <= 1
+            : carousel.scrollLeft >= maxScroll - 1;
+        });
+      };
+
+      buttons.forEach((button) => {
+        button.addEventListener("click", () => {
+          carousel.scrollBy({
+            left: (button.dataset.scroll === "next" ? 1 : -1) * carousel.clientWidth * 0.85,
+            behavior: "smooth"
+          });
+        });
+      });
+
+      carousel.addEventListener("scroll", updateButtons);
+      carousel.addEventListener("pointerdown", (event) => {
+        if (event.pointerType !== "mouse" || event.button !== 0) return;
+        isDragging = true;
+        startX = event.clientX;
+        startScrollLeft = carousel.scrollLeft;
+        carousel.classList.add("is-dragging");
+        carousel.setPointerCapture(event.pointerId);
+      });
+      carousel.addEventListener("pointermove", (event) => {
+        if (!isDragging) return;
+        carousel.scrollLeft = startScrollLeft - (event.clientX - startX);
+      });
+      const stopDragging = () => {
+        isDragging = false;
+        carousel.classList.remove("is-dragging");
+      };
+      carousel.addEventListener("pointerup", stopDragging);
+      carousel.addEventListener("pointercancel", stopDragging);
+      carousel.addEventListener("lostpointercapture", stopDragging);
+      window.addEventListener("resize", updateButtons);
+      updateButtons();
+    });
+  </script>
   <script src="auth.php"></script>
 </body>
 </html>
