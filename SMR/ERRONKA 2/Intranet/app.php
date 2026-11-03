@@ -87,32 +87,32 @@ header('Content-Type: application/javascript; charset=utf-8');
 const leaveForm = document.querySelector("#leave-form");
 
 if (leaveForm) {
-  const startDate = document.querySelector("#start-date");
-  const endDate = document.querySelector("#end-date");
-  const message = document.querySelector("#request-message");
   if (!window.intranetUser?.canCreateRequests) {
     leaveForm.hidden = true;
-    return;
-  }
-  const csrfInput = document.createElement("input");
-  csrfInput.type = "hidden";
-  csrfInput.name = "csrf-token";
-  csrfInput.value = window.intranetUser.csrfToken;
-  leaveForm.append(csrfInput);
+  } else {
+    const startDate = document.querySelector("#start-date");
+    const endDate = document.querySelector("#end-date");
+    const message = document.querySelector("#request-message");
+    const csrfInput = document.createElement("input");
+    csrfInput.type = "hidden";
+    csrfInput.name = "csrf-token";
+    csrfInput.value = window.intranetUser.csrfToken;
+    leaveForm.append(csrfInput);
 
-  const query = new URLSearchParams(window.location.search);
-  if (query.has("request_submitted")) {
-    message.textContent = "Solicitud guardada correctamente para que la revise el equipo de Personas.";
-  } else if (query.has("request_error")) {
-    message.textContent = "Revisa el tipo de solicitud y las fechas introducidas.";
-  }
-
-  startDate.addEventListener("change", () => {
-    endDate.min = startDate.value;
-    if (endDate.value && endDate.value < startDate.value) {
-      endDate.value = "";
+    const query = new URLSearchParams(window.location.search);
+    if (query.has("request_submitted")) {
+      message.textContent = "Solicitud guardada correctamente para que la revise el equipo de Personas.";
+    } else if (query.has("request_error")) {
+      message.textContent = "Revisa el tipo de solicitud y las fechas introducidas.";
     }
-  });
+
+    startDate.addEventListener("change", () => {
+      endDate.min = startDate.value;
+      if (endDate.value && endDate.value < startDate.value) {
+        endDate.value = "";
+      }
+    });
+  }
 }
 
 const requestStatusLabels = {
