@@ -1,5 +1,6 @@
 <?php
 session_start();
+require_once __DIR__ . '/permissions.php';
 header('Content-Type: application/javascript; charset=utf-8');
 $authenticated = ($_SESSION['authenticated'] ?? false) === true;
 $user = null;
@@ -12,12 +13,16 @@ if ($authenticated) {
     $role = trim((string) ($_SESSION['rol'] ?? ''));
     $normalizedRole = strtolower($role);
     $roleLabels = [
+        'admin' => 'Admin',
+        'guest' => 'Guest',
+        'recursos humanos' => 'Recursos Humanos',
         'director' => 'Director',
         'director ejecutivo' => 'Director Ejecutivo',
         'gerente' => 'Gerente',
         'empleado' => 'Empleado',
         'cliente' => 'Cliente',
     ];
+    $permissions = permissions_for_role($normalizedRole);
     $name = trim((string) ($_SESSION['nombre'] ?? ''));
     if ($name === '') {
         $name = (string) ($_SESSION['username'] ?? '');
@@ -26,7 +31,17 @@ if ($authenticated) {
         'name' => $name,
         'role' => $roleLabels[$normalizedRole] ?? $role,
         'roleKey' => $normalizedRole,
-        'canManage' => in_array($normalizedRole, ['director', 'director ejecutivo', 'gerente'], true),
+        'canCreateProducts' => $permissions['create_product'],
+        'canUpdateProducts' => $permissions['update_product'],
+        'canDeleteProducts' => $permissions['delete_product'],
+        'canCreateSchedules' => $permissions['create_schedule'],
+        'canUpdateSchedules' => $permissions['update_schedule'],
+        'canDeleteSchedules' => $permissions['delete_schedule'],
+        'canViewAllRequests' => $permissions['view_all_requests'],
+        'canChangeRequestStatus' => $permissions['change_request_status'],
+        'canReplyToOthers' => $permissions['reply_to_others'],
+        'canCreateRequests' => $permissions['create_request'],
+        'canReplyToOwnRequests' => $permissions['reply_to_own_requests'],
         'csrfToken' => $_SESSION['csrf_token'],
     ];
 }
@@ -51,13 +66,13 @@ if (authenticated && window.self !== window.top) {
 }
 
 if (authenticated && window.intranetUser) {
-  const { name, role, roleKey, canManage } = window.intranetUser;
-  const isDirector = roleKey === "director";
+  const { name, role, roleKey } = window.intranetUser;
+  const roleAliases = roleKey === "director ejecutivo" ? ["director"] : [];
   const responsesContent = document.querySelector("#responses-content");
   const responsesDenied = document.querySelector("#responses-denied");
   if (responsesContent && responsesDenied) {
-    responsesContent.hidden = !isDirector;
-    responsesDenied.hidden = isDirector;
+    responsesContent.hidden = !window.intranetUser.canViewAllRequests;
+    responsesDenied.hidden = window.intranetUser.canViewAllRequests;
   }
 
   document.querySelectorAll(".profile").forEach((profile) => {
@@ -77,9 +92,7 @@ if (authenticated && window.intranetUser) {
 
   document.querySelectorAll("[data-role-allow]").forEach((element) => {
     const allowedRoles = element.dataset.roleAllow.split(",").map((value) => value.trim().toLocaleLowerCase("es"));
-    const currentRole = role.toLocaleLowerCase("es");
-    const directorRole = currentRole === "director ejecutivo";
-    element.hidden = !canManage || !(allowedRoles.includes(currentRole) || (directorRole && allowedRoles.includes("director")));
+    element.hidden = !allowedRoles.some((allowedRole) => roleKey === allowedRole || roleAliases.includes(allowedRole));
   });
 
   document.querySelectorAll("[data-role-exact]").forEach((element) => {

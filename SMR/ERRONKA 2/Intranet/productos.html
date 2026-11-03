@@ -17,7 +17,7 @@
         <a class="nav-link" href="index.html"><span class="nav-icon">⌂</span>Inicio</a>
         <a class="nav-link" href="solicitudes.html"><span class="nav-icon">＋</span>Solicitudes</a>
         <a class="nav-link" href="mis-solicitudes.html"><span class="nav-icon">☷</span>Mis solicitudes</a>
-        <a class="nav-link" href="respuestas.php" data-role-exact="Director"><span class="nav-icon">▤</span>Respuestas</a>
+        <a class="nav-link" href="respuestas.php" data-role-exact="admin,director,recursos humanos"><span class="nav-icon">▤</span>Respuestas</a>
         <a class="nav-link" href="horarios.html"><span class="nav-icon">▦</span>Horarios</a>
         <a class="nav-link active" href="productos.html" aria-current="page"><span class="nav-icon">◇</span>Catálogo</a>
       </nav>
@@ -26,12 +26,12 @@
     <main class="main-area">
       <header class="topbar"><div><p class="breadcrumb">INTRANET <span>/</span> CATÁLOGO</p><p class="topbar-date">Espacio privado para el equipo</p></div><div class="profile"><span class="status-dot"></span><span class="avatar">EM</span><span class="profile-name">Usuario<small>Rol</small></span></div></header>
       <div class="page-content">
-        <section class="page-intro"><p class="eyebrow">CATÁLOGO INTERNO</p><h1>Productos y precios</h1><p>Consulta el catálogo de productos y sus precios. Director y Gerente pueden gestionarlo.</p></section>
+        <section class="page-intro"><p class="eyebrow">CATÁLOGO INTERNO</p><h1>Productos y precios</h1><p>Consulta el catálogo de productos y sus precios. Admin, Director, Director Ejecutivo y Gerente pueden gestionarlo; Empleado puede crear y editar productos.</p></section>
         <section class="catalog-toolbar" aria-label="Filtros del catálogo">
-          <div><p class="eyebrow">CATÁLOGO INTERNO</p><p class="catalog-count" id="catalog-count">Cargando productos...</p><button class="button button-primary" id="new-product" data-role-allow="Director,Gerente" type="button">Crear producto</button><p id="catalog-message" class="form-message" role="status" aria-live="polite"></p></div>
+          <div><p class="eyebrow">CATÁLOGO INTERNO</p><p class="catalog-count" id="catalog-count">Cargando productos...</p><button class="button button-primary" id="new-product" data-role-allow="Admin,Director,Director Ejecutivo,Gerente,Empleado" type="button">Crear producto</button><p id="catalog-message" class="form-message" role="status" aria-live="polite"></p></div>
           <label class="search-box"><span aria-hidden="true">⌕</span><span class="visually-hidden">Buscar producto</span><input id="product-search" type="search" placeholder="Buscar productos..." autocomplete="off"></label>
         </section>
-        <form id="product-form" class="management-form" data-role-allow="Director,Gerente" hidden>
+        <form id="product-form" class="management-form" data-role-allow="Admin,Director,Director Ejecutivo,Gerente,Empleado" hidden>
           <h2 id="product-form-title">Crear producto</h2>
           <input id="product-id" type="hidden">
           <div class="management-fields">

@@ -1,5 +1,6 @@
 <?php
 session_start();
+require_once __DIR__ . '/permissions.php';
 
 if (($_SESSION['authenticated'] ?? false) !== true) {
     header('Location: ../Web 1.0/index.html', true, 303);
@@ -7,6 +8,12 @@ if (($_SESSION['authenticated'] ?? false) !== true) {
 }
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $role = strtolower(trim((string) ($_SESSION['rol'] ?? '')));
+    if (!permissions_for_role($role)['create_request']) {
+        http_response_code(403);
+        exit('Tu rol solo puede consultar la información y no puede crear solicitudes.');
+    }
+
     $csrfToken = $_POST['csrf-token'] ?? '';
     if (!is_string($csrfToken) || !isset($_SESSION['csrf_token']) || !hash_equals($_SESSION['csrf_token'], $csrfToken)) {
         http_response_code(403);
@@ -83,6 +90,10 @@ if (leaveForm) {
   const startDate = document.querySelector("#start-date");
   const endDate = document.querySelector("#end-date");
   const message = document.querySelector("#request-message");
+  if (!window.intranetUser?.canCreateRequests) {
+    leaveForm.hidden = true;
+    return;
+  }
   const csrfInput = document.createElement("input");
   csrfInput.type = "hidden";
   csrfInput.name = "csrf-token";
@@ -116,7 +127,7 @@ function formatRequestDate(value) {
   return requestDateLabels.format(new Date(year, month - 1, day));
 }
 
-function createRequestCard(item, canManage) {
+function createRequestCard(item, permissions = {}) {
   const card = document.createElement("article");
   card.className = "card response-card";
   const heading = document.createElement("div");
@@ -171,7 +182,7 @@ function createRequestCard(item, canManage) {
   }
   card.append(messages);
 
-  if (canManage && item.estado !== "cerrada") {
+  if (permissions.canChangeStatus && item.estado !== "cerrada") {
     const button = document.createElement("button");
     button.className = "button button-secondary request-state-button";
     button.type = "button";
@@ -181,12 +192,12 @@ function createRequestCard(item, canManage) {
     card.append(button);
   }
 
-  if (item.estado === "en_revision") {
+  if (item.estado === "en_revision" && permissions.canReply) {
     const form = document.createElement("form");
     form.className = "request-message-form";
     form.dataset.requestId = item.id;
     const label = document.createElement("label");
-    label.textContent = canManage ? "Responder al emisor" : "Enviar un mensaje";
+    label.textContent = permissions.replyLabel || "Enviar un mensaje";
     const textarea = document.createElement("textarea");
     textarea.name = "mensaje";
     textarea.rows = 3;
@@ -258,7 +269,9 @@ if (myRequestsList) {
       const response = await fetch("api.php?resource=solicitudes&scope=mine");
       const result = await response.json();
       if (!response.ok) throw new Error(result.error || "No se pudieron cargar tus solicitudes.");
-      myRequestsList.replaceChildren(...result.items.map((item) => createRequestCard(item, false)));
+      myRequestsList.replaceChildren(...result.items.map((item) => createRequestCard(item, {
+        canReply: window.intranetUser?.canReplyToOwnRequests
+      })));
       emptyState.hidden = result.items.length > 0;
       message.textContent = "";
       message.setAttribute("role", "status");
@@ -274,7 +287,7 @@ if (myRequestsList) {
 
 const responseList = document.querySelector("#response-list");
 
-if (responseList && window.intranetUser?.roleKey === "director") {
+if (responseList && window.intranetUser?.canViewAllRequests) {
   const message = document.querySelector("#responses-message");
   const typeChart = document.querySelector("#type-chart");
   const monthChart = document.querySelector("#month-chart");
@@ -338,7 +351,11 @@ if (responseList && window.intranetUser?.roleKey === "director") {
 
     responseList.replaceChildren();
     items.forEach((item) => {
-      responseList.append(createRequestCard(item, true));
+      responseList.append(createRequestCard(item, {
+        canChangeStatus: window.intranetUser.canChangeRequestStatus,
+        canReply: window.intranetUser.canReplyToOthers,
+        replyLabel: "Responder al emisor"
+      }));
     });
     emptyState.hidden = items.length > 0;
   };
@@ -378,7 +395,8 @@ if (productSearch) {
   const emptyState = document.querySelector("#empty-state");
   const form = document.querySelector("#product-form");
   const formError = document.querySelector("#product-form-error");
-  const canManage = Boolean(window.intranetUser?.canManage);
+  const canUpdateProducts = Boolean(window.intranetUser?.canUpdateProducts);
+  const canDeleteProducts = Boolean(window.intranetUser?.canDeleteProducts);
   let products = [];
 
   const updateProductCount = () => {
@@ -431,20 +449,25 @@ if (productSearch) {
       bottom.append(price, availability);
       info.append(title, description, bottom);
 
-      if (canManage) {
+      if (canUpdateProducts || canDeleteProducts) {
         const actions = document.createElement("div");
         actions.className = "management-actions";
-        const edit = document.createElement("button");
-        edit.className = "button button-secondary";
-        edit.type = "button";
-        edit.dataset.editProduct = product.id;
-        edit.textContent = "Editar";
-        const remove = document.createElement("button");
-        remove.className = "button button-danger";
-        remove.type = "button";
-        remove.dataset.deleteProduct = product.id;
-        remove.textContent = "Borrar";
-        actions.append(edit, remove);
+        if (canUpdateProducts) {
+          const edit = document.createElement("button");
+          edit.className = "button button-secondary";
+          edit.type = "button";
+          edit.dataset.editProduct = product.id;
+          edit.textContent = "Editar";
+          actions.append(edit);
+        }
+        if (canDeleteProducts) {
+          const remove = document.createElement("button");
+          remove.className = "button button-danger";
+          remove.type = "button";
+          remove.dataset.deleteProduct = product.id;
+          remove.textContent = "Borrar";
+          actions.append(remove);
+        }
         info.append(actions);
       }
 
@@ -477,6 +500,7 @@ if (productSearch) {
   };
 
   document.querySelector("#new-product")?.addEventListener("click", () => {
+    if (!window.intranetUser?.canCreateProducts) return;
     resetProductForm();
     form.hidden = false;
     form.querySelector('[name="nombre"]').focus();
@@ -552,7 +576,8 @@ if (scheduleList) {
   const formError = document.querySelector("#schedule-form-error");
   const message = document.querySelector("#schedule-message");
   const emptyState = document.querySelector("#schedule-empty");
-  const canManage = Boolean(window.intranetUser?.canManage);
+  const canUpdateSchedules = Boolean(window.intranetUser?.canUpdateSchedules);
+  const canDeleteSchedules = Boolean(window.intranetUser?.canDeleteSchedules);
   let schedules = [];
 
   const renderSchedules = () => {
@@ -568,20 +593,25 @@ if (scheduleList) {
         cell.textContent = schedule[key];
         row.append(cell);
       });
-      if (canManage) {
+      if (canUpdateSchedules || canDeleteSchedules) {
         const actions = document.createElement("td");
         actions.className = "management-actions";
-        const edit = document.createElement("button");
-        edit.className = "button button-secondary";
-        edit.type = "button";
-        edit.dataset.editSchedule = schedule.id;
-        edit.textContent = "Editar";
-        const remove = document.createElement("button");
-        remove.className = "button button-danger";
-        remove.type = "button";
-        remove.dataset.deleteSchedule = schedule.id;
-        remove.textContent = "Borrar";
-        actions.append(edit, remove);
+        if (canUpdateSchedules) {
+          const edit = document.createElement("button");
+          edit.className = "button button-secondary";
+          edit.type = "button";
+          edit.dataset.editSchedule = schedule.id;
+          edit.textContent = "Editar";
+          actions.append(edit);
+        }
+        if (canDeleteSchedules) {
+          const remove = document.createElement("button");
+          remove.className = "button button-danger";
+          remove.type = "button";
+          remove.dataset.deleteSchedule = schedule.id;
+          remove.textContent = "Borrar";
+          actions.append(remove);
+        }
         row.append(actions);
       }
       scheduleList.append(row);
@@ -610,6 +640,7 @@ if (scheduleList) {
   };
 
   document.querySelector("#new-schedule")?.addEventListener("click", () => {
+    if (!window.intranetUser?.canCreateSchedules) return;
     resetScheduleForm();
     form.hidden = false;
     form.querySelector('[name="equipo"]').focus();

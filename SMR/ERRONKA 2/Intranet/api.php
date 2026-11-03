@@ -1,5 +1,6 @@
 <?php
 session_start();
+require_once __DIR__ . '/permissions.php';
 header('Content-Type: application/json; charset=utf-8');
 header('Cache-Control: no-store');
 
@@ -15,7 +16,7 @@ if (($_SESSION['authenticated'] ?? false) !== true) {
 }
 
 $role = strtolower(trim((string) ($_SESSION['rol'] ?? '')));
-$canManage = in_array($role, ['director', 'director ejecutivo', 'gerente'], true);
+$permissions = permissions_for_role($role);
 $resource = $_GET['resource'] ?? '';
 
 if (!in_array($resource, ['productos', 'horarios', 'solicitudes'], true)) {
@@ -41,8 +42,8 @@ if ($resource === 'solicitudes') {
 
     if ($_SERVER['REQUEST_METHOD'] === 'GET') {
         $showAll = ($_GET['scope'] ?? '') === 'all';
-        if ($showAll && $role !== 'director') {
-            respond(403, ['error' => 'Solo el rol Director puede consultar todas las solicitudes.']);
+        if ($showAll && !$permissions['view_all_requests']) {
+            respond(403, ['error' => 'Tu rol no tiene permiso para consultar todas las solicitudes.']);
         }
 
         $query = $showAll
@@ -104,8 +105,8 @@ if ($resource === 'solicitudes') {
     }
 
     if ($action === 'status') {
-        if ($role !== 'director') {
-            respond(403, ['error' => 'Solo el rol Director puede cambiar el estado de una solicitud.']);
+        if (!$permissions['change_request_status']) {
+            respond(403, ['error' => 'Tu rol no tiene permiso para cambiar el estado de una solicitud.']);
         }
 
         $newStatus = $input['estado'] ?? '';
@@ -135,6 +136,9 @@ if ($resource === 'solicitudes') {
     if ($action !== 'message') {
         respond(400, ['error' => 'Acción no válida.']);
     }
+    if (!$permissions['reply_to_own_requests'] && !$permissions['reply_to_others']) {
+        respond(403, ['error' => 'Tu rol no tiene permiso para responder a solicitudes.']);
+    }
 
     $messageText = $input['mensaje'] ?? null;
     $trimmedMessage = is_string($messageText) ? trim($messageText) : '';
@@ -157,7 +161,7 @@ if ($resource === 'solicitudes') {
     if ($request['estado'] !== 'en_revision') {
         respond(409, ['error' => 'Solo se pueden enviar mensajes mientras la solicitud está en revisión.']);
     }
-    if ($role !== 'director' && (int) $request['empleado_id'] !== $userId) {
+    if (!$permissions['reply_to_others'] && (int) $request['empleado_id'] !== $userId) {
         respond(403, ['error' => 'No tienes permiso para responder a esta solicitud.']);
     }
 
@@ -194,10 +198,6 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     respond(405, ['error' => 'Método no permitido.']);
 }
 
-if (!$canManage) {
-    respond(403, ['error' => 'Tu rol no tiene permiso para modificar estos datos.']);
-}
-
 $csrfToken = $_SERVER['HTTP_X_CSRF_TOKEN'] ?? '';
 if (!is_string($csrfToken) || !isset($_SESSION['csrf_token']) || !hash_equals($_SESSION['csrf_token'], $csrfToken)) {
     respond(403, ['error' => 'La sesión del formulario ha caducado. Recarga la página e inténtalo de nuevo.']);
@@ -211,6 +211,25 @@ if (!is_array($input)) {
 $action = $input['action'] ?? '';
 $id = filter_var($input['id'] ?? null, FILTER_VALIDATE_INT, ['options' => ['min_range' => 1]]);
 $table = $resource;
+$permissionByAction = [
+    'productos' => [
+        'create' => 'create_product',
+        'update' => 'update_product',
+        'delete' => 'delete_product',
+    ],
+    'horarios' => [
+        'create' => 'create_schedule',
+        'update' => 'update_schedule',
+        'delete' => 'delete_schedule',
+    ],
+];
+if (!is_string($action) || !isset($permissionByAction[$resource][$action])) {
+    respond(400, ['error' => 'Acción no válida.']);
+}
+if (!$permissions[$permissionByAction[$resource][$action]]) {
+    respond(403, ['error' => 'Tu rol no tiene permiso para realizar esta acción.']);
+}
+
 $columns = $resource === 'productos'
     ? ['nombre', 'descripcion', 'categoria', 'precio', 'imagen_url', 'disponibilidad']
     : ['equipo', 'lunes_jueves', 'viernes', 'modalidad', 'responsable'];
@@ -232,7 +251,7 @@ if ($action === 'delete') {
     respond(200, ['message' => 'Registro eliminado.']);
 }
 
-if (!in_array($action, ['create', 'update'], true) || ($action === 'update' && $id === false)) {
+if ($action === 'update' && $id === false) {
     respond(400, ['error' => 'Acción o identificador no válido.']);
 }
 

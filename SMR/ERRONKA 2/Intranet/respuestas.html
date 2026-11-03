@@ -17,7 +17,7 @@
         <a class="nav-link" href="index.html"><span class="nav-icon">⌂</span>Inicio</a>
         <a class="nav-link" href="solicitudes.html"><span class="nav-icon">＋</span>Solicitudes</a>
         <a class="nav-link" href="mis-solicitudes.html"><span class="nav-icon">☷</span>Mis solicitudes</a>
-        <a class="nav-link active" href="respuestas.php" aria-current="page" data-role-exact="Director"><span class="nav-icon">▤</span>Respuestas</a>
+        <a class="nav-link active" href="respuestas.php" aria-current="page" data-role-exact="admin,director,recursos humanos"><span class="nav-icon">▤</span>Respuestas</a>
         <a class="nav-link" href="horarios.html"><span class="nav-icon">▦</span>Horarios</a>
         <a class="nav-link" href="productos.html"><span class="nav-icon">◇</span>Catálogo</a>
       </nav>
@@ -28,7 +28,7 @@
       <section id="responses-denied" class="access-denied" role="alert" hidden>
         <p>ACCESO RESTRINGIDO</p>
         <h1>NO TIENES PERMISOS PARA ACCEDER</h1>
-        <span>Esta sección está reservada al rango Director.</span>
+        <span>Esta sección está reservada a los roles autorizados para revisar solicitudes.</span>
       </section>
       <div id="responses-content" class="page-content" hidden>
         <section class="page-intro"><p class="eyebrow">GESTIÓN DE PERSONAS</p><h1>Respuestas del formulario</h1><p>Consulta de forma visual las solicitudes de vacaciones y permisos enviadas por el equipo.</p></section>
@@ -53,7 +53,7 @@
           <div id="response-list" class="response-list"></div>
           <p id="responses-empty" class="card empty-state" hidden>Aún no hay solicitudes registradas.</p>
         </section>
-        <footer class="page-footer">[Nombre de la empresa] · Intranet <span>Solo para Dirección</span></footer>
+        <footer class="page-footer">[Nombre de la empresa] · Intranet <span>Panel de solicitudes</span></footer>
       </div>
     </main>
   </div>

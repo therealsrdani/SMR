@@ -58,16 +58,26 @@ PAGINAS Y FUNCIONES
 SOLICITUDES Y PERMISOS
 ----------------------
 Las solicitudes quedan asociadas al usuario autenticado y guardan tipo, fechas,
-comentarios, estado y fecha de envio. Comienzan como «Enviada»; Director puede
-cambiarlas a «En revision» y despues a «Cerrada». El empleado puede consultar
-el estado y la conversacion de sus propias solicitudes. Solo se permiten
-mensajes mientras la solicitud esta en revision.
+comentarios, estado y fecha de envio. Comienzan como «Enviada» y solo se
+permiten mensajes mientras estan en revision. Admin y Director pueden ver todas
+las solicitudes, responder y cambiar su estado; Recursos Humanos puede verlas
+todas y responder, pero no cambiar su estado. Los demas usuarios solo pueden
+consultar y responder sus propias solicitudes.
 
-El panel respuestas.php esta reservado al rol exacto «Director». Director y
-Gerente pueden crear, editar y borrar productos y horarios; los demas roles
-pueden consultarlos. Las operaciones del servidor comprueban los permisos,
-ademas de ocultar o mostrar controles en la interfaz. Los roles utilizados son
-Director, Director Ejecutivo, Gerente, Empleado y Cliente.
+Los permisos se definen en permissions.php y se verifican en api.php; auth.php
+y los atributos data-role-allow de las paginas controlan la interfaz:
+- Admin: todos los permisos.
+- Recursos Humanos: consultar y responder todas las solicitudes, y crear
+  horarios; no puede cambiar estados ni editar o borrar horarios.
+- Empleado: crear y editar productos; no puede borrarlos.
+- Guest: solo consultar, sin crear solicitudes ni enviar mensajes.
+- Director, Director Ejecutivo y Gerente: conservan sus permisos anteriores.
+- Cliente: solo consulta.
+
+Asigna uno de estos nombres en la columna usuarios.rol, respetando el texto del
+rol, por ejemplo: UPDATE usuarios SET rol = 'Recursos Humanos' WHERE usuario =
+'nombre_de_usuario';. Las operaciones del servidor comprueban los permisos,
+ademas de ocultar o mostrar controles en la interfaz.
 
 PERSONALIZACION Y LIMITACIONES
 ------------------------------

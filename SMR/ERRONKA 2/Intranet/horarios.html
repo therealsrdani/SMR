@@ -17,7 +17,7 @@
         <a class="nav-link" href="index.html"><span class="nav-icon">⌂</span>Inicio</a>
         <a class="nav-link" href="solicitudes.html"><span class="nav-icon">＋</span>Solicitudes</a>
         <a class="nav-link" href="mis-solicitudes.html"><span class="nav-icon">☷</span>Mis solicitudes</a>
-        <a class="nav-link" href="respuestas.php" data-role-exact="Director"><span class="nav-icon">▤</span>Respuestas</a>
+        <a class="nav-link" href="respuestas.php" data-role-exact="admin,director,recursos humanos"><span class="nav-icon">▤</span>Respuestas</a>
         <a class="nav-link active" href="horarios.html" aria-current="page"><span class="nav-icon">▦</span>Horarios</a>
         <a class="nav-link" href="productos.html"><span class="nav-icon">◇</span>Catálogo</a>
       </nav>
@@ -26,18 +26,18 @@
     <main class="main-area">
       <header class="topbar"><div><p class="breadcrumb">INTRANET <span>/</span> HORARIOS</p><p class="topbar-date">Espacio privado para el equipo</p></div><div class="profile"><span class="status-dot"></span><span class="avatar">EM</span><span class="profile-name">Usuario<small>Rol</small></span></div></header>
       <div class="page-content">
-        <section class="page-intro"><p class="eyebrow">ORGANIZACIÓN DEL EQUIPO</p><h1>Horarios de trabajo</h1><p>Consulta los horarios de los equipos. Director y Gerente pueden crear, editar y borrar los registros.</p></section>
+        <section class="page-intro"><p class="eyebrow">ORGANIZACIÓN DEL EQUIPO</p><h1>Horarios de trabajo</h1><p>Consulta los horarios de los equipos. Admin, Director, Director Ejecutivo y Gerente pueden gestionar los registros; Recursos Humanos puede crear horarios.</p></section>
         <section class="card schedule-card">
-          <div class="schedule-heading"><div><h2>Jornada semanal por equipo</h2><p>Horarios actuales de los equipos</p></div><button class="button button-primary" id="new-schedule" data-role-allow="Director,Gerente" type="button">Añadir horario</button></div>
+          <div class="schedule-heading"><div><h2>Jornada semanal por equipo</h2><p>Horarios actuales de los equipos</p></div><button class="button button-primary" id="new-schedule" data-role-allow="Admin,Director,Director Ejecutivo,Gerente,Recursos Humanos" type="button">Añadir horario</button></div>
           <div class="table-wrap">
             <table class="data-table">
-              <thead><tr><th scope="col">Equipo</th><th scope="col">Lunes - jueves</th><th scope="col">Viernes</th><th scope="col">Modalidad</th><th scope="col">Responsable</th><th scope="col" data-role-allow="Director,Gerente">Acciones</th></tr></thead>
+              <thead><tr><th scope="col">Equipo</th><th scope="col">Lunes - jueves</th><th scope="col">Viernes</th><th scope="col">Modalidad</th><th scope="col">Responsable</th><th scope="col" data-role-allow="Admin,Director,Director Ejecutivo,Gerente">Acciones</th></tr></thead>
               <tbody id="schedule-list"></tbody>
             </table>
           </div>
           <p id="schedule-empty" class="table-note" hidden>No hay horarios guardados todavía.</p>
           <p id="schedule-message" class="form-message" role="status" aria-live="polite"></p>
-          <form id="schedule-form" class="management-form" data-role-allow="Director,Gerente" hidden>
+          <form id="schedule-form" class="management-form" data-role-allow="Admin,Director,Director Ejecutivo,Gerente,Recursos Humanos" hidden>
             <h2 id="schedule-form-title">Añadir horario</h2>
             <input id="schedule-id" type="hidden">
             <div class="management-fields">
