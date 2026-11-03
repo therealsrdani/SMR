@@ -3,7 +3,7 @@
 function permissions_for_role(string $role): array
 {
     $role = strtolower(trim($role));
-    $isAdmin = $role === 'admin';
+    $isAdmin = in_array($role, ['admin', 'director ejecutivo'], true);
     $isDirector = $role === 'director';
     $isLegacyManager = in_array($role, ['director', 'director ejecutivo', 'gerente'], true);
 

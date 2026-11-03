@@ -59,19 +59,19 @@ SOLICITUDES Y PERMISOS
 ----------------------
 Las solicitudes quedan asociadas al usuario autenticado y guardan tipo, fechas,
 comentarios, estado y fecha de envio. Comienzan como «Enviada» y solo se
-permiten mensajes mientras estan en revision. Admin y Director pueden ver todas
-las solicitudes, responder y cambiar su estado; Recursos Humanos puede verlas
-todas y responder, pero no cambiar su estado. Los demas usuarios solo pueden
-consultar y responder sus propias solicitudes.
+permiten mensajes mientras estan en revision. Admin, Director Ejecutivo y
+Director pueden ver todas las solicitudes, responder y cambiar su estado;
+Recursos Humanos puede verlas todas y responder, pero no cambiar su estado.
+Los demas usuarios solo pueden consultar y responder sus propias solicitudes.
 
 Los permisos se definen en permissions.php y se verifican en api.php; auth.php
 y los atributos data-role-allow de las paginas controlan la interfaz:
-- Admin: todos los permisos.
+- Admin y Director Ejecutivo: todos los permisos.
 - Recursos Humanos: consultar y responder todas las solicitudes, y crear
   horarios; no puede cambiar estados ni editar o borrar horarios.
 - Empleado: crear y editar productos; no puede borrarlos.
 - Guest: solo consultar, sin crear solicitudes ni enviar mensajes.
-- Director, Director Ejecutivo y Gerente: conservan sus permisos anteriores.
+- Director y Gerente: conservan sus permisos anteriores.
 - Cliente: solo consulta.
 
 Asigna uno de estos nombres en la columna usuarios.rol, respetando el texto del
