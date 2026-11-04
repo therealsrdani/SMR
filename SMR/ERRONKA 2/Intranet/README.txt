@@ -58,10 +58,10 @@ PAGINAS Y FUNCIONES
   almacenamiento compartido y persistente.
 - documentacion.html: apartado de documentación integrado en la navegación del
   portal. documentacion.js carga la vista y documentacion.php gestiona los
-  datos y acciones de la biblioteca de documentos PDF, DOCX y ODT. Solo Admin
+  datos y acciones de la biblioteca de documentos PDF, DOCX, ODT y ODS. Solo Admin
   puede subir o eliminar; los archivos se almacenan fuera del directorio web
   en kalvex-private-documents (junto al directorio publico) y se sirven mediante
-  documento.php. DOCX y ODT se previsualizan como texto extraido y PDF usa el
+  documento.php. DOCX, ODT y ODS se previsualizan como texto extraido y PDF usa el
   visor integrado del navegador. Guest ve solo la mitad inicial en la
   previsualizacion. El usuario del servidor necesita permiso de escritura. En
   despliegues con varios servidores, configura ese almacenamiento como una

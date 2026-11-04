@@ -86,7 +86,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     || !is_int($file['size'])
                     || !is_string($file['name'])
                 ) {
-                    $errorMessage = 'Selecciona un archivo PDF, DOCX u ODT.';
+                    $errorMessage = 'Selecciona un archivo PDF, DOCX, ODT u ODS.';
                 } elseif ($file['error'] !== UPLOAD_ERR_OK || !is_uploaded_file($file['tmp_name'])) {
                     $errorMessage = 'No se pudo recibir el archivo. Comprueba que no supere los 20 MB.';
                 } elseif ($file['size'] < 1 || $file['size'] > 20 * 1024 * 1024) {
@@ -98,11 +98,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         'pdf' => 'application/pdf',
                         'docx' => 'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
                         'odt' => 'application/vnd.oasis.opendocument.text',
+                        'ods' => 'application/vnd.oasis.opendocument.spreadsheet',
                     ];
                     if ($originalName === '' || strlen($originalName) > 255) {
                         $errorMessage = 'El nombre del archivo no puede superar los 255 caracteres.';
                     } elseif (!isset($formats[$extension])) {
-                        $errorMessage = 'Formato no permitido. Usa PDF, DOCX u ODT.';
+                        $errorMessage = 'Formato no permitido. Usa PDF, DOCX, ODT u ODS.';
                     } else {
                         $fileInfo = new finfo(FILEINFO_MIME_TYPE);
                         $detectedMime = $fileInfo->file($file['tmp_name']);
@@ -111,7 +112,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         } elseif ($extension === 'pdf' && $detectedMime !== 'application/pdf') {
                             $errorMessage = 'El contenido del archivo no es un PDF válido.';
                         } elseif ($extension !== 'pdf' && !class_exists(ZipArchive::class)) {
-                            $errorMessage = 'El servidor necesita la extensión PHP ZIP para validar archivos DOCX y ODT.';
+                            $errorMessage = 'El servidor necesita la extensión PHP ZIP para validar archivos DOCX, ODT y ODS.';
                         } elseif ($extension !== 'pdf') {
                             $archive = new ZipArchive();
                             $archiveResult = $archive->open($file['tmp_name'], ZipArchive::CHECKCONS);
@@ -127,7 +128,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                 !$isValidArchive
                                 || !in_array($detectedMime, ['application/zip', $formats[$extension]], true)
                             ) {
-                                $errorMessage = 'El contenido no coincide con un documento DOCX u ODT válido.';
+                                $errorMessage = 'El contenido no coincide con un documento DOCX, ODT u ODS válido.';
                             }
                         }
 
@@ -294,6 +295,7 @@ if ($previewId !== null && $previewId !== false) {
     } elseif (in_array($previewDocument['tipo_mime'], [
         'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
         'application/vnd.oasis.opendocument.text',
+        'application/vnd.oasis.opendocument.spreadsheet',
     ], true)) {
         try {
             $path = document_storage_file((string) $previewDocument['ruta_archivo']);
@@ -333,7 +335,7 @@ if ($previewId !== null && $previewId !== false) {
               <label class="field">Título<input name="titulo" maxlength="150" required></label>
               <label class="field">Categoría<input name="categoria" maxlength="100" placeholder="Guías, políticas, procedimientos..."></label>
               <label class="field document-description-field">Descripción<textarea name="descripcion" rows="3" maxlength="5000"></textarea></label>
-              <label class="field document-file-field">Archivo<input name="archivo" type="file" accept=".pdf,.docx,.odt,application/pdf,application/vnd.openxmlformats-officedocument.wordprocessingml.document,application/vnd.oasis.opendocument.text" required><small>PDF, DOCX u ODT; máximo 20 MB.</small></label>
+              <label class="field document-file-field">Archivo<input name="archivo" type="file" accept=".pdf,.docx,.odt,.ods,application/pdf,application/vnd.openxmlformats-officedocument.wordprocessingml.document,application/vnd.oasis.opendocument.text,application/vnd.oasis.opendocument.spreadsheet" required><small>PDF, DOCX, ODT u ODS; máximo 20 MB.</small></label>
             </div>
             <div class="form-actions"><span></span><button class="button button-primary" type="submit">Publicar documento</button></div>
           </form>

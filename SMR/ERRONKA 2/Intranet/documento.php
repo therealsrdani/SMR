@@ -59,6 +59,7 @@ if (!is_file($path) || !is_readable($path)) {
 if ($mode === 'preview' && in_array($document['tipo_mime'], [
     'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
     'application/vnd.oasis.opendocument.text',
+    'application/vnd.oasis.opendocument.spreadsheet',
 ], true)) {
     header('Content-Type: application/json; charset=utf-8');
     header('Cache-Control: no-store');

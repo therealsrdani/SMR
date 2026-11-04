@@ -12,7 +12,7 @@ function document_storage_directory(): string
 
 function document_storage_file(string $relativePath): ?string
 {
-    if (!preg_match('/\A[a-f0-9]{32}\.(?:pdf|docx|odt)\z/', $relativePath)) {
+    if (!preg_match('/\A[a-f0-9]{32}\.(?:pdf|docx|odt|ods)\z/', $relativePath)) {
         return null;
     }
 
