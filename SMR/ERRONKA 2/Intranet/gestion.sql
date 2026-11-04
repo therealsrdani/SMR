@@ -23,3 +23,17 @@ CREATE TABLE IF NOT EXISTS horarios (
     actualizado_en TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     PRIMARY KEY (id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+CREATE TABLE IF NOT EXISTS documentos (
+    id BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
+    titulo VARCHAR(150) NOT NULL,
+    descripcion TEXT NOT NULL,
+    categoria VARCHAR(100) NOT NULL DEFAULT '',
+    nombre_archivo VARCHAR(255) NOT NULL,
+    ruta_archivo VARCHAR(255) NOT NULL,
+    tipo_mime VARCHAR(100) NOT NULL,
+    subido_por VARCHAR(150) NOT NULL,
+    creado_en TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    PRIMARY KEY (id),
+    UNIQUE KEY uq_documentos_ruta_archivo (ruta_archivo)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;

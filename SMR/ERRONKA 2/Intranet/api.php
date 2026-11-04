@@ -11,6 +11,35 @@ function respond(int $status, array $body): void
     exit;
 }
 
+function product_image_path(string $relativePath): ?string
+{
+    if (!preg_match('/\Auploads\/productos\/[a-f0-9]{32}\.(?:jpg|png|webp|gif)\z/', $relativePath)) {
+        return null;
+    }
+
+    return __DIR__ . DIRECTORY_SEPARATOR . str_replace('/', DIRECTORY_SEPARATOR, $relativePath);
+}
+
+function delete_unused_product_image(mysqli $connection, string $relativePath): void
+{
+    $path = product_image_path($relativePath);
+    if ($path === null) {
+        return;
+    }
+
+    $statement = $connection->prepare('SELECT id FROM productos WHERE imagen_url = ? LIMIT 1');
+    if (!$statement || !$statement->bind_param('s', $relativePath) || !$statement->execute()) {
+        error_log('No se pudo comprobar si una imagen del catálogo sigue en uso.');
+        return;
+    }
+    if ($statement->get_result()->num_rows > 0) {
+        return;
+    }
+    if (is_file($path) && !unlink($path)) {
+        error_log('No se pudo eliminar una imagen del catálogo que ya no está en uso.');
+    }
+}
+
 if (($_SESSION['authenticated'] ?? false) !== true) {
     respond(401, ['error' => 'Inicia sesión para continuar.']);
 }
@@ -203,7 +232,13 @@ if (!is_string($csrfToken) || !isset($_SESSION['csrf_token']) || !hash_equals($_
     respond(403, ['error' => 'La sesión del formulario ha caducado. Recarga la página e inténtalo de nuevo.']);
 }
 
-$input = json_decode(file_get_contents('php://input'), true);
+$contentType = strtolower((string) ($_SERVER['CONTENT_TYPE'] ?? ''));
+$isProductForm = $resource === 'productos' && strpos($contentType, 'multipart/form-data') === 0;
+if ($isProductForm && empty($_POST) && empty($_FILES) && (int) ($_SERVER['CONTENT_LENGTH'] ?? 0) > 0) {
+    respond(413, ['error' => 'La imagen supera el límite de tamaño permitido por el servidor.']);
+}
+
+$input = $isProductForm ? $_POST : json_decode(file_get_contents('php://input'), true);
 if (!is_array($input)) {
     respond(400, ['error' => 'La petición no contiene datos válidos.']);
 }
@@ -239,6 +274,19 @@ if ($action === 'delete') {
         respond(400, ['error' => 'Identificador no válido.']);
     }
 
+    $oldImage = '';
+    if ($resource === 'productos') {
+        $imageStatement = $connection->prepare('SELECT imagen_url FROM productos WHERE id = ?');
+        if (!$imageStatement || !$imageStatement->bind_param('i', $id) || !$imageStatement->execute()) {
+            respond(500, ['error' => 'No se pudo consultar la imagen del producto.']);
+        }
+        $product = $imageStatement->get_result()->fetch_assoc();
+        if (!$product) {
+            respond(404, ['error' => 'El registro ya no existe.']);
+        }
+        $oldImage = (string) $product['imagen_url'];
+    }
+
     $statement = $connection->prepare("DELETE FROM {$table} WHERE id = ?");
     if (!$statement || !$statement->bind_param('i', $id) || !$statement->execute()) {
         respond(500, ['error' => 'No se pudo eliminar el registro.']);
@@ -248,6 +296,10 @@ if ($action === 'delete') {
         respond(404, ['error' => 'El registro ya no existe.']);
     }
 
+    if ($resource === 'productos' && $oldImage !== '') {
+        delete_unused_product_image($connection, $oldImage);
+    }
+
     respond(200, ['message' => 'Registro eliminado.']);
 }
 
@@ -255,8 +307,11 @@ if ($action === 'update' && $id === false) {
     respond(400, ['error' => 'Acción o identificador no válido.']);
 }
 
+$inputColumns = $resource === 'productos'
+    ? ['nombre', 'descripcion', 'categoria', 'precio', 'disponibilidad']
+    : $columns;
 $values = [];
-foreach ($columns as $column) {
+foreach ($inputColumns as $column) {
     $value = $input[$column] ?? null;
     if (!is_string($value) && !is_int($value) && !is_float($value)) {
         respond(400, ['error' => 'Completa todos los campos correctamente.']);
@@ -271,16 +326,86 @@ if ($resource === 'productos') {
         || strlen($values['descripcion']) > 5000
         || $values['categoria'] === '' || strlen($values['categoria']) > 100
         || $price === false || $price < 0 || $price > 99999999.99
-        || strlen($values['imagen_url']) > 2048
-        || ($values['imagen_url'] !== '' && (
-            !filter_var($values['imagen_url'], FILTER_VALIDATE_URL)
-            || !in_array(strtolower((string) parse_url($values['imagen_url'], PHP_URL_SCHEME)), ['http', 'https'], true)
-        ))
         || $values['disponibilidad'] === '' || strlen($values['disponibilidad']) > 100
     ) {
         respond(400, ['error' => 'Revisa el nombre, categoría, precio, imagen y disponibilidad del producto.']);
     }
     $values['precio'] = number_format((float) $price, 2, '.', '');
+
+    $oldImage = '';
+    if ($action === 'update') {
+        $imageStatement = $connection->prepare('SELECT imagen_url FROM productos WHERE id = ?');
+        if (!$imageStatement || !$imageStatement->bind_param('i', $id) || !$imageStatement->execute()) {
+            respond(500, ['error' => 'No se pudo consultar la imagen actual del producto.']);
+        }
+        $product = $imageStatement->get_result()->fetch_assoc();
+        if (!$product) {
+            respond(404, ['error' => 'El registro ya no existe.']);
+        }
+        $oldImage = (string) $product['imagen_url'];
+    }
+
+    $imagePath = product_image_path($oldImage) === null ? '' : $oldImage;
+    $uploadedFile = $_FILES['imagen'] ?? null;
+    if ($uploadedFile !== null) {
+        if (
+            !is_array($uploadedFile)
+            || !isset($uploadedFile['error'], $uploadedFile['tmp_name'], $uploadedFile['size'])
+            || !is_int($uploadedFile['error'])
+            || !is_string($uploadedFile['tmp_name'])
+            || !is_int($uploadedFile['size'])
+        ) {
+            respond(400, ['error' => 'El archivo de imagen no es válido.']);
+        }
+        if ($uploadedFile['error'] !== UPLOAD_ERR_NO_FILE) {
+            if ($uploadedFile['error'] !== UPLOAD_ERR_OK) {
+                respond(400, ['error' => 'No se pudo recibir la imagen. Comprueba que no supere el límite de 5 MB.']);
+            }
+            if ((int) $uploadedFile['size'] > 5 * 1024 * 1024 || !is_uploaded_file($uploadedFile['tmp_name'])) {
+                respond(400, ['error' => 'La imagen debe ser válida y no superar los 5 MB.']);
+            }
+
+            $fileInfo = new finfo(FILEINFO_MIME_TYPE);
+            $mimeType = $fileInfo->file($uploadedFile['tmp_name']);
+            $imageTypes = [
+                'image/jpeg' => ['extension' => 'jpg', 'type' => IMAGETYPE_JPEG],
+                'image/png' => ['extension' => 'png', 'type' => IMAGETYPE_PNG],
+                'image/webp' => ['extension' => 'webp', 'type' => IMAGETYPE_WEBP],
+                'image/gif' => ['extension' => 'gif', 'type' => IMAGETYPE_GIF],
+            ];
+            $imageInfo = @getimagesize($uploadedFile['tmp_name']);
+            if (
+                !is_string($mimeType) || !isset($imageTypes[$mimeType])
+                || $imageInfo === false || $imageInfo[2] !== $imageTypes[$mimeType]['type']
+            ) {
+                respond(400, ['error' => 'Formato no válido. Usa una imagen JPG, PNG, WEBP o GIF.']);
+            }
+
+            $uploadDirectory = __DIR__ . DIRECTORY_SEPARATOR . 'uploads' . DIRECTORY_SEPARATOR . 'productos';
+            if (!is_dir($uploadDirectory) && !mkdir($uploadDirectory, 0755, true) && !is_dir($uploadDirectory)) {
+                respond(500, ['error' => 'No se pudo preparar el almacenamiento compartido de imágenes.']);
+            }
+            if (!is_writable($uploadDirectory)) {
+                respond(500, ['error' => 'El servidor no tiene permiso para guardar imágenes del catálogo.']);
+            }
+
+            $filename = bin2hex(random_bytes(16)) . '.' . $imageTypes[$mimeType]['extension'];
+            $destination = $uploadDirectory . DIRECTORY_SEPARATOR . $filename;
+            if (!move_uploaded_file($uploadedFile['tmp_name'], $destination)) {
+                respond(500, ['error' => 'No se pudo guardar la imagen en el servidor.']);
+            }
+            $imagePath = 'uploads/productos/' . $filename;
+        }
+    }
+    $values['imagen_url'] = $imagePath;
+    $values = [
+        'nombre' => $values['nombre'],
+        'descripcion' => $values['descripcion'],
+        'categoria' => $values['categoria'],
+        'precio' => $values['precio'],
+        'imagen_url' => $values['imagen_url'],
+        'disponibilidad' => $values['disponibilidad'],
+    ];
 } elseif (
     $values['equipo'] === '' || strlen($values['equipo']) > 150
     || $values['lunes_jueves'] === '' || strlen($values['lunes_jueves']) > 150
@@ -311,6 +436,9 @@ foreach ($values as &$value) {
 unset($value);
 
 if (!$statement || !call_user_func_array([$statement, 'bind_param'], $parameters) || !$statement->execute()) {
+    if (isset($destination) && is_file($destination) && !unlink($destination)) {
+        error_log('No se pudo limpiar una imagen subida tras fallar el guardado del producto.');
+    }
     respond(500, ['error' => 'No se pudo guardar el registro en la base de datos.']);
 }
 
@@ -319,6 +447,10 @@ if ($action === 'update' && $statement->affected_rows === 0) {
     if (!$check || !$check->bind_param('i', $id) || !$check->execute() || $check->get_result()->num_rows === 0) {
         respond(404, ['error' => 'El registro ya no existe.']);
     }
+}
+
+if ($resource === 'productos' && $action === 'update' && $oldImage !== '' && $oldImage !== $imagePath) {
+    delete_unused_product_image($connection, $oldImage);
 }
 
 respond(200, ['message' => 'Cambios guardados correctamente.']);

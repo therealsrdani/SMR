@@ -10,8 +10,9 @@ portal.html.
 
 REQUISITOS Y ARRANQUE
 ---------------------
-Se necesita PHP con las extensiones mysqli y MySQL/MariaDB. Desde la carpeta
-ERRONKA 2 puedes iniciar el servidor integrado de PHP:
+Se necesita PHP con las extensiones mysqli, fileinfo, zip y dom, y
+MySQL/MariaDB. Desde la carpeta ERRONKA 2 puedes iniciar el servidor integrado
+de PHP:
 
   php -S localhost:8000
 
@@ -20,7 +21,10 @@ los HTML directamente con file://: el login y las funciones de datos dependen
 de PHP. La tabla usuarios debe existir previamente y tener id, usuario,
 password, nombre y rol. password debe contener un hash compatible con
 password_verify. El proyecto no crea usuarios ni proporciona credenciales de
-demostracion.
+demostracion. Para las imagenes, configura upload_max_filesize en al menos 5M
+y post_max_size por encima de ese valor (por ejemplo, 6M).
+Para la documentación, configura upload_max_filesize en al menos 20M y
+post_max_size por encima de ese valor (por ejemplo, 25M).
 
 La conexion esta configurada por defecto para localhost, usuario root,
 contrasena vacia y base empresa. Ajusta los parametros en
@@ -29,7 +33,7 @@ contrasena vacia y base empresa. Ajusta los parametros en
 BASE DE DATOS
 -------------
 En MySQL/MariaDB, crea o selecciona la base empresa y ejecuta:
-- gestion.sql: crea las tablas productos y horarios.
+- gestion.sql: crea las tablas productos, horarios y documentos.
 - solicitudes.sql: crea solicitudes_ausencia y mensajes_solicitud.
 
 Si ya tenias una tabla solicitudes_ausencia de una version anterior, revisa
@@ -46,7 +50,22 @@ PAGINAS Y FUNCIONES
 - respuestas.php y respuestas.html: panel de solicitudes para el rol Director,
   con resumen, graficos, lista y gestion del estado y los mensajes.
 - horarios.html: consulta y gestion de horarios por equipo.
-- productos.html: catalogo con busqueda y gestion de productos.
+- productos.html: catalogo con busqueda y gestion de productos. Las imagenes
+  se seleccionan desde el dispositivo y se guardan en Intranet/uploads/productos;
+  PHP necesita permiso de escritura en esa carpeta. La ruta se guarda en la
+  base de datos para que todos los usuarios de la misma instalacion vean la
+  misma imagen. En despliegues con varios servidores, esa carpeta debe ser un
+  almacenamiento compartido y persistente.
+- documentacion.php: biblioteca de documentos PDF, DOCX y ODT; este apartado
+  no necesita archivos JavaScript propios. Los formularios, la lista y la
+  ventana de previsualizacion funcionan con PHP y CSS. Solo Admin puede subir o
+  eliminar; los archivos se almacenan fuera del directorio web
+  en kalvex-private-documents (junto al directorio publico) y se sirven mediante
+  documento.php. DOCX y ODT se previsualizan como texto extraido y PDF usa el
+  visor integrado del navegador. Guest ve solo la mitad inicial en la
+  previsualizacion. El usuario del servidor necesita permiso de escritura. En
+  despliegues con varios servidores, configura ese almacenamiento como una
+  carpeta compartida.
 - equipo.html: presentacion del equipo fundador y espacios para inversores,
   promotores y colaboradores.
 - styles.css: estilos compartidos de las paginas de la intranet.
@@ -66,13 +85,17 @@ Los demas usuarios solo pueden consultar y responder sus propias solicitudes.
 
 Los permisos se definen en permissions.php y se verifican en api.php; auth.php
 y los atributos data-role-allow de las paginas controlan la interfaz:
-- Admin y Director Ejecutivo: todos los permisos.
+- Admin y Director Ejecutivo: permisos de gestion existentes; solo Admin
+  puede gestionar la documentación.
 - Recursos Humanos: consultar y responder todas las solicitudes, y crear
   horarios; no puede cambiar estados ni editar o borrar horarios.
 - Empleado: crear y editar productos; no puede borrarlos.
 - Guest: solo consultar, sin crear solicitudes ni enviar mensajes.
 - Director y Gerente: conservan sus permisos anteriores.
 - Cliente: solo consulta.
+- Documentación: todos los roles autenticados pueden previsualizar y descargar,
+  excepto Guest, que solo ve la mitad inicial y no puede descargar. Solo Admin
+  puede subir o eliminar.
 
 Asigna uno de estos nombres en la columna usuarios.rol, respetando el texto del
 rol, por ejemplo: UPDATE usuarios SET rol = 'Recursos Humanos' WHERE usuario =
@@ -82,8 +105,9 @@ ademas de ocultar o mostrar controles en la interfaz.
 PERSONALIZACION Y LIMITACIONES
 ------------------------------
 Sustituye los textos entre corchetes de las paginas por informacion real de la
-empresa. En productos.html puedes completar o cambiar las imagenes, condiciones
-y datos del catalogo. Los avisos y horarios deben mantenerse actualizados.
+empresa. En productos.html puedes completar o cambiar las condiciones y datos
+del catalogo; las imagenes se cargan desde el dispositivo al crear o editar un
+producto. Los avisos y horarios deben mantenerse actualizados.
 En equipo.html puedes actualizar los perfiles y completar las URLs de la red
 de apoyo.
 

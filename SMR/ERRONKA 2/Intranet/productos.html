@@ -39,7 +39,7 @@
             <label class="field">Categoría<input name="categoria" maxlength="100" required></label>
             <label class="field">Precio (€)<input name="precio" type="number" min="0" max="99999999.99" step="0.01" required></label>
             <label class="field">Disponibilidad<input name="disponibilidad" maxlength="100" required value="Disponible"></label>
-            <label class="field">URL de imagen<input name="imagen_url" type="url" maxlength="2048" placeholder="https://..."></label>
+            <label class="field">Imagen del producto<input name="imagen" type="file" accept="image/jpeg,image/png,image/webp,image/gif"><small>Elige una imagen de tu dispositivo (máximo 5 MB). Al editar, déjalo vacío para conservar la imagen actual.</small></label>
             <label class="field">Descripción<textarea name="descripcion" rows="3" maxlength="5000"></textarea></label>
           </div>
           <div class="form-actions"><p id="product-form-error" class="form-message" role="alert"></p><button class="button button-primary" type="submit">Guardar producto</button><button class="button button-secondary" id="cancel-product" type="button">Cancelar</button></div>

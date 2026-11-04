@@ -424,7 +424,8 @@ if (productSearch) {
       const imageContainer = document.createElement("div");
       imageContainer.className = "product-image";
       const image = document.createElement("img");
-      image.src = product.imagen_url || "img/producto-placeholder.svg";
+      const uploadedImage = /^uploads\/productos\/[a-f0-9]{32}\.(?:jpg|png|webp|gif)$/.test(product.imagen_url || "");
+      image.src = uploadedImage ? product.imagen_url : "img/producto-placeholder.svg";
       image.alt = `Imagen de ${product.nombre}`;
       image.loading = "lazy";
       const category = document.createElement("span");
@@ -532,13 +533,10 @@ if (productSearch) {
 
   form.addEventListener("submit", async (event) => {
     event.preventDefault();
-    const data = Object.fromEntries(new FormData(form));
     const id = document.querySelector("#product-id").value;
-    const saved = await saveRecord("productos", id ? "update" : "create", {
-      ...data,
-      precio: Number(data.precio),
-      ...(id ? { id: Number(id) } : {})
-    }, formError, loadProducts);
+    const data = new FormData(form);
+    if (id) data.set("id", id);
+    const saved = await saveRecord("productos", id ? "update" : "create", data, formError, loadProducts);
     if (saved) {
       catalogMessage.textContent = formError.textContent;
       resetProductForm();
@@ -550,13 +548,21 @@ if (productSearch) {
 
 async function saveRecord(resource, action, data, messageElement, refresh) {
   try {
+    const headers = {
+      "X-CSRF-Token": window.intranetUser.csrfToken
+    };
+    let body;
+    if (data instanceof FormData) {
+      data.set("action", action);
+      body = data;
+    } else {
+      headers["Content-Type"] = "application/json";
+      body = JSON.stringify({ action, ...data });
+    }
     const response = await fetch(`api.php?resource=${resource}`, {
       method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        "X-CSRF-Token": window.intranetUser.csrfToken
-      },
-      body: JSON.stringify({ action, ...data })
+      headers,
+      body
     });
     const result = await response.json();
     if (!response.ok) throw new Error(result.error || "No se pudieron guardar los cambios.");
