@@ -317,7 +317,7 @@ if ($previewId !== null && $previewId !== false) {
 
 ?>
 <div class="page-content">
-        <section class="page-intro"><p class="eyebrow">CENTRO DE DOCUMENTACIÓN</p><h1>Documentación</h1><p>Consulta las guías y documentos internos. DOCX y ODT se previsualizan como texto; el visor PDF necesita conexión a Internet. El acceso a descarga depende de tu rol.</p></section>
+        <section class="page-intro"><p class="eyebrow">CENTRO DE DOCUMENTACIÓN</p><h1>Documentación</h1><p>Esta es la documentación oficial. Para poder descargarla deberás ser empleado, de lo contrario solo podrás visualizar parcialmente el contenido.</p></section>
         <?php if ($successMessage !== ''): ?><p class="form-message"><?= document_escape($successMessage) ?></p><?php endif; ?>
         <?php if ($errorMessage !== ''): ?><p class="form-message" role="alert"><?= document_escape($errorMessage) ?></p><?php endif; ?>
         <section class="documents-toolbar" aria-label="Acciones de documentación">
@@ -335,7 +335,7 @@ if ($previewId !== null && $previewId !== false) {
               <label class="field document-description-field">Descripción<textarea name="descripcion" rows="3" maxlength="5000"></textarea></label>
               <label class="field document-file-field">Archivo<input name="archivo" type="file" accept=".pdf,.docx,.odt,application/pdf,application/vnd.openxmlformats-officedocument.wordprocessingml.document,application/vnd.oasis.opendocument.text" required><small>PDF, DOCX u ODT; máximo 20 MB.</small></label>
             </div>
-            <div class="form-actions"><span></span><button class="button button-primary" type="submit">Guardar documento</button></div>
+            <div class="form-actions"><span></span><button class="button button-primary" type="submit">Publicar documento</button></div>
           </form>
         <?php endif; ?>
         <section class="document-grid" aria-label="Documentos disponibles">
