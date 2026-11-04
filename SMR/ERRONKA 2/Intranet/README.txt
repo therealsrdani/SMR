@@ -56,10 +56,10 @@ PAGINAS Y FUNCIONES
   base de datos para que todos los usuarios de la misma instalacion vean la
   misma imagen. En despliegues con varios servidores, esa carpeta debe ser un
   almacenamiento compartido y persistente.
-- documentacion.php: biblioteca de documentos PDF, DOCX y ODT; este apartado
-  no necesita archivos JavaScript propios. Los formularios, la lista y la
-  ventana de previsualizacion funcionan con PHP y CSS. Solo Admin puede subir o
-  eliminar; los archivos se almacenan fuera del directorio web
+- documentacion.html: apartado de documentación integrado en la navegación del
+  portal. documentacion.js carga la vista y documentacion.php gestiona los
+  datos y acciones de la biblioteca de documentos PDF, DOCX y ODT. Solo Admin
+  puede subir o eliminar; los archivos se almacenan fuera del directorio web
   en kalvex-private-documents (junto al directorio publico) y se sirven mediante
   documento.php. DOCX y ODT se previsualizan como texto extraido y PDF usa el
   visor integrado del navegador. Guest ve solo la mitad inicial en la

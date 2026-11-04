@@ -8,6 +8,12 @@ if (($_SESSION['authenticated'] ?? false) !== true) {
     header('Location: ../Web 1.0/index.html', true, 303);
     exit;
 }
+if ($_SERVER['REQUEST_METHOD'] === 'GET' && ($_GET['fragment'] ?? '') !== '1') {
+    $requestedPreview = filter_input(INPUT_GET, 'preview', FILTER_VALIDATE_INT, ['options' => ['min_range' => 1]]);
+    $previewQuery = is_int($requestedPreview) ? '?preview=' . $requestedPreview : '';
+    header('Location: documentacion.html' . $previewQuery, true, 303);
+    exit;
+}
 
 $role = strtolower(trim((string) ($_SESSION['rol'] ?? '')));
 $permissions = permissions_for_role($role);
@@ -25,7 +31,7 @@ function document_escape(string $value): string
 
 function redirect_to_documents(): void
 {
-    header('Location: documentacion.php', true, 303);
+    header('Location: documentacion.html', true, 303);
     exit;
 }
 
@@ -240,6 +246,14 @@ if (isset($_SESSION['document_success'])) {
     $successMessage = (string) $_SESSION['document_success'];
     unset($_SESSION['document_success']);
 }
+if (isset($_SESSION['document_error'])) {
+    $errorMessage = (string) $_SESSION['document_error'];
+    unset($_SESSION['document_error']);
+}
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && $errorMessage !== '') {
+    $_SESSION['document_error'] = $errorMessage;
+    redirect_to_documents();
+}
 
 mysqli_report(MYSQLI_REPORT_OFF);
 $connection = new mysqli('localhost', 'root', '', 'empresa');
@@ -301,55 +315,8 @@ if ($previewId !== null && $previewId !== false) {
     }
 }
 
-$name = trim((string) ($_SESSION['nombre'] ?? $_SESSION['username'] ?? 'Usuario'));
-$initials = implode('', array_map(
-    static fn (string $part): string => substr($part, 0, 1),
-    array_slice(preg_split('/\s+/', $name) ?: [], 0, 2)
-));
-$roleLabels = [
-    'admin' => 'Admin',
-    'guest' => 'Guest',
-    'recursos humanos' => 'Recursos Humanos',
-    'director' => 'Director',
-    'director ejecutivo' => 'Director Ejecutivo',
-    'gerente' => 'Gerente',
-    'empleado' => 'Empleado',
-    'cliente' => 'Cliente',
-];
-$roleLabel = $roleLabels[$role] ?? trim((string) ($_SESSION['rol'] ?? ''));
 ?>
-<!doctype html>
-<html lang="es">
-<head>
-  <meta charset="utf-8">
-  <link rel="icon" type="image/png" href="img/logo.png">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="theme-color" content="#005AFA">
-  <title>Documentación | Intranet</title>
-  <link rel="stylesheet" href="styles.css">
-</head>
-<body>
-  <div class="app-shell">
-    <aside class="sidebar">
-      <a class="brand" href="index.html" aria-label="Intranet, inicio"><span class="brand-mark">I</span><span>Kalvex<small>ESPACIO DE EQUIPO</small></span></a>
-      <p class="nav-caption">MENÚ PRINCIPAL</p>
-      <nav class="side-nav" aria-label="Navegación principal">
-        <a class="nav-link" href="index.html"><span class="nav-icon">⌂</span>Inicio</a>
-        <a class="nav-link" href="solicitudes.html"><span class="nav-icon">＋</span>Solicitudes</a>
-        <a class="nav-link" href="mis-solicitudes.html"><span class="nav-icon">☷</span>Mis solicitudes</a>
-        <?php if (in_array($role, ['admin', 'director', 'director ejecutivo', 'recursos humanos'], true)): ?>
-          <a class="nav-link" href="respuestas.php"><span class="nav-icon">▤</span>Respuestas</a>
-        <?php endif; ?>
-        <a class="nav-link" href="horarios.html"><span class="nav-icon">▦</span>Horarios</a>
-        <a class="nav-link" href="productos.html"><span class="nav-icon">◇</span>Catálogo</a>
-        <a class="nav-link active" href="documentacion.php" aria-current="page"><span class="nav-icon">▧</span>Documentación</a>
-        <a class="nav-link" href="equipo.html"><span class="nav-icon">♧</span>Equipo</a>
-      </nav>
-      <div class="sidebar-bottom"><div class="sidebar-help"><span class="help-icon">?</span><span>¿Necesitas ayuda?<small>Contacta con RR. HH.</small></span></div><a class="logout-link" href="logout.php">Cerrar sesión</a></div>
-    </aside>
-    <main class="main-area">
-      <header class="topbar"><div><p class="breadcrumb">INTRANET <span>/</span> DOCUMENTACIÓN</p><p class="topbar-date">Documentos de consulta del equipo</p></div><div class="profile"><span class="status-dot"></span><span class="avatar"><?= document_escape($initials ?: 'U') ?></span><span class="profile-name"><?= document_escape($name) ?><small><?= document_escape($roleLabel) ?></small></span></div></header>
-      <div class="page-content">
+<div class="page-content">
         <section class="page-intro"><p class="eyebrow">CENTRO DE DOCUMENTACIÓN</p><h1>Documentación</h1><p>Consulta las guías y documentos internos. DOCX y ODT se previsualizan como texto; el visor PDF necesita conexión a Internet. El acceso a descarga depende de tu rol.</p></section>
         <?php if ($successMessage !== ''): ?><p class="form-message"><?= document_escape($successMessage) ?></p><?php endif; ?>
         <?php if ($errorMessage !== ''): ?><p class="form-message" role="alert"><?= document_escape($errorMessage) ?></p><?php endif; ?>
@@ -382,7 +349,7 @@ $roleLabel = $roleLabels[$role] ?? trim((string) ($_SESSION['rol'] ?? ''));
               <p class="document-description"><?= document_escape((string) ($document['descripcion'] ?: 'Sin descripción.')) ?></p>
               <p class="document-metadata"><?= document_escape((string) ($document['categoria'] ?: 'General')) ?> · Subido por <?= document_escape((string) $document['subido_por']) ?> · <?= document_escape(document_date((string) $document['creado_en'])) ?></p>
               <div class="document-actions">
-                <a class="button button-secondary" href="documentacion.php?preview=<?= (int) $document['id'] ?>#vista-previa">Previsualizar</a>
+                <a class="button button-secondary" href="documentacion.html?preview=<?= (int) $document['id'] ?>#vista-previa">Previsualizar</a>
                 <?php if ($permissions['download_documents']): ?><a class="button button-primary" href="documento.php?modo=download&amp;id=<?= (int) $document['id'] ?>">Descargar</a><?php endif; ?>
                 <?php if ($permissions['delete_documents']): ?>
                   <form action="documentacion.php" method="post">
@@ -397,9 +364,7 @@ $roleLabel = $roleLabels[$role] ?? trim((string) ($_SESSION['rol'] ?? ''));
           <?php endforeach; ?>
         </section>
         <footer class="page-footer">Kalvex · Intranet <span>Documentación interna</span></footer>
-      </div>
-    </main>
-  </div>
+</div>
 
   <?php if ($previewId !== null && $previewId !== false): ?>
     <section class="document-viewer-overlay" id="vista-previa" aria-label="Previsualización del documento">
@@ -409,7 +374,7 @@ $roleLabel = $roleLabels[$role] ?? trim((string) ($_SESSION['rol'] ?? ''));
             <h2><?= document_escape((string) ($previewDocument['titulo'] ?? 'Previsualización')) ?></h2>
             <p><?= document_escape((string) ($previewDocument['descripcion'] ?? '')) ?></p>
           </div>
-          <a class="button button-secondary" href="documentacion.php">Cerrar</a>
+          <a class="button button-secondary" href="documentacion.html">Cerrar</a>
         </header>
         <?php if ($previewDocument === null): ?>
           <p class="document-preview-error"><?= document_escape($previewError) ?></p>
@@ -428,5 +393,3 @@ $roleLabel = $roleLabels[$role] ?? trim((string) ($_SESSION['rol'] ?? ''));
       </div>
     </section>
   <?php endif; ?>
-</body>
-</html>
