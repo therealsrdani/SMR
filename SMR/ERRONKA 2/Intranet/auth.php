@@ -70,6 +70,11 @@ if (authenticated && window.self !== window.top) {
 
 if (authenticated && window.intranetUser) {
   const { name, role, roleKey } = window.intranetUser;
+  const welcomeName = document.querySelector("#welcome-user-name");
+  if (welcomeName) {
+    welcomeName.textContent = name;
+  }
+
   const roleAliases = roleKey === "director ejecutivo" ? ["director"] : [];
   const responsesContent = document.querySelector("#responses-content");
   const responsesDenied = document.querySelector("#responses-denied");
