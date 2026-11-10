@@ -365,7 +365,7 @@ if ($previewId !== null && $previewId !== false) {
             </article>
           <?php endforeach; ?>
         </section>
-        <footer class="page-footer">Kalvex · Intranet <span>Documentación interna</span></footer>
+        <footer class="page-footer">Kalvex <span>Documentación interna</span></footer>
 </div>
 
   <?php if ($previewId !== null && $previewId !== false): ?>
