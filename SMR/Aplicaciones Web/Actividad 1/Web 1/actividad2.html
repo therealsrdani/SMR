@@ -241,21 +241,6 @@
         <br>
         <hr style="height: 10px; border: none; background-color: black;">
         <br>
-        <!--Creamos el script-->
-            <script>
-                function ponerFechaHora() {
-                    const ahora = new Date();
-
-                    const fechaHora =
-                        ahora.toLocaleDateString("es-ES") + " " +
-                        ahora.toLocaleTimeString("es-ES");
-
-                    document.getElementById("fechaHora").textContent = fechaHora;
-
-                    document.getElementById("fecha_hora").value = fechaHora;
-                }
-                ponerFechaHora();
-            </script>
      <h1 style="color: black;">Formulario 2</h1>
         <br>
         <hr>
